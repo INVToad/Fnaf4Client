@@ -1,4 +1,7 @@
-const socket = io("https://invtoadserver.github.io/", {
+const socket = io("https://invtoad.github.io/INVToadServer.github.io/", {
+  cors: {
+    origin: "*"
+  },
   reconnection: false,
 });
 
