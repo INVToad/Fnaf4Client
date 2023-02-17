@@ -4,13 +4,16 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
 
 
 socket.on('connect', function() {
-  console.log('Emitted')
   socket.emit("connection", 'User Connected')
 });
 socket.on('disconnect', function() {
   socket.emit("disconnection", 'User Diconnected')
 });
 
-socket.on('connection', function() {
-  console.log('Received')
+socket.on('connected', function() {
+  console.log("User Connected")
 })
+
+socket.on('disconnected', function()) {
+  console.log("User Disconnected")
+}
