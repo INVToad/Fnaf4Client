@@ -1,7 +1,4 @@
 const socket = io("https://FnafServer.jarethcochrane.repl.co", {
-  cors: {
-    origin: "*"
-  },
   reconnection: false,
 });
 
