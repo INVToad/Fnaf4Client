@@ -10,5 +10,5 @@ socket.on('connected', function() {
   console.log('user connected')
 });
 socket.on('disconnected', function() {
-  console.log('user connected')
+  console.log('user disconnected')
 });
