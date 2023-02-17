@@ -16,4 +16,4 @@ socket.on('connected', function() {
 
 socket.on('disconnected', function() {
   console.log("User Disconnected")
-}
+})
