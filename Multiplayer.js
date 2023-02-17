@@ -6,9 +6,9 @@ const socket = io("https://invtoad.github.io/INVToadServer.github.io/", {
 });
 
 
-socket.on('connected', function() {
+socket.on('connect', function() {
   console.log('user connected')
 });
-socket.on('disconnected', function() {
+socket.on('disconnect', function() {
   console.log('user disconnected')
 });
