@@ -6,8 +6,8 @@ const socket = io("https://invtoad.github.io/INVToadServer.github.io/", {
 });
 
 
-io.on('Connection', (socket) => {
-  res.send('user connected');
+socket.on('Connection', function() {
+  consoel.log('user connected')
 });
 
 server.listen(3000, () => {
