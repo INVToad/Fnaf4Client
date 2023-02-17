@@ -9,3 +9,7 @@ socket.on('connect', function() {
 socket.on('disconnect', function() {
   socket.emit("disconnection", 'User Diconnected')
 });
+
+socket.on('connection', function() {
+  console.log('Received')
+})
