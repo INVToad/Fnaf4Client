@@ -4,8 +4,8 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
 
 
 socket.on('connect', function() {
-  console.log('user connected')
+  socket.emit("connection", 'User Connected')
 });
 socket.on('disconnect', function() {
-  console.log('user disconnected')
+  socket.emit("disconnection", 'User Diconnected')
 });
