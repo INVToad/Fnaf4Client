@@ -6,6 +6,7 @@ var button = document.getElementById("ButtonJoin")
 var Joined = false
 
 if (Joined) {
+  console.log("Registerd")
   socket.on('connect', function() {
     socket.emit("connection", 'User Connected')
   });
@@ -24,6 +25,7 @@ if (Joined) {
 
 function Buttoon() {
   Joined = true
+  console.log("True")
 }
 
 button.onclick = Buttoon
