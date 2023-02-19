@@ -2,17 +2,28 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
   reconnection: false,
 });
 
-socket.on('connect', function() {
-  socket.emit("connection", 'User Connected')
-});
-socket.on('disconnect', function() {
-  socket.emit("disconnection", 'User Diconnected')
-});
+var button = document.getElementById("ButtonJoin")
+var Joined = false
 
-socket.on('connected', function() {
-  console.log("User Connected")
-})
+if (Joined) {
+  socket.on('connect', function() {
+    socket.emit("connection", 'User Connected')
+  });
+  socket.on('disconnect', function() {
+    socket.emit("disconnection", 'User Diconnected')
+  });
 
-socket.on('disconnected', function() {
-  console.log("User Disconnected")
-})
+  socket.on('connected', function() {
+    console.log("User Connected")
+  })
+
+  socket.on('disconnected', function() {
+    console.log("User Disconnected")
+  })
+}
+
+function Buttoon() {
+  Joined = true
+}
+
+button.onclick = Buttoon
