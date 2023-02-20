@@ -3,10 +3,10 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
 });
 
 socket.on('connect', function() {
-  socket.emit("connection", 'User Connected')
+  socket.emit("connection", socket.id)
 });
 socket.on('disconnect', function() {
-  socket.emit("disconnection", 'User Diconnected')
+  socket.emit("disconnection", socket.id)
 });
 socket.on('connected', function() {
   console.log("User Connected")
@@ -14,3 +14,10 @@ socket.on('connected', function() {
 socket.on('disconnected', function() {
   console.log("User Disconnected")
 });
+socket.on('RetrieveMsg', function(msg){
+  console.log(msg)
+})
+
+function SendMsg(msg) {
+  socket.emit('SendMsg', msg)
+}
