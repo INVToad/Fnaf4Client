@@ -14,10 +14,10 @@ socket.on('connected', function() {
 socket.on('disconnected', function() {
   console.log("User Disconnected")
 });
-socket.on('RetrieveMsg', function(msg){
-  console.log(msg)
+socket.on('RetrieveMsg', function(data){
+  console.log(data)
 })
 
 function SendMsg(msg) {
-  socket.emit('SendMsg', msg)
+  socket.emit('SentMsg', msg)
 }
