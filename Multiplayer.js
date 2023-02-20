@@ -16,8 +16,10 @@ socket.on('disconnected', function() {
 });
 socket.on('receiveMessage', (arg) => {
   console.log(arg)
-})
+});
 
 function SendMsg(msg) {
   socket.emit('SentMsg', msg)
 }
+
+SendMsg('test')
