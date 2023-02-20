@@ -5,8 +5,7 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
 var button = document.getElementById("ButtonJoin")
 var Joined = false
 
-if (Joined) {
-  console.log("Registerd")
+function Buttoon() {
   socket.on('connect', function() {
     socket.emit("connection", 'User Connected')
   });
@@ -21,11 +20,6 @@ if (Joined) {
   socket.on('disconnected', function() {
     console.log("User Disconnected")
   })
-}
-
-function Buttoon() {
-  Joined = true
-  console.log("True")
 }
 
 button.onclick = Buttoon
