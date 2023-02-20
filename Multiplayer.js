@@ -10,8 +10,7 @@ socket.on('disconnect', function() {
 });
 socket.on('connected', function() {
   console.log("User Connected")
-})
-
+});
 socket.on('disconnected', function() {
   console.log("User Disconnected")
-})
+});
