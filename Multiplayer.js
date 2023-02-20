@@ -20,4 +20,5 @@ socket.on('RetrieveMsg', function(data){
 
 function SendMsg(msg) {
   socket.emit('SentMsg', msg)
+  console.log(msg)
 }
