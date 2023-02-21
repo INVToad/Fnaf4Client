@@ -14,7 +14,7 @@ socket.on('connected', function() {
 socket.on('disconnected', function() {
   console.log("User Disconnected")
 });
-socket.on('receiveMessage', (arg) => {
+socket.on('receiveMessage', function(arg) {
   console.log(arg)
 });
 
