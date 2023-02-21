@@ -22,6 +22,13 @@ socket.on('receiveMessage', function(arg) {
   console.log(arg)
 });
 
-function SendMsg(msg) {
-  socket.emit('SentMsg', msg)
+function SendMsg() {
+  if (ChatInput.value != '') {
+    socket.emit('SentMsg', ChatInput.value)
+    ChatInput.value = ''
+  } else {
+    console.log("Error: no input text")
+  }
 }
+
+ChatSubmitButton.onclick = SendMsg
