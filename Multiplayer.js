@@ -5,8 +5,10 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
 var ChatInput = document.getElementById('Input')
 var ChatSubmitButton = document.getElementById('SubmitButton')
 
+var Username = prompt('Username')
+
 socket.on('connect', function() {
-  socket.emit("connection", socket.id)
+  socket.emit("connection", socket.id, {Username: socket.id})
 });
 socket.on('disconnect', function() {
   socket.emit("disconnection", socket.id)
@@ -31,7 +33,7 @@ function SendChatMsg() {
 }
 
 function SendChatServerMessage(msg) {
-  socket.emit('SentMsg', msg)
+  socket.emit('SentMsg', msg, socket.id)
 }
 
 ChatSubmitButton.onclick = SendChatMsg
