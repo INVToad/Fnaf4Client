@@ -17,9 +17,4 @@ socket.on('disconnected', function() {
 socket.on('receiveMessage', function(arg) {
   console.log(arg)
 });
-
-function SendMsg(msg) {
-  socket.emit('SentMsg', msg)
-}
-
-SendMsg('test')
+socket.emit('SentMsg', 'test')
