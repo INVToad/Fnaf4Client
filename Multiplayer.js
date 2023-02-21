@@ -10,6 +10,7 @@ socket.on('disconnect', function() {
 });
 socket.on('connected', function() {
   console.log("User Connected")
+  SendMsg('test')
 });
 socket.on('disconnected', function() {
   console.log("User Disconnected")
@@ -17,4 +18,7 @@ socket.on('disconnected', function() {
 socket.on('receiveMessage', function(arg) {
   console.log(arg)
 });
-socket.emit('SentMsg', 'test')
+
+function SendMsg(msg) {
+  socket.emit('SentMsg', msg)
+}
