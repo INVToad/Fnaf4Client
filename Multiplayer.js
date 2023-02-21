@@ -12,17 +12,16 @@ socket.on('disconnect', function() {
   socket.emit("disconnection", socket.id)
 });
 socket.on('connected', function() {
-  console.log("User Connected")
-  SendMsg('test')
+  SendChatServerMessage("User Connected")
 });
 socket.on('disconnected', function() {
-  console.log("User Disconnected")
+  SendChatServerMessage("User Disconnected")
 });
 socket.on('receiveMessage', function(arg) {
   console.log(arg)
 });
 
-function SendMsg() {
+function SendChatMsg() {
   if (ChatInput.value != '') {
     socket.emit('SentMsg', ChatInput.value)
     ChatInput.value = ''
@@ -31,4 +30,8 @@ function SendMsg() {
   }
 }
 
-ChatSubmitButton.onclick = SendMsg
+function SendChatServerMessage(msg) {
+  socket.emit('SentMsg', msg)
+}
+
+ChatSubmitButton.onclick = SendChatMsg
