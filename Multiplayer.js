@@ -2,6 +2,9 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
   reconnection: false,
 });
 
+var ChatInput = document.getElementById('Input')
+var ChatSubmitButton = document.getElementById('SubmitButton')
+
 socket.on('connect', function() {
   socket.emit("connection", socket.id)
 });
