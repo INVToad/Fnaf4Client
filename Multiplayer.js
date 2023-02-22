@@ -23,8 +23,11 @@ socket.on('connected', function(data) {
   SendChatServerMessage(data + " Connected")
 });
 socket.on('disconnected', function(data) {
-  console.log('yeaa')
-  SendChatServerMessage(data + " Disconnected")
+  if (ChatMsgs.length >= 10) {
+    ChatMsgs.shift()
+  }
+  ChatMsgs.push(data + ' Disconnected')
+  console.log(data + ' Disconnected')
 });
 socket.on('receiveMessage', function(arg) {
   if (ChatMsgs.length >= 10) {
