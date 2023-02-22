@@ -11,9 +11,9 @@ socket.on('connect', function() {
   socket.emit("connection")
   socket.emit("connected", Username, socket.id)
 });
-socket.on('user', function(data) {
+socket.on('user', function(data, name) {
   if (data == 'Taken') {
-    var Username = prompt('Username')
+    var Username = prompt('Username', name + 'was Taken')
     socket.emit("connected", Username, socket.id)
   }
 })
