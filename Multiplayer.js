@@ -60,6 +60,7 @@ function createChatMsg(e) {
   NewPara.style.position = 'fixed'
   NewPara.style.left = '10px'
   NewPara.style.bottom = '110px'
+  ChatBox.appendChild(NewPara)
 }
 
 function SendChatServerMessage(msg) {
