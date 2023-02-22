@@ -25,8 +25,8 @@ socket.on('disconnect', function() {
 socket.on('connected', function(data) {
   SendChatServerMessage(data + " Connected")
 });
-socket.on('disconnected', function() {
-  SendChatServerMessage("User Disconnected")
+socket.on('disconnected', function(data) {
+  SendChatServerMessage(data + " Disconnected")
 });
 socket.on('receiveMessage', function(arg) {
   if (ChatMsgs.length >= 10) {
