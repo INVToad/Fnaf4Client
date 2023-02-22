@@ -8,7 +8,8 @@ var ChatSubmitButton = document.getElementById('SubmitButton')
 var Username = prompt('Username')
 
 socket.on('connect', function() {
-  socket.emit("connection", Username, socket.id)
+  socket.emit("connection")
+  socket.emit("connected", Username, socket.id)
 });
 socket.on('disconnect', function() {
   socket.emit("disconnection", socket.id)
