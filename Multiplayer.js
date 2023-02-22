@@ -33,6 +33,7 @@ socket.on('disconnected', function(data) {
 socket.on('receiveMessage', function(arg) {
   if (ChatMsgs.length >= 10) {
     ChatMsgs.shift()
+    deleteChatMsg()
   }
   createChatMsg(arg)
   ChatMsgs.push(arg)
@@ -66,6 +67,12 @@ function createChatMsg(e) {
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
     TempMsg.style.bottom = (CurrentUp + 13) + 'px'
   }
+}
+
+function deleteChatMsg() {
+  var tempdel = document.getElementById(Messages[0])
+  tempdel.remove()
+  Messages.shift()
 }
 
 function SendChatServerMessage(msg) {
