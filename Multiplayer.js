@@ -20,7 +20,7 @@ socket.on('user', function(data, name) {
   }
 })
 socket.on('disconnect', function() {
-  socket.emit("disconnection", socket.id)
+  socket.emit("disconnected", socket.id)
 });
 socket.on('connected', function(data) {
   SendChatServerMessage(data + " Connected")
