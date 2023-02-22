@@ -40,7 +40,7 @@ function SendChatMsg() {
 }
 
 function SendChatServerMessage(msg) {
-  socket.emit('SentConnectMsg', msg, socket.id)
+  socket.emit('SentConnectMsg', msg)
 }
 
 ChatSubmitButton.onclick = SendChatMsg
