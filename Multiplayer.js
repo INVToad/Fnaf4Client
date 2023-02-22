@@ -7,6 +7,8 @@ var ChatSubmitButton = document.getElementById('SubmitButton')
 
 var Username = prompt('Username')
 
+var ChatMsgs = new Array()
+
 socket.on('connect', function() {
   socket.emit("connection")
   socket.emit("connected", Username, socket.id)
@@ -27,6 +29,10 @@ socket.on('disconnected', function() {
   SendChatServerMessage("User Disconnected")
 });
 socket.on('receiveMessage', function(arg) {
+  if (ChatMsgs.length > 10) {
+    ChatMsgs.pop()
+  }
+  ChatMsgs.push(arg)
   console.log(arg)
 });
 
