@@ -32,7 +32,7 @@ socket.on('receiveMessage', function(arg) {
 
 function SendChatMsg() {
   if (ChatInput.value != '') {
-    socket.emit('SentMsg', ChatInput.value)
+    socket.emit('SentMsg', ChatInput.value, socket.id)
     ChatInput.value = ''
   } else {
     console.log("Error: no input text")
