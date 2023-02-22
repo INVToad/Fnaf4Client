@@ -26,6 +26,7 @@ socket.on('connected', function(data) {
   SendChatServerMessage(data + " Connected")
 });
 socket.on('disconnected', function(data) {
+  console.log('yeaa')
   SendChatServerMessage(data + " Disconnected")
 });
 socket.on('receiveMessage', function(arg) {
