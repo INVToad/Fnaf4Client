@@ -11,6 +11,12 @@ socket.on('connect', function() {
   socket.emit("connection")
   socket.emit("connected", Username, socket.id)
 });
+socket.on('user', function(data) {
+  if (data == 'Taken') {
+    var Username = prompt('Username')
+    socket.emit("connected", Username, socket.id)
+  }
+})
 socket.on('disconnect', function() {
   socket.emit("disconnection", socket.id)
 });
