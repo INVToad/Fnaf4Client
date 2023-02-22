@@ -59,12 +59,12 @@ function createChatMsg(e) {
   number += 1
   NewPara.style.position = 'fixed'
   NewPara.style.left = '10px'
-  NewPara.style.bottom = '110px'
+  NewPara.style.bottom = '100px'
   ChatBox.appendChild(NewPara)
   for (let i = 0; i < Messages.length; i++) {
     var TempMsg = document.getElementById(Messages[i])
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
-    TempMsg.style.bottom = (CurrentUp + 10) + 'px'
+    TempMsg.style.bottom = (CurrentUp + 13) + 'px'
   }
 }
 
