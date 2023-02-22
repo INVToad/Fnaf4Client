@@ -29,8 +29,8 @@ socket.on('disconnected', function() {
   SendChatServerMessage("User Disconnected")
 });
 socket.on('receiveMessage', function(arg) {
-  if (ChatMsgs.length > 10) {
-    ChatMsgs.pop()
+  if (ChatMsgs.length >= 10) {
+    ChatMsgs.shift()
   }
   ChatMsgs.push(arg)
   console.log(arg)
