@@ -61,6 +61,11 @@ function createChatMsg(e) {
   NewPara.style.left = '10px'
   NewPara.style.bottom = '110px'
   ChatBox.appendChild(NewPara)
+  for (let i = 0; i < Messages.length; i++) {
+    var TempMsg = document.getElementById(Messages[i])
+    var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
+    TempMsg.style.bottom = (CurrentUp + 10) + 'px'
+  }
 }
 
 function SendChatServerMessage(msg) {
