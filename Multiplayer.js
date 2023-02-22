@@ -6,6 +6,7 @@ var ChatInput = document.getElementById('Input')
 var ChatSubmitButton = document.getElementById('SubmitButton')
 
 var Username = prompt('Username')
+var ChatBox = document.getElementById("ChatBox")
 
 var ChatMsgs = new Array()
 
@@ -33,6 +34,7 @@ socket.on('receiveMessage', function(arg) {
   if (ChatMsgs.length >= 10) {
     ChatMsgs.shift()
   }
+  createChatMsg(arg)
   ChatMsgs.push(arg)
   console.log(arg)
 });
@@ -44,6 +46,20 @@ function SendChatMsg() {
   } else {
     console.log("Error: no input text")
   }
+}
+
+var number = 0
+var Messages = []
+function createChatMsg(e) {
+  var NewPara = document.createElement("p")
+  var Context = document.createTextNode(e)
+  NewPara.appendChild(Context)
+  NewPara.id = 'ChatMsg' + number
+  Messages.push('ChatMsg' + number)
+  number += 1
+  NewPara.style.position = 'fixed'
+  NewPara.style.left = '10px'
+  NewPara.style.bottom = '110px'
 }
 
 function SendChatServerMessage(msg) {
