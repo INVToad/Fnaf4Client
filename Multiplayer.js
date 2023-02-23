@@ -68,7 +68,6 @@ function createChatMsg(e) {
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
     if (i == Messages.length - 1) {
       TempMsg.style.bottom = (CurrentUp + 19) + 'px'
-      console.log('Moved ' + i)
     } else {
       TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
     }
@@ -85,7 +84,8 @@ function SendChatServerMessage(msg) {
   socket.emit('SentConnectMsg', msg)
 }
 
-function Checkkey() {
+function Checkkey(e) {
+  console.log(e)
   if (keys['Enter']) {
     SendChatMsg()
   }
