@@ -26,9 +26,10 @@ socket.on('connected', function(data) {
 socket.on('disconnected', function(data) {
   if (ChatMsgs.length >= 10) {
     ChatMsgs.shift()
+    deleteChatMsg()
   }
-  ChatMsgs.push(data + ' Disconnected')
-  console.log(data + ' Disconnected')
+  createChatMsg(data + 'Disconnected')
+  ChatMsgs.push(data + 'Disconnected')
 });
 socket.on('receiveMessage', function(arg) {
   if (ChatMsgs.length >= 10) {
@@ -37,7 +38,6 @@ socket.on('receiveMessage', function(arg) {
   }
   createChatMsg(arg)
   ChatMsgs.push(arg)
-  console.log(arg)
 });
 
 function SendChatMsg() {
