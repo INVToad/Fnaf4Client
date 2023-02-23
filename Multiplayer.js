@@ -66,7 +66,11 @@ function createChatMsg(e) {
   for (let i = 0; i < Messages.length; i++) {
     var TempMsg = document.getElementById(Messages[i])
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
-    TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
+    if (i == 0) {
+      TempMsg.style.bottom = (CurrentUp + 19) + 'px'
+    } else {
+      TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
+    }
   }
 }
 
