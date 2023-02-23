@@ -87,7 +87,7 @@ function SendChatServerMessage(msg) {
 }
 
 function Checkkey() {
-  if (key['enter']) {
+  if (keys['enter']) {
     SendChatMsg()
   }
 }
