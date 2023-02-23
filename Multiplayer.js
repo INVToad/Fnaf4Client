@@ -61,11 +61,19 @@ function createChatMsg(e) {
   NewPara.style.position = 'fixed'
   NewPara.style.left = '10px'
   NewPara.style.bottom = '100px'
+  NewPara.style.maxWidth = '200px'
   ChatBox.appendChild(NewPara)
+  var maxh = 0
+  for (let i = 0; i < Messages.length; i++) {
+    var TempMsg = document.getElementById(Messages[i])
+    if (TempMsg.offsetHeight > maxh) {
+      maxh = TempMsg.offsetHeight
+    }
+  }
   for (let i = 0; i < Messages.length; i++) {
     var TempMsg = document.getElementById(Messages[i])
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
-    TempMsg.style.bottom = (CurrentUp + 13) + 'px'
+    TempMsg.style.bottom = (CurrentUp + maxh) + 'px'
   }
 }
 
