@@ -68,8 +68,10 @@ function createChatMsg(e) {
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
     if (i == 0) {
       TempMsg.style.bottom = (CurrentUp + 19) + 'px'
+      console.log('Moved ' + i)
     } else {
       TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
+      console.log('Moved offbiggest' + i)
     }
   }
 }
@@ -91,4 +93,4 @@ function Checkkey() {
 }
 
 ChatSubmitButton.onclick = SendChatMsg
-ChatInput.onkeydown = CheckKey
+ChatInput.onkeydown = Checkkey
