@@ -85,8 +85,7 @@ function SendChatServerMessage(msg) {
 }
 
 function Checkkey(e) {
-  console.log(e)
-  if (keys['Enter']) {
+  if (e.key == "Enter") {
     SendChatMsg()
   }
 }
