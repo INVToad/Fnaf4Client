@@ -84,5 +84,11 @@ function SendChatServerMessage(msg) {
   socket.emit('SentConnectMsg', msg)
 }
 
+function Checkkey() {
+  if (key['enter']) {
+    SendChatMsg()
+  }
+}
+
 ChatSubmitButton.onclick = SendChatMsg
-ChatInput.oninput = SendChatMsg
+ChatInput.onkeydown = CheckKey
