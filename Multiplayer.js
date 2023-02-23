@@ -85,3 +85,4 @@ function SendChatServerMessage(msg) {
 }
 
 ChatSubmitButton.onclick = SendChatMsg
+ChatInput.oninput = SendChatMsg
