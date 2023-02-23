@@ -28,8 +28,8 @@ socket.on('disconnected', function(data) {
     ChatMsgs.shift()
     deleteChatMsg()
   }
-  createChatMsg(data + 'Disconnected')
-  ChatMsgs.push(data + 'Disconnected')
+  createChatMsg(data + ' Disconnected')
+  ChatMsgs.push(data + ' Disconnected')
 });
 socket.on('receiveMessage', function(arg) {
   if (ChatMsgs.length >= 10) {
@@ -63,17 +63,10 @@ function createChatMsg(e) {
   NewPara.style.bottom = '100px'
   NewPara.style.maxWidth = '200px'
   ChatBox.appendChild(NewPara)
-  var maxh = 0
-  for (let i = 0; i < Messages.length; i++) {
-    var TempMsg = document.getElementById(Messages[i])
-    if (TempMsg.offsetHeight > maxh) {
-      maxh = TempMsg.offsetHeight
-    }
-  }
   for (let i = 0; i < Messages.length; i++) {
     var TempMsg = document.getElementById(Messages[i])
     var CurrentUp = (TempMsg.style.bottom.replace('px', '')) - ''
-    TempMsg.style.bottom = (CurrentUp + maxh) + 'px'
+    TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
   }
 }
 
