@@ -113,6 +113,10 @@ function sendRoomRequest() {
   }
 }
 
+function SendData(type, data) {
+  socket.emit('SendGameData', Room, type, data)
+}
+
 ChatSubmitButton.onclick = SendChatMsg
 ChatInput.onkeydown = Checkkey
 
