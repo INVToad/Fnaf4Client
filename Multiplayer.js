@@ -39,6 +39,9 @@ socket.on('receiveMessage', function(arg) {
   createChatMsg(arg)
   ChatMsgs.push(arg)
 });
+socket.on('RoomConnection', function(data) {
+  SendChatServerMessage(data)
+})
 
 function SendChatMsg() {
   if (ChatInput.value != '') {
