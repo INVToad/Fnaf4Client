@@ -2,6 +2,7 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
   reconnection: false,
 });
 
+//These are tehe variables used
 var ChatInput = document.getElementById('Input')
 var ChatSubmitButton = document.getElementById('SubmitButton')
 var RoomInput = document.getElementById('RoomInput')
@@ -11,7 +12,9 @@ var Username = prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
 
 var ChatMsgs = new Array()
+var Room = 'null'
 
+//Connection socket to tell when the player connects
 socket.on('connect', function() {
   socket.emit("connection")
   socket.emit("connected", Username, socket.id)
@@ -41,9 +44,14 @@ socket.on('receiveMessage', function(arg) {
   createChatMsg(arg)
   ChatMsgs.push(arg)
 });
-socket.on('RoomConnection', function(data, data1) {
-  SendChatServerMessage(data)
-  console.log(data1)
+socket.on('RoomConnection', function(data) {
+  if (ChatMsgs.length >= 10) {
+    ChatMsgs.shift()
+    deleteChatMsg()
+  }
+  createChatMsg('You have Joined ' + data)
+  ChatMsgs.push('You have Joined ' + data)
+  Room = data
 })
 
 function SendChatMsg() {
