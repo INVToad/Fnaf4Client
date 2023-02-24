@@ -41,8 +41,9 @@ socket.on('receiveMessage', function(arg) {
   createChatMsg(arg)
   ChatMsgs.push(arg)
 });
-socket.on('RoomConnection', function(data) {
+socket.on('RoomConnection', function(data, data1) {
   SendChatServerMessage(data)
+  console.log(data1)
 })
 
 function SendChatMsg() {
