@@ -53,9 +53,6 @@ socket.on('RoomConnection', function(data) {
   ChatMsgs.push('You have Joined ' + data)
   Room = data
 })
-socket.on('receiveGameData', type, data) {
-  
-}
 
 function SendChatMsg() {
   if (ChatInput.value != '') {
