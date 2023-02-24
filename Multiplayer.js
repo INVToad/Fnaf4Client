@@ -4,6 +4,8 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
 
 var ChatInput = document.getElementById('Input')
 var ChatSubmitButton = document.getElementById('SubmitButton')
+var RoomInput = document.getElementById('RoomInput')
+var RoomSubmitButton = document.getElementById('RoomSubmitButton')
 
 var Username = prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
@@ -93,5 +95,16 @@ function Checkkey(e) {
   }
 }
 
+function sendRoomRequest() {
+  if (RoomInput.value != '') {
+    socket.emit('JoinRoom', RoomInput.value)
+    RoomInput.value = ''
+    RoomInput.hidden = true
+    RoomSubmitButton.hidden = true
+  }
+}
+
 ChatSubmitButton.onclick = SendChatMsg
 ChatInput.onkeydown = Checkkey
+
+RoomSubmitButton.onclick = sendRoomRequest
