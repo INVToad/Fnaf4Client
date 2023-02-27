@@ -52,7 +52,10 @@ socket.on('RoomConnection', function(data) {
   createChatMsg('You have Joined ' + data)
   ChatMsgs.push('You have Joined ' + data)
   Room = data
-})
+});
+socket.on('ConsoleLog', function(data) {
+  console.log(data)
+});
 
 function SendChatMsg() {
   if (ChatInput.value != '') {
