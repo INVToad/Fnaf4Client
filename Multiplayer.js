@@ -10,6 +10,7 @@ var RoomSubmitButton = document.getElementById('RoomSubmitButton')
 
 var Username = prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
+var Lobbylist = document.getElementById("lobbies")
 
 var ChatMsgs = new Array()
 var Room = 'null'
@@ -56,6 +57,23 @@ socket.on('RoomConnection', function(data) {
 socket.on('ConsoleLog', function(data) {
   console.log(data)
 });
+socket.on('refreshTransmit', function(data) {
+  while(Lobbylist.firstChild) {
+    Lobbylist.removeChild(Lobbylist.lastChild)
+  }
+  var keys = Object.keys(data)
+  for (let i = 0; i < data.length; i++) {
+    var e = keys[i] + str(data[keys[i]]) + '/4'
+    var newLobby = document.createElement("p")
+    var LobbyStuff = document.createTextNode(e)
+    newLobby.appendChild(LobbyStuff)
+    newLobby.style.position = 'fixed'
+    newLobby.style.left = '400px'
+    newLobby.style.top = '100px'
+    newLobby.style.maxWidth = '500px'
+    Lobbylist.appendChild(newLobby)
+  }
+})
 
 function SendChatMsg() {
   if (ChatInput.value != '') {
@@ -89,6 +107,10 @@ function createChatMsg(e) {
       TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
     }
   }
+}
+
+function refreshLobbies() {
+  socket.emit('refreshRequest')
 }
 
 function deleteChatMsg() {
