@@ -7,6 +7,7 @@ var ChatInput = document.getElementById('Input')
 var ChatSubmitButton = document.getElementById('SubmitButton')
 var RoomInput = document.getElementById('RoomInput')
 var RoomSubmitButton = document.getElementById('RoomSubmitButton')
+var refreshLobbiesButton = document.getElementById('refreshLobbiesButton')
 
 var Username = prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
@@ -146,3 +147,4 @@ ChatSubmitButton.onclick = SendChatMsg
 ChatInput.onkeydown = Checkkey
 
 RoomSubmitButton.onclick = sendRoomRequest
+refreshLobbiesButton.onclick = refreshLobbies
