@@ -54,6 +54,10 @@ socket.on('RoomConnection', function(data) {
   createChatMsg('You have Joined ' + data)
   ChatMsgs.push('You have Joined ' + data)
   Room = data
+  while(Lobbylist.firstChild != null) {
+    Lobbylist.removeChild(Lobbylist.lastChild)
+  }
+  refreshLobbiesButton.hidden = true
 });
 socket.on('ConsoleLog', function(data) {
   console.log(data)
@@ -78,6 +82,17 @@ socket.on('refreshTransmit', function(data) {
   }
 })
 
+//Important, this socket is constantly used for game data across clients
+socket.on('receiveGameData', function(type, data) {
+  if (type == 'GameInitiate') {
+    InGame = true
+    console.log('Your Game has Started')
+  }
+  if (type == 'LobbyLoad') {
+    Office = 'Office' + data
+  }
+})
+
 function SendChatMsg() {
   if (ChatInput.value != '') {
     socket.emit('SentMsg', ChatInput.value, socket.id)
@@ -85,6 +100,10 @@ function SendChatMsg() {
   } else {
     console.log("Error: no input text")
   }
+}
+
+function CreatePlayers(data) {
+  
 }
 
 var number = 0
