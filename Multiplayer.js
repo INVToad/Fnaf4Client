@@ -59,11 +59,11 @@ socket.on('ConsoleLog', function(data) {
   console.log(data)
 });
 socket.on('refreshTransmit', function(data) {
-  while(Lobbylist.firstChild) {
+  while(Lobbylist.firstChild != null) {
     Lobbylist.removeChild(Lobbylist.lastChild)
   }
   var keys = Object.keys(data)
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < Object.keys(data).length; i++) {
     var e = keys[i] + str(data[keys[i]]) + '/4'
     var newLobby = document.createElement("p")
     var LobbyStuff = document.createTextNode(e)
@@ -111,7 +111,7 @@ function createChatMsg(e) {
 }
 
 function refreshLobbies() {
-  socket.emit('refreshRequest')
+  socket.emit('refreshRequest', 'yes')
 }
 
 function deleteChatMsg() {
