@@ -86,10 +86,13 @@ socket.on('refreshTransmit', function(data) {
 socket.on('receiveGameData', function(type, data) {
   if (type == 'GameInitiate') {
     InGame = true
-    console.log('Your Game has Started')
+    GameStart()
   }
   if (type == 'LobbyLoad') {
     Office = 'Office' + data
+    if (data == 1) {
+      IsHost = true
+    }
   }
 })
 

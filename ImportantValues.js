@@ -1,5 +1,6 @@
 var Office = null
 var InGame = false
+var IsHost = false
 
 const Offices = {
   Office1: {
