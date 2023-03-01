@@ -1,6 +1,7 @@
 var Office = null
 var InGame = false
 var IsHost = false
+var ShiftTime = 0
 
 const Offices = {
   Office1: {
@@ -55,4 +56,25 @@ const Offices = {
     ShockControl: false,
     Cameras: []
   }
+}
+
+//This controls the animatronics paths
+const MotherlyAnamtronic = {
+  Limit: 0,
+}
+const PowerDrainAnamtronic = {
+  Room: 0,
+  Path: {},
+}
+const ElectricianAnamtronic = {
+  Room: 0,
+  Path: {},
+}
+const FreeRoamAnamtronic = {
+  Room: 0,
+  Path: {},
+}
+const MothAnamtronic = {
+  Room: 0,
+  Path: {},
 }

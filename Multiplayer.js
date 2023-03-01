@@ -94,6 +94,9 @@ socket.on('receiveGameData', function(type, data) {
       IsHost = true
     }
   }
+  if (type == 'ShiftTime') {
+    ShiftTime = data
+  }
 })
 
 function SendChatMsg() {
