@@ -64,7 +64,7 @@ socket.on('refreshTransmit', function(data) {
   }
   var keys = Object.keys(data)
   for (let i = 0; i < Object.keys(data).length; i++) {
-    var e = keys[i] + str(data[keys[i]]) + '/4'
+    var e = keys[i] + String(data[keys[i]]) + '/4'
     var newLobby = document.createElement("p")
     var LobbyStuff = document.createTextNode(e)
     newLobby.appendChild(LobbyStuff)
