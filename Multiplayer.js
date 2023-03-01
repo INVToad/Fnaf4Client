@@ -62,17 +62,19 @@ socket.on('refreshTransmit', function(data) {
   while(Lobbylist.firstChild != null) {
     Lobbylist.removeChild(Lobbylist.lastChild)
   }
+  var ypos = 100
   var keys = Object.keys(data)
   for (let i = 0; i < Object.keys(data).length; i++) {
-    var e = keys[i] + String(data[keys[i]]) + '/4'
+    var e = keys[i] + ': ' + String(data[keys[i]]) + '/4'
     var newLobby = document.createElement("p")
     var LobbyStuff = document.createTextNode(e)
     newLobby.appendChild(LobbyStuff)
     newLobby.style.position = 'fixed'
     newLobby.style.left = '400px'
-    newLobby.style.top = '100px'
+    newLobby.style.top = ypos + 'px'
     newLobby.style.maxWidth = '500px'
     Lobbylist.appendChild(newLobby)
+    ypos += 20
   }
 })
 
