@@ -2,7 +2,7 @@
 function GameStart() {
   console.log('uhhhhhhhh')
   if (IsHost) {
-    var GameTime = setInterval(function() => {
+    var GameTime = setInterval(() => {
       ShiftTime += 1
       socket.emit('SendGameData', 'ShiftTime', ShiftTime)
     }, 60000)
