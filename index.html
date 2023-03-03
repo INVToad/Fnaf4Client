@@ -5,7 +5,9 @@
     <meta name="viewport", content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <img id="TheOffice" src="Assests/TemporaryOffice.png" style="position: fixed; right: 0px; top: 0px; height: 1980px" alt="offuce" draggable='false'>
+    <img id="TheOffice" src="Assests/TemporaryOffice.png" style="position: fixed; right: 0px; top: -1px; height: 791px" alt="offuce" draggable='false' hidden>
+    <img id="ivisObeject1" src="Assests/InvisObject.png" style="position: fixed; right: 0px; top: 0px; height: 790px" alt="offuce" draggable='false' alt="invis">
+    <img id="ivisObeject2" src="Assests/InvisObject.png" style="position: fixed; left: 0px; top: 0px; height: 790px" alt="offuce" draggable='false' alt="invis">
     <div id="chatInput">
       <input type="text" id="Input" style="position: fixed; left: 10px; bottom: 100px">
       <button type="submit" id="SubmitButton" style="position: fixed; left: 170px; bottom: 100px">Send Message</button>
@@ -19,6 +21,7 @@
     <div id='lobbies'></div>
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/biri/dist/biri.min.js"></script>
+    <script src="LoadValues.js"></script>
     <script src="Controlls.js"></script>
     <script src="Multiplayer.js"></script>
     <script src="ImportantValues.js"></script>
