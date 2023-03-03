@@ -61,7 +61,7 @@ function checkScreen() {
 
 setInterval(() => {
   checkScreen()
-}, 50)
+}, 1)
 
 Invis1.onmouseenter = TurnScreen
 Invis1.onmouseleave = TurnScreen
