@@ -24,3 +24,10 @@ function GameEnd() {
 function AudioContoll(e) {
   
 }
+
+//Will move the corresponding animatronic
+function MoveAnimatronic(Animatronic) {
+  if (Animatronic.Room in Animatronic.Path) {
+    
+  }
+}

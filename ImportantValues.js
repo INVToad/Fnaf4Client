@@ -4,6 +4,7 @@ var InGame = false
 var IsHost = false
 var ShiftTime = 0
 var Power = 1000
+var ActiveAnimatronics = []
 
 //Tells how difficult the animatronics are
 const Difficulty = {
@@ -76,7 +77,7 @@ const Offices = {
     HeatControl: false,
     LightControl: true,
     ShockControl: true,
-    Cameras: []
+    Cameras: [15, 3, 5, 6, 11, 14]
   },
   Office3: {
     HasCameras: true,
@@ -89,7 +90,7 @@ const Offices = {
     HeatControl: true,
     LightControl: false,
     ShockControl: false,
-    Cameras: []
+    Cameras: [13, 4, 10, 12]
   },
   Office4: {
     HasCameras: true,
@@ -102,7 +103,7 @@ const Offices = {
     HeatControl: false,
     LightControl: false,
     ShockControl: false,
-    Cameras: []
+    Cameras: [1, 2, 8, 9, 7]
   }
 }
 
@@ -111,6 +112,7 @@ const MotherlyAnamtronic = {
   Limit: 0,
 }
 const PowerDrainAnamtronic = {
+  OriginRoom: 4,
   Room: 4,
   Path: {
         4: 10,
@@ -119,6 +121,7 @@ const PowerDrainAnamtronic = {
         },
 }
 const ElectricianAnamtronic = {
+  OriginRoom: 9,
   Room: 9,
   Path: {
         9: 2,
@@ -132,6 +135,7 @@ const ElectricianAnamtronic = {
   ShockAmount: 0
 }
 const FreeRoamAnamtronic = {
+  OriginRoom: 10,
   Room: 10,
   Path: {10: [12, 11, 2],
          12: ['Office', 1],
@@ -153,6 +157,7 @@ const FreeRoamAnamtronic = {
         },
 }
 const MothAnamtronic = {
+  OriginRoom: 4,
   Room: 5,
   Path: {5: [11, 15],
         15: 'Office',
