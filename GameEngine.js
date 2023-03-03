@@ -37,15 +37,14 @@ function MoveAnimatronic(Animatronic) {
 //The things below are temporary and will be improved and change
 var movescreen = 0
 function TurnScreen(direction) {
-  console.log(direction)
-  if (direction == 'stop') {
+  if (direction.type == 'mouseleave') {
     movescreen = 0
   }
-  if (direction == 'left') {
+  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2') {
     movescreen = -1
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') - 1) + 'px'
   }
-  if (direction == 'right') {
+  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1') {
     movescreen = 1
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + 1) + 'px'
   }
