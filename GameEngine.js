@@ -37,6 +37,7 @@ function MoveAnimatronic(Animatronic) {
 //The things below are temporary and will be improved and change
 var movescreen = 0
 function TurnScreen(direction) {
+  console.log(direction)
   if (direction == 'stop') {
     movescreen = 0
   }
@@ -63,8 +64,8 @@ setInterval(() => {
   checkScreen()
 }, 500)
 
-Invis1.onmouseover = TurnScreen('right')
-Invis1.onmouseout = TurnScreen('stop')
-Invis2.onmouseover = TurnScreen('left')
-Invis2.onmouseout = TurnScreen('stop')
+Invis1.onmouseenter = TurnScreen
+Invis1.onmouseleave = TurnScreen
+Invis2.onmouseenter = TurnScreen
+Invis2.onmouseleave = TurnScreen
 //it ends at this point
