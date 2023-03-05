@@ -40,11 +40,11 @@ function TurnScreen(direction) {
   if (direction.type == 'mouseleave') {
     movescreen = 0
   }
-  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2') {
+  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2' && (theOffice.style.right.replace('px', '')) - '' <= 0) {
     movescreen = -1
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') - 1) + 'px'
   }
-  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1') {
+  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1' && (theOffice.style.right.replace('px', '')) - '' <= -2950) {
     movescreen = 1
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + 1) + 'px'
   }
