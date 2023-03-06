@@ -8,7 +8,6 @@ var ActiveAnimatronics = []
 
 //Tells how difficult the animatronics are
 const Difficulty = {
-  Boxtronic: 0,
   Motherlytronic: 0,
   PowerDraintronic: 0,
   Eyescantronic: 0,
@@ -108,9 +107,6 @@ const Offices = {
 }
 
 //This controls the animatronics paths and other values specilized for them
-const MotherlyAnamtronic = {
-  Limit: 0,
-}
 const PowerDrainAnamtronic = {
   OriginRoom: 4,
   Room: 4,
@@ -132,6 +128,7 @@ const ElectricianAnamtronic = {
         11: 6
         },
   EnergyLevels: 1000,
+  ShockLimitor: 0,
   ShockAmount: 0
 }
 const FreeRoamAnamtronic = {
@@ -165,4 +162,9 @@ const MothAnamtronic = {
         18: 19,
         19: 14,
         14: 'Office'},
+}
+const EyeScanAnamtronic = {
+  VentLocation: 'middle',
+  ShockLimitor: 0,
+  ShockAmount: 0
 }

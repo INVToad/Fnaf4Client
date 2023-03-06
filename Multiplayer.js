@@ -97,6 +97,15 @@ socket.on('receiveGameData', function(type, data) {
   if (type == 'ShiftTime') {
     ShiftTime = data
   }
+  if (type == 'Difficulty') {
+    Difficulty.Motherlytronic = data.Motherlytronic
+    Difficulty.PowerDraintronic = data.PowerDraintronic
+    Difficulty.Eyescantronic = data.Eyescantronic
+    Difficulty.Electriciantronic = data.Electriciantronic
+    Difficulty.FreeRoamtronic = data.FreeRoamtronic
+    Difficulty.Phantomtronic = data.Phantomtronic
+    Difficulty.Mothtronic = data.Mothtronic
+  }
 })
 
 function SendChatMsg() {
