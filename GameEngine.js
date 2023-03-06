@@ -50,10 +50,10 @@ function TurnScreen(direction) {
   }
 }
 function checkScreen() {
-  if (theOffice.style.right >= '0px') {
+  if (((theOffice.style.right.replace('px', '')) - '') >= 0) {
     movescreen = 0
   }
-  if (theOffice.style.right <= '-2490px') {
+  if (((theOffice.style.right.replace('px', '')) - '') <= -2490) {
     movescreen = 0
   }
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
