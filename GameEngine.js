@@ -13,45 +13,45 @@ function GameStart() {
   //The next part gives the office var for each office type
   if (Office == 'Office1') {
     alert('Have fun with this office')
-    var Office2ShockActive = true
-    var Office2FlashActive = true
-    var Office3DoorsActive = true
-    var Office3HeatActive = true
+    Office2ShockActive = true
+    Office2FlashActive = true
+    Office3DoorsActive = true
+    Office3HeatActive = true
   }
   if (Office == 'Office2') {
-    var Office2ShockActive = true
-    var Office2FlashActive = true
-    var ShockCharge = false
-    var ShockTimer = 5000
-    var FlashCharge = false
-    var FlashTimer = 5000
+    Office2ShockActive = true
+    Office2FlashActive = true
+    ShockCharge = false
+    ShockTimer = 5000
+    FlashCharge = false
+    FlashTimer = 5000
   }
   if (Office == 'Office3') {
     var Office3DoorsActive = true
-    var Office3HeatActive = true
-    var Office2LeftDoor = false
-    var Office2RightDoor = false
-    var Office3LeftDoor = false
-    var Office3RightDoor = false
-    var Office4LeftDoor = false
-    var Office4RightDoor = false
-    var Office1Heat = 20
-    var Office1Fan = false
-    var Office2Heat = 20
-    var Office2Fan = false
-    var Office3Heat = 20
-    var Office3Fan = false
-    var Office4Heat = 20
-    var Office4Fan = false
+    Office3HeatActive = true
+    Office2LeftDoor = false
+    Office2RightDoor = false
+    Office3LeftDoor = false
+    Office3RightDoor = false
+    Office4LeftDoor = false
+    Office4RightDoor = false
+    Office1Heat = 20
+    Office1Fan = false
+    Office2Heat = 20
+    Office2Fan = false
+    Office3Heat = 20
+    Office3Fan = false
+    Office4Heat = 20
+    Office4Fan = false
   }
   if (Office == 'Office4') {
     Power = 3000
-    var Office1Power = 1000
-    var Office1Recieving = false
-    var Office2Power = 1000
-    var Office2Recieving = false
-    var Office3Power = 1000
-    var Office3Recieving = false
+    Office1Power = 1000
+    Office1Recieving = false
+    Office2Power = 1000
+    Office2Recieving = false
+    Office3Power = 1000
+    Office3Recieving = false
   }
   //reveals and sets up rest of stuff for the office
   let i = Offices[Office]
@@ -115,7 +115,7 @@ function MoveAnimatronic(Animatronic) {
       let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
       Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
     }
-    SendData('moveAnimatronic', Animatronic.Room)
+    SendData('moveAnimatronic', Animatronic, Animatronic.Room)
   }
 }
 
