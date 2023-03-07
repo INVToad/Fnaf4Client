@@ -5,6 +5,8 @@ var IsHost = false
 var ShiftTime = 0
 var Power = 1000
 var ActiveAnimatronics = []
+var leftDoor = false
+var rightDoor = false
 
 //Tells how difficult the animatronics are
 const Difficulty = {
