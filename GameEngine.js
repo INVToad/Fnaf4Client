@@ -27,7 +27,7 @@ function GameStart() {
       if (BoxTime <= 0) {
         GameEnd('Loss')
       }
-    }, 6000)
+    }, 7000)
     AllTimers.push(BoxTimer)
   }
   if (Office == 'Office2') {
@@ -106,7 +106,6 @@ function GamePause() {
 
 //Ends all Game engine functions
 function GameEnd(condition) {
-  clearInterval(Gametime)
   theOffice.hidden = true
   Invis1.hidden = true
   Invis2.hidden = true
