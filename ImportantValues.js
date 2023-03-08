@@ -7,6 +7,7 @@ var Power = 1000
 var ActiveAnimatronics = []
 var leftDoor = false
 var rightDoor = false
+var AllTimers = []
 
 //Tells how difficult the animatronics are
 const Difficulty = {

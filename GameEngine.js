@@ -2,21 +2,33 @@
 function GameStart() {
   console.log('work in progress')
   if (IsHost) {
-    var GameTime = setInterval(() => {
+    GameTime = setInterval(() => {
       ShiftTime += 1
       socket.emit('SendGameData', 'ShiftTime', ShiftTime)
+      if (ShiftTime == 6) {
+        GameEnd('Win')
+      }
     }, 60000)
+    AllTimers.push(GameTime)
   }
   theOffice.hidden = false
   Invis1.hidden = false
   Invis2.hidden = false
-  //The next part gives the office var for each office type
+  //The next part gives the offices their specifc values needed for their functions
   if (Office == 'Office1') {
     alert('Have fun with this office')
     Office2ShockActive = true
     Office2FlashActive = true
     Office3DoorsActive = true
     Office3HeatActive = true
+    BoxTime = 10
+    BoxTimer = setInterval(() => {
+      BoxTime -= 1
+      if (BoxTime <= 0) {
+        GameEnd('Loss')
+      }
+    }, 6000)
+    AllTimers.push(BoxTimer)
   }
   if (Office == 'Office2') {
     Office2ShockActive = true
@@ -93,11 +105,21 @@ function GamePause() {
 }
 
 //Ends all Game engine functions
-function GameEnd() {
+function GameEnd(condition) {
   clearInterval(Gametime)
   theOffice.hidden = true
   Invis1.hidden = true
   Invis2.hidden = true
+  for (i in AllTimers) {
+    clearInterval(i)
+  }
+  //next determines what the condition for the game ending was
+  if (condition == 'Loss') {
+    alert('Congratulations, Your a loser')
+  }
+  if (condition == 'Win') {
+    alert('Congratulations, you won')
+  }
   console.log('Are you the one that ruined it for everyone?')
 }
 

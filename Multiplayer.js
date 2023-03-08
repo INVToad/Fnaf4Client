@@ -54,7 +54,7 @@ socket.on('RoomConnection', function(data) {
   createChatMsg('You have Joined ' + data)
   ChatMsgs.push('You have Joined ' + data)
   Room = data
-  while(Lobbylist.firstChild != null) {
+  while (Lobbylist.firstChild != null) {
     Lobbylist.removeChild(Lobbylist.lastChild)
   }
   refreshLobbiesButton.hidden = true
@@ -63,7 +63,7 @@ socket.on('ConsoleLog', function(data) {
   console.log(data)
 });
 socket.on('refreshTransmit', function(data) {
-  while(Lobbylist.firstChild != null) {
+  while (Lobbylist.firstChild != null) {
     Lobbylist.removeChild(Lobbylist.lastChild)
   }
   var ypos = 100
@@ -83,7 +83,7 @@ socket.on('refreshTransmit', function(data) {
 })
 
 //Important, this socket is constantly used for game data across clients
-socket.on('receiveGameData', function(type, data) {
+socket.on('receiveGameData', function(type, data, data1) {
   if (type == 'GameInitiate') {
     InGame = true
     GameStart()
@@ -118,7 +118,7 @@ function SendChatMsg() {
 }
 
 function CreatePlayers(data) {
-  
+
 }
 
 var number = 0
@@ -141,7 +141,7 @@ function createChatMsg(e) {
     if (i == Messages.length - 1) {
       TempMsg.style.bottom = (CurrentUp + 19) + 'px'
     } else {
-      TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number-1)).offsetHeight) + 'px'
+      TempMsg.style.bottom = (CurrentUp + document.getElementById('ChatMsg' + (number - 1)).offsetHeight) + 'px'
     }
   }
 }
