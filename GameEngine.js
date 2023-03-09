@@ -189,11 +189,11 @@ Invis2.onmouseleave = TurnScreen
 function ControlDoor(Door) {
   if (Door == 'left') {
     for (let i = 0; i < 209; i++) {
-      LeftValue = (LeftDoorDiv.style.left.replace('px', '')) - ''
+      LeftValue = (LeftDoorDiv.style.width.replace('px', '')) - ''
       if (LeftValue > 1) {
-        LeftDoorDiv.style.left = (LeftValue - 1) + 'px'
+        LeftDoorDiv.style.width = (LeftValue - 1) + 'px'
       } else {
-        LeftDoorDiv.style.left = (LeftValue + 1) + 'px'
+        LeftDoorDiv.style.width = (LeftValue + 1) + 'px'
       }
     }
   }
