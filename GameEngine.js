@@ -16,6 +16,7 @@ function GameStart() {
   theOffice.hidden = false
   Invis1.hidden = false
   Invis2.hidden = false
+  LeftDoorDiv.hidden = false
   //The next part gives the offices their specifc values needed for their functions
   if (Office == 'Office1') {
     alert('Have fun with this office')
@@ -73,7 +74,10 @@ function GameStart() {
     
   }
   if (i.HasDoors) {
-    
+    let img = document.createElement("img")
+    img.src = 'Assests/LeftDoor.png'
+    img.style.height = '647px'
+    LeftDoorDiv.appendChild(img)
   }
   if (i.suit) {
     
@@ -111,6 +115,7 @@ function GameEnd(condition) {
   theOffice.hidden = true
   Invis1.hidden = true
   Invis2.hidden = true
+  LeftDoorDiv.hidden = true
   for (i in AllTimers) {
     clearInterval(AllTimers[i])
   }
@@ -150,10 +155,12 @@ function TurnScreen(direction) {
   }
   if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2' && ((theOffice.style.right.replace('px', '')) - '') + 1 >= -2950) {
     movescreen = -1
+    LeftDoorDiv.style.right = (((LeftDoorDiv.style.right.replace('px', '')) - '') - 1) + 'px'
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') - 1) + 'px'
   }
   if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1' && ((theOffice.style.right.replace('px', '')) - '') - 1 <= 0) {
     movescreen = 1
+    LeftDoorDiv.style.right = (((LeftDoorDiv.style.right.replace('px', '')) - '') + 1) + 'px'
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + 1) + 'px'
   }
 }
@@ -164,6 +171,7 @@ function checkScreen() {
   if (((theOffice.style.right.replace('px', '')) - '') <= -2490) {
     movescreen = 0
   }
+  LeftDoorDiv.style.right = (((LeftDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
 };
 
