@@ -2,6 +2,7 @@
 function GameStart() {
   console.log('work in progress')
   if (IsHost) {
+    socket.emit('SendGameData', 'Night', NightShift)
     GameTime = setInterval(() => {
       ShiftTime += 1
       socket.emit('SendGameData', 'ShiftTime', ShiftTime)
@@ -11,6 +12,7 @@ function GameStart() {
     }, 60000)
     AllTimers.push(GameTime)
   }
+  socket.emit('NightSettings', NightShift)
   theOffice.hidden = false
   Invis1.hidden = false
   Invis2.hidden = false
@@ -110,7 +112,7 @@ function GameEnd(condition) {
   Invis1.hidden = true
   Invis2.hidden = true
   for (i in AllTimers) {
-    clearInterval(i)
+    clearInterval(AllTimers[i])
   }
   //next determines what the condition for the game ending was
   if (condition == 'Loss') {

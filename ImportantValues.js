@@ -8,6 +8,7 @@ var ActiveAnimatronics = []
 var leftDoor = false
 var rightDoor = false
 var AllTimers = []
+var NightShift = 1
 
 //Tells how difficult the animatronics are
 const Difficulty = {

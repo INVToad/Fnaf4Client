@@ -106,6 +106,9 @@ socket.on('receiveGameData', function(type, data, data1) {
     Difficulty.Phantomtronic = data.Phantomtronic
     Difficulty.Mothtronic = data.Mothtronic
   }
+  if (type == 'Night') {
+    NightShift = data
+  }
 })
 
 function SendChatMsg() {
