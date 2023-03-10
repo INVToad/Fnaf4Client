@@ -188,15 +188,15 @@ Invis2.onmouseleave = TurnScreen
 //This opens and closes the doors
 function ControlDoor(Door) {
   if (Door == 'left') {
-    let move = 0
+    var move = 0
     LeftValue = (LeftDoorDiv.style.width.replace('px', '')) - ''
     if (LeftValue > 1) {
-        move = -1
-      } else {
-        move = 1
-      }
+      move = -1
+    } else {
+      move = 1
+    }
     for (let i = 0; i < 209; i++) {
-      LeftDoorDiv.style.width = (LeftValue - 1) + 'px'
+      LeftDoorDiv.style.width = (LeftValue - move) + 'px'
     }
   }
 }
