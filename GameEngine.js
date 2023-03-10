@@ -191,12 +191,10 @@ function ControlDoor(Door) {
     var move = 0
     LeftValue = (LeftDoorDiv.style.width.replace('px', '')) - ''
     if (LeftValue > 1) {
-      move = -1
+      move = -209
     } else {
-      move = 1
+      move = 209
     }
-    for (let i = 0; i < 209; i++) {
-      LeftDoorDiv.style.width = (LeftValue - move) + 'px'
-    }
+    LeftDoorDiv.style.width = (LeftValue + move) + 'px'
   }
 }
