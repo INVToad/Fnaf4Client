@@ -32,26 +32,26 @@ const OpenFunction = {
 
 //Allows quick check if animtronic is in a certain room
 const RoomPlacement = {
-  Cam1: '',
-  Cam2: '',
-  Cam3: '',
-  Cam4: '',
-  Cam5: '',
-  Cam6: '',
-  Cam7: '',
-  Cam8: '',
-  Cam9: '',
-  Cam10: '',
-  Cam11: '',
-  Cam12: '',
-  Cam13: '',
-  Cam14: '',
-  Cam15: '',
-  Room16: '',
-  Room17: '',
-  Room18: '',
-  Room19: '',
-  Room20: ''
+  Cam1: [''],
+  Cam2: [''],
+  Cam3: [''],
+  Cam4: ['PowerDrainAnamtronic', 'MothAnamtronic'],
+  Cam5: [''],
+  Cam6: [''],
+  Cam7: [''],
+  Cam8: [''],
+  Cam9: ['ElectricianAnamtronic'],
+  Cam10: ['FreeRoamAnamtronic'],
+  Cam11: [''],
+  Cam12: [''],
+  Cam13: [''],
+  Cam14: [''],
+  Cam15: [''],
+  Room16: [''],
+  Room17: [''],
+  Room18: [''],
+  Room19: [''],
+  Room20: ['']
 }
 
 //Lists offices for easier load time

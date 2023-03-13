@@ -109,6 +109,11 @@ socket.on('receiveGameData', function(type, data, data1) {
   if (type == 'Night') {
     NightShift = data
   }
+  if (type == 'Door') {
+    if (data == Office) {
+      ControlDoor(data1)
+    }
+  }
 })
 
 function SendChatMsg() {
