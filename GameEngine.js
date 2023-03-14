@@ -137,12 +137,15 @@ function AudioContoll(e) {
 //Will move the corresponding animatronic
 function MoveAnimatronic(Animatronic) {
   if (Animatronic.Room in Animatronic.Path) {
+    let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
+    RoomPlacement['Cam' + Animatronic.Room].splice(e)
     if (Animatronic.Path[Animatronic.Room].length <= 1) {
       Animatronic.Room = Animatronic.Path[Animatronic.Room]
     } else {
       let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
       Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
     }
+    RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
     SendData('moveAnimatronic', Animatronic, Animatronic.Room)
   }
 }

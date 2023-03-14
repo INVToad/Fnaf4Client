@@ -119,6 +119,7 @@ const PowerDrainAnamtronic = {
         10: 2,
         2: [8, 9]
         },
+  Name: 'PowerDrainAnamtronic'
 }
 const ElectricianAnamtronic = {
   OriginRoom: 9,
@@ -133,7 +134,8 @@ const ElectricianAnamtronic = {
         },
   EnergyLevels: 1000,
   ShockLimitor: 0,
-  ShockAmount: 0
+  ShockAmount: 0,
+  Name: 'ElectricianAnamtronic'
 }
 const FreeRoamAnamtronic = {
   OriginRoom: 10,
@@ -156,6 +158,7 @@ const FreeRoamAnamtronic = {
          14: 'Office',
          21: 'Office'
         },
+  Name: 'FreeRoamAnamtronic'
 }
 const MothAnamtronic = {
   OriginRoom: 4,
@@ -166,6 +169,7 @@ const MothAnamtronic = {
         18: 19,
         19: 14,
         14: 'Office'},
+  Name: 'MothAnamtronic'
 }
 const EyeScanAnamtronic = {
   VentLocation: 'middle',
