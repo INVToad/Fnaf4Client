@@ -80,7 +80,7 @@ function GameStart() {
   let i = Offices[Office]
   if (i.HasCameras) {
     let img = document.createElement("img")
-    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
+    img.src = 'Assests/StaticScreen.jpeg'
     img.style.position = 'fixed'
     img.style.left = '0px'
     img.style.top = '0px'
@@ -89,6 +89,17 @@ function GameStart() {
     img.hidden = true
     img.id = 'CameraStaticGIF'
     DivTrigger.appendChild(img)
+    let img1 = document.createElement("img")
+    img1.src = ''
+    img1.style.position = 'fixed'
+    img1.style.left = '0px'
+    img1.style.top = '0px'
+    img1.style.height = '791px'
+    img1.style.width = '1424px'
+    img1.hidden = true
+    img1.id = 'CameraView'
+    DivTrigger.appendChild(img1)
+    CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIf')
   }
   if (i.HasDoors) {
@@ -162,6 +173,19 @@ function GameEnd(condition) {
 function AudioContoll(e) {
   if (!GameMute) {
     
+  }
+}
+
+//Function for the trigger
+function TriggerFunction() {
+  if (Offices[Office].HasCameras) {
+    if(CameraView.hidden = true) {
+      CameraView.hidden = false
+      CameraStatic.hidden = false
+    } else {
+      CameraView.hidden = true
+      CameraStatic.hidden = true
+    }
   }
 }
 
