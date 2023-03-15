@@ -179,11 +179,13 @@ function TurnScreen(direction) {
   if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2' && ((theOffice.style.right.replace('px', '')) - '') + 1 >= -2950) {
     movescreen = -1
     LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') + 1) + 'px'
+    RightDoorDiv.style.left = (((RightDoorDiv.style.left.replace('px', '')) - '') - 1) + 'px'
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') - 1) + 'px'
   }
   if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1' && ((theOffice.style.right.replace('px', '')) - '') - 1 <= 0) {
     movescreen = 1
     LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - 1) + 'px'
+    RightDoorDiv.style.left = (((RightDoorDiv.style.left.replace('px', '')) - '') + 1) + 'px'
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + 1) + 'px'
   }
 }
@@ -195,6 +197,7 @@ function checkScreen() {
     movescreen = 0
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
+  RightDoorDiv.style.left = (((RightDoorDiv.style.left.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
 };
 
