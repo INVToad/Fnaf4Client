@@ -81,13 +81,13 @@ function GameStart() {
   if (i.HasCameras) {
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
-    img.style.position = fixed
+    img.style.position = 'fixed'
     img.style.left = '0px'
     img.style.top = '0px'
     img.style.height = '791px'
     img.style.width = '1424px'
     img.hidden = true
-    img.id = 'CameraStaticGIf'
+    img.id = 'CameraStaticGIF'
     DivTrigger.appendChild(img)
     CameraStatic = document.getElementById('CameraStaticGIf')
   }
