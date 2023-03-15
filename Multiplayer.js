@@ -125,10 +125,6 @@ function SendChatMsg() {
   }
 }
 
-function CreatePlayers(data) {
-
-}
-
 var number = 0
 var Messages = []
 function createChatMsg(e) {

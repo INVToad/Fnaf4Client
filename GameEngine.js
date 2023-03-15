@@ -24,6 +24,7 @@ function GameStart() {
   Invis1.hidden = false
   Invis2.hidden = false
   LeftDoorDiv.hidden = false
+  RightDoorDiv.hidden = false
   //The next part gives the offices their specifc values needed for their functions
   if (Office == 'Office1') {
     alert('Have fun with this office')
@@ -78,7 +79,17 @@ function GameStart() {
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
-    
+    let img = document.createElement("img")
+    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
+    img.style.position = fixed
+    img.style.left = '0px'
+    img.style.top = '0px'
+    img.style.height = '791px'
+    img.style.width = '1424px'
+    img.hidden = true
+    img.id = 'CameraStaticGIf'
+    DivTrigger.appendChild(img)
+    CameraStatic = document.getElementById('CameraStaticGIf')
   }
   if (i.HasDoors) {
     let img = document.createElement("img")
@@ -132,6 +143,8 @@ function GameEnd(condition) {
   Invis1.hidden = true
   Invis2.hidden = true
   LeftDoorDiv.hidden = true
+  RightDoorDiv.hidden = true
+  CamSuitTrig.hidden = true
   for (i in AllTimers) {
     clearInterval(AllTimers[i])
   }
@@ -179,13 +192,13 @@ function TurnScreen(direction) {
   if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2' && ((theOffice.style.right.replace('px', '')) - '') + 1 >= -2950) {
     movescreen = -1
     LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') + 1) + 'px'
-    RightDoorDiv.style.left = (((RightDoorDiv.style.left.replace('px', '')) - '') - 1) + 'px'
+    RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') - 1) + 'px'
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') - 1) + 'px'
   }
   if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1' && ((theOffice.style.right.replace('px', '')) - '') - 1 <= 0) {
     movescreen = 1
     LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - 1) + 'px'
-    RightDoorDiv.style.left = (((RightDoorDiv.style.left.replace('px', '')) - '') + 1) + 'px'
+    RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + 1) + 'px'
     theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + 1) + 'px'
   }
 }
@@ -197,8 +210,13 @@ function checkScreen() {
     movescreen = 0
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
-  RightDoorDiv.style.left = (((RightDoorDiv.style.left.replace('px', '')) - '') + movescreen) + 'px'
+  RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
+  if ((theOffice.style.right.replace('px', '')) - '' <= -2000)  {
+    CamSuitTrig.hidden = false
+  } else {
+    CamSuitTrig.hidden = true
+  };
 };
 
 setInterval(() => {
