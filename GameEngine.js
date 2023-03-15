@@ -12,6 +12,13 @@ function GameStart() {
     }, 60000)
     AllTimers.push(GameTime)
   }
+  OfficePowerDrain = setInterval(() => {
+    Power -= PowerUsage
+    if (Power <= 0) {
+      GameEnd('Loss')
+    }
+  }, 1000)
+  AllTimers.push(OfficePowerDrain)
   socket.emit('NightSettings', NightShift)
   theOffice.hidden = false
   Invis1.hidden = false
@@ -68,7 +75,7 @@ function GameStart() {
     Office3Power = 1000
     Office3Recieving = false
   }
-  //reveals and sets up rest of stuff for the office
+  //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
     
@@ -78,6 +85,10 @@ function GameStart() {
     img.src = 'Assests/LeftDoor.png'
     img.style.height = '647px'
     LeftDoorDiv.appendChild(img)
+    let img1 = document.createElement("img")
+    img1.src = 'Assests/RightDoor.png'
+    img1.style.height = '647px'
+    RightDoorDiv.appendChild(img1)
   }
   if (i.suit) {
     
@@ -112,6 +123,11 @@ function GamePause() {
 
 //Ends all Game engine functions
 function GameEnd(condition) {
+  Power = 1000
+  if (!leftDoor) {
+    ControlDoor('left')
+  }
+  PowerUsage = 1
   theOffice.hidden = true
   Invis1.hidden = true
   Invis2.hidden = true
@@ -131,17 +147,21 @@ function GameEnd(condition) {
 
 //This will help control what audio plays and stops when
 function AudioContoll(e) {
-  
+  if (!GameMute) {
+    
+  }
 }
 
 //Will move the corresponding animatronic
 function MoveAnimatronic(Animatronic) {
   if (Animatronic.Room in Animatronic.Path) {
+    //Will remove animatronic name from room placement list
     let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
     RoomPlacement['Cam' + Animatronic.Room].splice(e)
     if (Animatronic.Path[Animatronic.Room].length <= 1) {
       Animatronic.Room = Animatronic.Path[Animatronic.Room]
     } else {
+      // adds animatronic to room placement list
       let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
       Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
     }
@@ -195,9 +215,27 @@ function ControlDoor(Door) {
     LeftValue = (LeftDoorDiv.style.width.replace('px', '')) - ''
     if (LeftValue > 1) {
       move = -209
+      leftDoor = true
+      PowerUsage += 1
     } else {
       move = 209
+      leftDoor = false
+      PowerUsage -= 1
     }
     LeftDoorDiv.style.width = (LeftValue + move) + 'px'
+  }
+  if (Door == 'right') {
+    var move = 0
+    RightValue = (RightDoorDiv.style.width.replace('px', '')) - ''
+    if (RightValue > 1) {
+      move = -209
+      rightDoor = true
+      PowerUsage += 1
+    } else {
+      move = 209
+      rightDoor = false
+      PowerUsage -= 1
+    }
+    RightDoorDiv.style.width = (RightValue + move) + 'px'
   }
 }
