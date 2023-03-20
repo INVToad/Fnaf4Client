@@ -79,7 +79,7 @@ function GameStart() {
   let i = Offices[Office]
   if (i.HasCameras) {
     let img = document.createElement("img")
-    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv'
+    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
     img.style.position = 'fixed'
     img.style.left = '0px'
     img.style.top = '0px'
