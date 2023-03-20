@@ -27,7 +27,6 @@ function GameStart() {
   RightDoorDiv.hidden = false
   //The next part gives the offices their specifc values needed for their functions
   if (Office == 'Office1') {
-    alert('Have fun with this office')
     Office2ShockActive = true
     Office2FlashActive = true
     Office3DoorsActive = true
@@ -80,7 +79,7 @@ function GameStart() {
   let i = Offices[Office]
   if (i.HasCameras) {
     let img = document.createElement("img")
-    img.src = 'Assests/StaticScreen.jpeg'
+    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv'
     img.style.position = 'fixed'
     img.style.left = '0px'
     img.style.top = '0px'
@@ -100,7 +99,7 @@ function GameStart() {
     img1.id = 'CameraView'
     DivTrigger.appendChild(img1)
     CameraView = document.getElementById('CameraView')
-    CameraStatic = document.getElementById('CameraStaticGIf')
+    CameraStatic = document.getElementById('CameraStaticGIF')
   }
   if (i.HasDoors) {
     let img = document.createElement("img")
@@ -176,6 +175,14 @@ function AudioContoll(e) {
   }
 }
 
+//Changes Camera View
+function CamChange(e) {
+  CameraStatic.style.opacity = 0
+  setTimeout(() => {
+    CameraStatic.style.opacity = 50
+  }, 100)
+}
+
 //Function for the trigger
 function TriggerFunction() {
   if (Offices[Office].HasCameras) {
@@ -236,7 +243,7 @@ function checkScreen() {
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  if ((theOffice.style.right.replace('px', '')) - '' <= -2000)  {
+  if ((theOffice.style.right.replace('px', '')) - '' <= -1660)  {
     CamSuitTrig.hidden = false
   } else {
     CamSuitTrig.hidden = true
