@@ -112,34 +112,34 @@ function GameStart() {
     RightDoorDiv.appendChild(img1)
   }
   if (i.suit) {
-    
+
   }
   if (i.BoxAnimatronic) {
-    
+
   }
   if (i.SystemReset) {
-    
+
   }
   if (i.DoorControl) {
-    
+
   }
   if (i.PowerControl) {
-    
+
   }
   if (i.HeatControl) {
-    
+
   }
   if (i.LightControl) {
-    
+
   }
   if (i.ShockControl) {
-    
+
   }
 }
 
 //Pauses Game
 function GamePause() {
-  
+
 }
 
 //Ends all Game engine functions
@@ -171,7 +171,7 @@ function GameEnd(condition) {
 //This will help control what audio plays and stops when
 function AudioContoll(e) {
   if (!GameMute) {
-    
+
   }
 }
 
@@ -186,7 +186,7 @@ function CamChange(e) {
 //Function for the trigger
 function TriggerFunction() {
   if (Offices[Office].HasCameras) {
-    if(CameraView.hidden = true) {
+    if (CameraView.hidden = true) {
       CameraView.hidden = false
       CameraStatic.hidden = false
     } else {
@@ -243,7 +243,7 @@ function checkScreen() {
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  if ((theOffice.style.right.replace('px', '')) - '' <= -1660)  {
+  if ((theOffice.style.right.replace('px', '')) - '' <= -1660) {
     CamSuitTrig.hidden = false
   } else {
     CamSuitTrig.hidden = true
