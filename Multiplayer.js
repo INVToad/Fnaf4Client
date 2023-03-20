@@ -98,13 +98,12 @@ socket.on('receiveGameData', function(type, data, data1) {
     ShiftTime = data
   }
   if (type == 'Difficulty') {
-    Difficulty.Motherlytronic = data.Motherlytronic
-    Difficulty.PowerDraintronic = data.PowerDraintronic
-    Difficulty.Eyescantronic = data.Eyescantronic
-    Difficulty.Electriciantronic = data.Electriciantronic
-    Difficulty.FreeRoamtronic = data.FreeRoamtronic
-    Difficulty.Phantomtronic = data.Phantomtronic
-    Difficulty.Mothtronic = data.Mothtronic
+    PowerDrainAnamtronic.AILevel = data.PowerDraintronic
+    EyeScanAnamtronic.AILevel = data.Eyescantronic
+    ElectricianAnamtronic.AILevel = data.Electriciantronic
+    FreeRoamAnamtronic.AILevel = data.FreeRoamtronic
+    PhantomAnamtronic.AILevel = data.Phantomtronic
+    MothAnamtronic.AILevel = data.Mothtronic
   }
   if (type == 'Night') {
     NightShift = data

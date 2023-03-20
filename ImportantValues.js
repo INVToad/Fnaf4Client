@@ -12,17 +12,6 @@ var rightDoor = false
 var AllTimers = []
 var NightShift = 1
 
-//Tells how difficult the animatronics are
-const Difficulty = {
-  Motherlytronic: 0,
-  PowerDraintronic: 0,
-  Eyescantronic: 0,
-  Electriciantronic: 0,
-  FreeRoamtronic: 0,
-  Phantomtronic: 0,
-  Mothtronic: 0,
-}
-
 //Changes what clicking the map camera buttons does
 const OpenFunction = {
   Cameras: false,
@@ -115,6 +104,7 @@ const Offices = {
 //This controls the animatronics paths and other values specilized for them
 const PowerDrainAnamtronic = {
   OriginRoom: 4,
+  AILevel: 0,
   Room: 4,
   Path: {
         4: 10,
@@ -125,6 +115,7 @@ const PowerDrainAnamtronic = {
 }
 const ElectricianAnamtronic = {
   OriginRoom: 9,
+  AILevel: 0,
   Room: 9,
   Path: {
         9: 2,
@@ -141,6 +132,7 @@ const ElectricianAnamtronic = {
 }
 const FreeRoamAnamtronic = {
   OriginRoom: 10,
+  AILevel: 0,
   Room: 10,
   Path: {10: [12, 11, 2],
          12: ['Office', 1],
@@ -164,6 +156,7 @@ const FreeRoamAnamtronic = {
 }
 const MothAnamtronic = {
   OriginRoom: 4,
+  AILevel: 0,
   Room: 5,
   Path: {5: [11, 15],
         15: 'Office',
@@ -175,6 +168,12 @@ const MothAnamtronic = {
 }
 const EyeScanAnamtronic = {
   VentLocation: 'middle',
+  AILevel: 0,
   ShockLimitor: 0,
   ShockAmount: 0
+}
+const PhantomAnamtronic = {
+  AILevel: 0,
+  Office: 'none',
+  Door: 'none'
 }

@@ -198,19 +198,22 @@ function TriggerFunction() {
 
 //Will move the corresponding animatronic
 function MoveAnimatronic(Animatronic) {
-  if (Animatronic.Room in Animatronic.Path) {
-    //Will remove animatronic name from room placement list
-    let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
-    RoomPlacement['Cam' + Animatronic.Room].splice(e)
-    if (Animatronic.Path[Animatronic.Room].length <= 1) {
-      Animatronic.Room = Animatronic.Path[Animatronic.Room]
-    } else {
-      // adds animatronic to room placement list
-      let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
-      Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
+  let Ran = Math.floor(Math.random() * 20) + 1
+  if (Ran <= Animatronic.AILevel) {
+    if (Animatronic.Room in Animatronic.Path) {
+      //Will remove animatronic name from room placement list
+      let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
+      RoomPlacement['Cam' + Animatronic.Room].splice(e)
+      if (Animatronic.Path[Animatronic.Room].length <= 1) {
+        Animatronic.Room = Animatronic.Path[Animatronic.Room]
+      } else {
+        // adds animatronic to room placement list
+        let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
+        Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
+      }
+      RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
+      SendData('moveAnimatronic', Animatronic, Animatronic.Room)
     }
-    RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
-    SendData('moveAnimatronic', Animatronic, Animatronic.Room)
   }
 }
 
@@ -267,12 +270,12 @@ function ControlDoor(Door) {
     LeftValue = (LeftDoorDiv.style.width.replace('px', '')) - ''
     if (LeftValue > 1) {
       move = -209
-      leftDoor = true
-      PowerUsage += 1
-    } else {
-      move = 209
       leftDoor = false
       PowerUsage -= 1
+    } else {
+      move = 209
+      leftDoor = true
+      PowerUsage += 1
     }
     LeftDoorDiv.style.width = (LeftValue + move) + 'px'
   }
@@ -281,12 +284,12 @@ function ControlDoor(Door) {
     RightValue = (RightDoorDiv.style.width.replace('px', '')) - ''
     if (RightValue > 1) {
       move = -209
-      rightDoor = true
-      PowerUsage += 1
-    } else {
-      move = 209
       rightDoor = false
       PowerUsage -= 1
+    } else {
+      move = 209
+      rightDoor = true
+      PowerUsage += 1
     }
     RightDoorDiv.style.width = (RightValue + move) + 'px'
   }
