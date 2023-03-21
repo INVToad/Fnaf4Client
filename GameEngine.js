@@ -98,16 +98,6 @@ function GameStart() {
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
-    let img = document.createElement("img")
-    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
-    img.style.position = 'fixed'
-    img.style.left = '0px'
-    img.style.top = '0px'
-    img.style.height = '791px'
-    img.style.width = '1424px'
-    img.hidden = true
-    img.id = 'CameraStaticGIF'
-    DivTrigger.appendChild(img)
     let img1 = document.createElement("img")
     img1.src = ''
     img1.style.position = 'fixed'
@@ -117,7 +107,17 @@ function GameStart() {
     img1.style.width = '1424px'
     img1.hidden = true
     img1.id = 'CameraView'
-    DivTrigger.appendChild(img1)
+    DivTrigger.prepend(img1)
+    let img = document.createElement("img")
+    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
+    img.style.position = 'fixed'
+    img.style.left = '0px'
+    img.style.top = '0px'
+    img.style.height = '791px'
+    img.style.width = '1424px'
+    img.hidden = true
+    img.id = 'CameraStaticGIF'
+    DivTrigger.prepend(img)
     CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIF')
     CamSuitTrig.onmouseenter = BasicCameraFlipOut

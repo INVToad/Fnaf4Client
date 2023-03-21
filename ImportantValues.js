@@ -39,11 +39,12 @@ const RoomPlacement = {
   Cam13: [],
   Cam14: [],
   Cam15: [],
-  Room16: [],
-  Room17: [],
-  Room18: [],
-  Room19: [],
-  Room20: []
+  Cam16: [],
+  Cam17: [],
+  Cam18: [],
+  Cam19: [],
+  Cam20: [],
+  Office: []
 }
 
 //Lists offices for easier load time
