@@ -11,6 +11,7 @@ var leftDoor = false
 var rightDoor = false
 var AllTimers = []
 var NightShift = 1
+var Functions = [] //Lists all the office abilities
 
 //Changes what clicking the map camera buttons does
 const OpenFunction = {
@@ -167,13 +168,13 @@ const MothAnamtronic = {
   Name: 'MothAnamtronic'
 }
 const EyeScanAnamtronic = {
-  VentLocation: 'middle',
+  Room: 'middle',
   AILevel: 0,
   ShockLimitor: 0,
   ShockAmount: 0
 }
 const PhantomAnamtronic = {
   AILevel: 0,
-  Office: 'none',
+  Room: 'none',
   Door: 'none'
 }

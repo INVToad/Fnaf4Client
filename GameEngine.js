@@ -47,13 +47,15 @@ function GameStart() {
     ShockTimer = 5000
     FlashCharge = false
     FlashTimer = 5000
+    Functions.push(Office2ShockActive)
+    Functions.push(Office2FlashActive)
     MothMove = setInterval(() => {
       MoveAnimatronic(MothAnamtronic)
     }, 10000)
     AllTimers.push(MothMove)
   }
   if (Office == 'Office3') {
-    var Office3DoorsActive = true
+    Office3DoorsActive = true
     Office3HeatActive = true
     Office2LeftDoor = false
     Office2RightDoor = false
@@ -69,6 +71,8 @@ function GameStart() {
     Office3Fan = false
     Office4Heat = 20
     Office4Fan = false
+    Functions.push(Office3HeatActive)
+    Functions.push(Office3DoorsActive)
     FreeRoamMove = setInterval(() => {
       MoveAnimatronic(FreeRoamAnamtronic)
     }, 5600)
@@ -165,6 +169,9 @@ function GameEnd(condition) {
   if (!leftDoor) {
     ControlDoor('left')
   }
+  if (!rightDoor) {
+    ControlDoor('right')
+  }
   PowerUsage = 1
   theOffice.hidden = true
   Invis1.hidden = true
@@ -230,6 +237,21 @@ function MoveAnimatronic(Animatronic) {
       }
       RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
       SendData('moveAnimatronic', Animatronic, Animatronic.Room)
+    } else if (Animatronic == EyeScanAnamtronic) {
+      if (Animatronic.Room == 'middle') {
+        let rando = Math.floor(Math.random() * 4) + 1
+        Animatronic.Room = 'Office' + rando
+      } else {
+        GameEnd('Loss')
+      }
+    } else if (Animatronic == PhantomAnamtronic) {
+      if (PhantomAnamtronic.Room == 'none') {
+        let rando = Math.floor(Math.random() * 2) + 2
+        PhantomAnamtronic.Room = 'Office' + rando
+      } else {
+        let rando = Math.floor(Math.random() * Functions.length)
+        Functions[rando] = false
+      }
     }
   }
 }
