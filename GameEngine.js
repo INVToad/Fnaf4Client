@@ -47,6 +47,10 @@ function GameStart() {
     ShockTimer = 5000
     FlashCharge = false
     FlashTimer = 5000
+    MothMove = setInterval(() => {
+      MoveAnimatronic(MothAnamtronic)
+    }, 10000)
+    AllTimers.push(MothMove)
   }
   if (Office == 'Office3') {
     var Office3DoorsActive = true
@@ -65,6 +69,14 @@ function GameStart() {
     Office3Fan = false
     Office4Heat = 20
     Office4Fan = false
+    FreeRoamMove = setInterval(() => {
+      MoveAnimatronic(FreeRoamAnamtronic)
+    }, 5600)
+    AllTimers.push(FreeRoamMove)
+    PowerDrainMove = setInterval(() => {
+      MoveAnimatronic(PowerDrainAnamtronic)
+    }, 7800)
+    AllTimers.push(PowerDrainMove)
   }
   if (Office == 'Office4') {
     Power = 3000
@@ -74,6 +86,10 @@ function GameStart() {
     Office2Recieving = false
     Office3Power = 1000
     Office3Recieving = false
+    ElectrianMove = setInterval(() => {
+      MoveAnimatronic(ElectricianAnamtronic)
+    }, 6400)
+    AllTimers.push(ElectrianMove)
   }
   //reveals/Creates basic values for each office
   let i = Offices[Office]
@@ -100,6 +116,7 @@ function GameStart() {
     DivTrigger.appendChild(img1)
     CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIF')
+    CamSuitTrig.onmouseenter = BasicCameraFlipOut
   }
   if (i.HasDoors) {
     let img = document.createElement("img")
@@ -183,8 +200,8 @@ function CamChange(e) {
   }, 100)
 }
 
-//Function for the trigger
-function TriggerFunction() {
+//Flip out for the chamera
+function BasicCameraFlipOut() {
   if (Offices[Office].HasCameras) {
     if (CameraView.hidden = true) {
       CameraView.hidden = false
@@ -217,7 +234,7 @@ function MoveAnimatronic(Animatronic) {
   }
 }
 
-//The things below are temporary and will be improved and change
+//The things below subject to change
 var movescreen = 0
 function TurnScreen(direction) {
   if (direction.type == 'mouseleave') {
