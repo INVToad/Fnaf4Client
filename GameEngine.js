@@ -118,6 +118,26 @@ function GameStart() {
     img.hidden = true
     img.id = 'CameraStaticGIF'
     DivTrigger.prepend(img)
+    let Mapdiv = document.createElement("div")
+    Mapdiv.style.position = 'fixed'
+    Mapdiv.style.right = '0px'
+    Mapdiv.style.bottom = '0px'
+    Mapdiv.style.overflow = 'hidden'
+    Mapdiv.style.width = '500px'
+    Mapdiv.style.height = '500px'
+    Mapdiv.id = 'MapContainer'
+    DivTrigger.append(Mapdiv)
+    MapDiv = document.getElementById("MapContainer")
+    let Map = document.createElement('img')
+    Map.src = 'Map.png'
+    Map.style.position = 'fixed'
+    Map.style.left = '0px'
+    Map.style.top = '0px'
+    Map.style.height = '800px'
+    Map.hidden = true
+    Map.id = 'CamMap'
+    MapDiv.append(Map)
+    Map = document.getElementById('CamMap')
     CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIF')
     CamSuitTrig.onmouseenter = BasicCameraFlipOut
@@ -210,10 +230,10 @@ function CamChange(e) {
 //Flip out for the chamera
 function BasicCameraFlipOut() {
   if (Offices[Office].HasCameras) {
-    if (CameraView.hidden = true) {
+    if (CameraView.hidden) {
       CameraView.hidden = false
       CameraStatic.hidden = false
-    } else {
+    } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
     }

@@ -44,7 +44,7 @@ const RoomPlacement = {
   Cam18: [],
   Cam19: [],
   Cam20: [],
-  Office: []
+  CamOffice: [] //Don't ask
 }
 
 //Lists offices for easier load time
