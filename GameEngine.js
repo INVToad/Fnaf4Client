@@ -129,7 +129,7 @@ function GameStart() {
     DivTrigger.append(Mapdiv)
     MapDiv = document.getElementById("MapContainer")
     let Map = document.createElement('img')
-    Map.src = 'Map.png'
+    Map.src = 'Assests/Map.png'
     Map.style.position = 'fixed'
     Map.style.left = '0px'
     Map.style.top = '0px'
