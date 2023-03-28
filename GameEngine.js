@@ -25,76 +25,6 @@ function GameStart() {
   Invis2.hidden = false
   LeftDoorDiv.hidden = false
   RightDoorDiv.hidden = false
-  //The next part gives the offices their specifc values needed for their functions
-  if (Office == 'Office1') {
-    Office2ShockActive = true
-    Office2FlashActive = true
-    Office3DoorsActive = true
-    Office3HeatActive = true
-    BoxTime = 10
-    BoxTimer = setInterval(() => {
-      BoxTime -= 1
-      if (BoxTime <= 0) {
-        GameEnd('Loss')
-      }
-    }, 7000)
-    AllTimers.push(BoxTimer)
-  }
-  if (Office == 'Office2') {
-    Office2ShockActive = true
-    Office2FlashActive = true
-    ShockCharge = false
-    ShockTimer = 5000
-    FlashCharge = false
-    FlashTimer = 5000
-    Functions.push(Office2ShockActive)
-    Functions.push(Office2FlashActive)
-    MothMove = setInterval(() => {
-      MoveAnimatronic(MothAnamtronic)
-    }, 10000)
-    AllTimers.push(MothMove)
-  }
-  if (Office == 'Office3') {
-    Office3DoorsActive = true
-    Office3HeatActive = true
-    Office2LeftDoor = false
-    Office2RightDoor = false
-    Office3LeftDoor = false
-    Office3RightDoor = false
-    Office4LeftDoor = false
-    Office4RightDoor = false
-    Office1Heat = 20
-    Office1Fan = false
-    Office2Heat = 20
-    Office2Fan = false
-    Office3Heat = 20
-    Office3Fan = false
-    Office4Heat = 20
-    Office4Fan = false
-    Functions.push(Office3HeatActive)
-    Functions.push(Office3DoorsActive)
-    FreeRoamMove = setInterval(() => {
-      MoveAnimatronic(FreeRoamAnamtronic)
-    }, 5600)
-    AllTimers.push(FreeRoamMove)
-    PowerDrainMove = setInterval(() => {
-      MoveAnimatronic(PowerDrainAnamtronic)
-    }, 7800)
-    AllTimers.push(PowerDrainMove)
-  }
-  if (Office == 'Office4') {
-    Power = 3000
-    Office1Power = 1000
-    Office1Recieving = false
-    Office2Power = 1000
-    Office2Recieving = false
-    Office3Power = 1000
-    Office3Recieving = false
-    ElectrianMove = setInterval(() => {
-      MoveAnimatronic(ElectricianAnamtronic)
-    }, 6400)
-    AllTimers.push(ElectrianMove)
-  }
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
@@ -123,8 +53,8 @@ function GameStart() {
     Mapdiv.style.right = '0px'
     Mapdiv.style.bottom = '0px'
     Mapdiv.style.overflow = 'hidden'
-    Mapdiv.style.width = '500px'
-    Mapdiv.style.height = '500px'
+    Mapdiv.style.width = '400px'
+    Mapdiv.style.height = '400px'
     Mapdiv.id = 'MapContainer'
     DivTrigger.append(Mapdiv)
     MapDiv = document.getElementById("MapContainer")
@@ -175,6 +105,79 @@ function GameStart() {
   }
   if (i.ShockControl) {
 
+  }
+  //The next part gives the offices their specifc values needed for their functions
+  if (Office == 'Office1') {
+    Office2ShockActive = true
+    Office2FlashActive = true
+    Office3DoorsActive = true
+    Office3HeatActive = true
+    BoxTime = 10
+    BoxTimer = setInterval(() => {
+      BoxTime -= 1
+      if (BoxTime <= 0) {
+        GameEnd('Loss')
+      }
+    }, 7000)
+    AllTimers.push(BoxTimer)
+  }
+  if (Office == 'Office2') {
+    Office2ShockActive = true
+    Office2FlashActive = true
+    ShockCharge = false
+    ShockTimer = 5000
+    FlashCharge = false
+    FlashTimer = 5000
+    Functions.push(Office2ShockActive)
+    Functions.push(Office2FlashActive)
+    MothMove = setInterval(() => {
+      MoveAnimatronic(MothAnamtronic)
+    }, 10000)
+    AllTimers.push(MothMove)
+    Map.style.left = '-410px'
+    Map.style.top = '-405px'
+  }
+  if (Office == 'Office3') {
+    Office3DoorsActive = true
+    Office3HeatActive = true
+    Office2LeftDoor = false
+    Office2RightDoor = false
+    Office3LeftDoor = false
+    Office3RightDoor = false
+    Office4LeftDoor = false
+    Office4RightDoor = false
+    Office1Heat = 20
+    Office1Fan = false
+    Office2Heat = 20
+    Office2Fan = false
+    Office3Heat = 20
+    Office3Fan = false
+    Office4Heat = 20
+    Office4Fan = false
+    Functions.push(Office3HeatActive)
+    Functions.push(Office3DoorsActive)
+    FreeRoamMove = setInterval(() => {
+      MoveAnimatronic(FreeRoamAnamtronic)
+    }, 5600)
+    AllTimers.push(FreeRoamMove)
+    PowerDrainMove = setInterval(() => {
+      MoveAnimatronic(PowerDrainAnamtronic)
+    }, 7800)
+    AllTimers.push(PowerDrainMove)
+    Map.style.top = '-405px'
+  }
+  if (Office == 'Office4') {
+    Power = 3000
+    Office1Power = 1000
+    Office1Recieving = false
+    Office2Power = 1000
+    Office2Recieving = false
+    Office3Power = 1000
+    Office3Recieving = false
+    ElectrianMove = setInterval(() => {
+      MoveAnimatronic(ElectricianAnamtronic)
+    }, 6400)
+    AllTimers.push(ElectrianMove)
   }
 }
 
@@ -233,9 +236,11 @@ function BasicCameraFlipOut() {
     if (CameraView.hidden) {
       CameraView.hidden = false
       CameraStatic.hidden = false
+      Map.hidden = false
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
+      Map.hidden = true
     }
   }
 }
