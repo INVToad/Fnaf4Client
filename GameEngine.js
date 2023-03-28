@@ -67,7 +67,7 @@ function GameStart() {
     Map.hidden = true
     Map.id = 'CamMap'
     MapDiv.append(Map)
-    Map = document.getElementById('CamMap')
+    map = document.getElementById('CamMap')
     CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIF')
     CamSuitTrig.onmouseenter = BasicCameraFlipOut
@@ -134,14 +134,15 @@ function GameStart() {
       MoveAnimatronic(MothAnamtronic)
     }, 10000)
     AllTimers.push(MothMove)
-    Map.style.left = '-410px'
-    Map.style.top = '-405px'
+    map.style.left = '-410px'
+    map.style.top = '-405px'
     cam = document.createElement('img')
     cam.style.position = 'absolute'
     cam.style.left = '0px'
     cam.style.top = '0px'
     cam.style.width = '100px'
     cam.id = 'Cam3'
+    cam.src = 'Assests/Cam3Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
@@ -149,6 +150,7 @@ function GameStart() {
     cam.style.top = '0px'
     cam.style.width = '100px'
     cam.id = 'Cam5'
+    cam.src = 'Assests/Cam5Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
@@ -156,6 +158,7 @@ function GameStart() {
     cam.style.top = '0px'
     cam.style.width = '100px'
     cam.id = 'Cam15'
+    cam.src = 'Assests/Cam15Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
@@ -163,6 +166,7 @@ function GameStart() {
     cam.style.top = '0px'
     cam.style.width = '100px'
     cam.id = 'Cam6'
+    cam.src = 'Assests/Cam6Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
@@ -170,6 +174,7 @@ function GameStart() {
     cam.style.top = '0px'
     cam.style.width = '100px'
     cam.id = 'Cam11'
+    cam.src = 'Assests/Cam11Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
@@ -177,7 +182,20 @@ function GameStart() {
     cam.style.top = '0px'
     cam.style.width = '100px'
     cam.id = 'Cam14'
+    cam.src = 'Assests/Cam14Button.png'
     MapDiv.append(cam)
+    cam3 = document.getElementById('Cam3')
+    cam5 = document.getElementById('Cam5')
+    cam15 = document.getElementById('Cam15')
+    cam6 = document.getElementById('Cam6')
+    cam11 = document.getElementById('Cam11')
+    cam14 = document.getElementById('Cam14')
+    cam3.onclick = CamChange
+    cam5.onclick = CamChange
+    cam15.onclick = CamChange
+    cam6.onclick = CamChange
+    cam11.onclick = CamChange
+    cam14.onclick = CamChange
   }
   if (Office == 'Office3') {
     Office3DoorsActive = true
@@ -207,6 +225,46 @@ function GameStart() {
     }, 7800)
     AllTimers.push(PowerDrainMove)
     Map.style.top = '-405px'
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam13'
+    cam.src = 'Assests/Cam13Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam4'
+    cam.src = 'Assests/Cam4Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam10'
+    cam.src = 'Assests/Cam10Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam12'
+    cam.src = 'Assests/Cam12Button.png'
+    MapDiv.append(cam)
+    cam13 = document.getElementById('Cam13')
+    cam4 = document.getElementById('Cam4')
+    cam10 = document.getElementById('Cam10')
+    cam12 = document.getElementById('Cam12')
+    cam13.onclick = CamChange
+    cam4.onclick = CamChange
+    cam10.onclick = CamChange
+    cam12.onclick = CamChange
   }
   if (Office == 'Office4') {
     Power = 3000
@@ -220,6 +278,56 @@ function GameStart() {
       MoveAnimatronic(ElectricianAnamtronic)
     }, 6400)
     AllTimers.push(ElectrianMove)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam1'
+    cam.src = 'Assests/Cam1Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam2'
+    cam.src = 'Assests/Cam2Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam7'
+    cam.src = 'Assests/Cam7Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam8'
+    cam.src = 'Assests/Cam8Button.png'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam9'
+    cam.src = 'Assests/Cam9Button.png'
+    MapDiv.append(cam)
+    cam1 = document.getElementById('Cam1')
+    cam2 = document.getElementById('Cam2')
+    cam7 = document.getElementById('Cam7')
+    cam8 = document.getElementById('Cam8')
+    cam9 = document.getElementById('Cam9')
+    cam1.onclick = CamChange
+    cam2.onclick = CamChange
+    cam7.onclick = CamChange
+    cam8.onclick = CamChange
+    cam9.onclick = CamChange
   }
 }
 
@@ -266,10 +374,12 @@ function AudioContoll(e) {
 
 //Changes Camera View
 function CamChange(e) {
-  CameraStatic.style.opacity = 0
-  setTimeout(() => {
-    CameraStatic.style.opacity = 50
-  }, 100)
+  if (Offices[Office].HasCameras) {
+    CameraStatic.style.opacity = '0%'
+    setTimeout(() => {
+      CameraStatic.style.opacity = '50%'
+    }, 100)
+  }
 }
 
 //Flip out for the chamera
