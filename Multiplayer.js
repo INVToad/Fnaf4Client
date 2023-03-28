@@ -73,7 +73,7 @@ socket.on('refreshTransmit', function(data) {
     var newLobby = document.createElement("p")
     var LobbyStuff = document.createTextNode(e)
     newLobby.appendChild(LobbyStuff)
-    newLobby.style.position = 'fixed'
+    newLobby.style.position = 'absolute'
     newLobby.style.left = '400px'
     newLobby.style.top = ypos + 'px'
     newLobby.style.maxWidth = '500px'
@@ -133,7 +133,7 @@ function createChatMsg(e) {
   NewPara.id = 'ChatMsg' + number
   Messages.push('ChatMsg' + number)
   number += 1
-  NewPara.style.position = 'fixed'
+  NewPara.style.position = 'absolute'
   NewPara.style.left = '10px'
   NewPara.style.bottom = '100px'
   NewPara.style.maxWidth = '200px'
