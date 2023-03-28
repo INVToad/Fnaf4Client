@@ -30,7 +30,7 @@ function GameStart() {
   if (i.HasCameras) {
     let img1 = document.createElement("img")
     img1.src = ''
-    img1.style.position = 'fixed'
+    img1.style.position = 'absolute'
     img1.style.left = '0px'
     img1.style.top = '0px'
     img1.style.height = '791px'
@@ -40,7 +40,7 @@ function GameStart() {
     DivTrigger.prepend(img1)
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
-    img.style.position = 'fixed'
+    img.style.position = 'absolute'
     img.style.left = '0px'
     img.style.top = '0px'
     img.style.height = '791px'
@@ -49,7 +49,7 @@ function GameStart() {
     img.id = 'CameraStaticGIF'
     DivTrigger.prepend(img)
     let Mapdiv = document.createElement("div")
-    Mapdiv.style.position = 'fixed'
+    Mapdiv.style.position = 'absolute'
     Mapdiv.style.right = '0px'
     Mapdiv.style.bottom = '0px'
     Mapdiv.style.overflow = 'hidden'
@@ -60,7 +60,7 @@ function GameStart() {
     MapDiv = document.getElementById("MapContainer")
     let Map = document.createElement('img')
     Map.src = 'Assests/Map.png'
-    Map.style.position = 'fixed'
+    Map.style.position = 'absolute'
     Map.style.left = '0px'
     Map.style.top = '0px'
     Map.style.height = '800px'
@@ -136,6 +136,48 @@ function GameStart() {
     AllTimers.push(MothMove)
     Map.style.left = '-410px'
     Map.style.top = '-405px'
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam3'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam5'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam15'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam6'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam11'
+    MapDiv.append(cam)
+    cam = document.createElement('img')
+    cam.style.position = 'absolute'
+    cam.style.left = '0px'
+    cam.style.top = '0px'
+    cam.style.width = '100px'
+    cam.id = 'Cam14'
+    MapDiv.append(cam)
   }
   if (Office == 'Office3') {
     Office3DoorsActive = true
