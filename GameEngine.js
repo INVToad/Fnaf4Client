@@ -443,6 +443,7 @@ function TurnScreen(direction) {
   if (direction.target.id == 'ivisObeject1') {
     movescreen = 10
   }
+  checkScreen()
 }
 function checkScreen() {
   if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
@@ -452,7 +453,7 @@ function checkScreen() {
   }
   if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
     movescreen = 0
-    theOffice.style.left = '-2490px'
+    theOffice.style.right = '-2490px'
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
