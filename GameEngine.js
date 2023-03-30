@@ -437,31 +437,34 @@ function MoveAnimatronic(Animatronic) {
 var movescreen = 0
 function TurnScreen(direction) {
   if (direction.target.id == 'ivisObeject2') {
+    CamSuitTrig.hidden = true
     movescreen = -10
   }
   if (direction.target.id == 'ivisObeject1') {
-    CamSuitTrig.hidden = true
     movescreen = 10
   }
 }
 function checkScreen() {
-  if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen >= 0) {
+  if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
     movescreen = 0
     theOffice.style.right = '0px'
+    CamSuitTrig.hidden = false
   }
-  if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen <= 0) {
+  if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
     movescreen = 0
     theOffice.style.left = '-2490px'
-    CamSuitTrig.hidden = false
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
+  if (movescreen != 0) {
+    movementScreen = setTimeout(() => {
+      checkScreen()
+      AllTimers.pop()
+    }, 1)
+    AllTimers.push(movementScreen)
+  }
 };
-
-setInterval(() => {
-  checkScreen()
-}, 1)
 
 Invis1.onmouseenter = TurnScreen
 Invis2.onmouseenter = TurnScreen
