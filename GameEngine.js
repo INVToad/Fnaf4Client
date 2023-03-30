@@ -333,7 +333,7 @@ function GameStart() {
 
 //Pauses Game
 function GamePause() {
-
+  alert('work in progress and stop using inspect')
 }
 
 //Ends all Game engine functions
@@ -436,37 +436,27 @@ function MoveAnimatronic(Animatronic) {
 //The things below subject to change
 var movescreen = 0
 function TurnScreen(direction) {
-  if (direction.type == 'mouseleave') {
-    movescreen = 0
+  if (&& direction.target.id == 'ivisObeject2') {
+    movescreen = -10
   }
-  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject2' && ((theOffice.style.right.replace('px', '')) - '') + 1 >= -2950) {
-    movescreen = -1
-    LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') + 1) + 'px'
-    RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') - 1) + 'px'
-    theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') - 1) + 'px'
-  }
-  if (direction.type == 'mouseenter' && direction.target.id == 'ivisObeject1' && ((theOffice.style.right.replace('px', '')) - '') - 1 <= 0) {
-    movescreen = 1
-    LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - 1) + 'px'
-    RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + 1) + 'px'
-    theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + 1) + 'px'
+  if (direction.target.id == 'ivisObeject1') {
+    CamSuitTrig.hidden = true
+    movescreen = 10
   }
 }
 function checkScreen() {
-  if (((theOffice.style.right.replace('px', '')) - '') >= 0) {
+  if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen >= 0) {
     movescreen = 0
+    theOffice.style.right = '0px'
   }
-  if (((theOffice.style.right.replace('px', '')) - '') <= -2490) {
+  if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen <= 0) {
     movescreen = 0
+    theOffice.style.left = '-2490px'
+    CamSuitTrig.hidden = false
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  if ((theOffice.style.right.replace('px', '')) - '' <= -1660) {
-    CamSuitTrig.hidden = false
-  } else {
-    CamSuitTrig.hidden = true
-  };
 };
 
 setInterval(() => {
@@ -474,9 +464,7 @@ setInterval(() => {
 }, 1)
 
 Invis1.onmouseenter = TurnScreen
-Invis1.onmouseleave = TurnScreen
 Invis2.onmouseenter = TurnScreen
-Invis2.onmouseleave = TurnScreen
 //it ends at this point
 
 //This opens and closes the doors
