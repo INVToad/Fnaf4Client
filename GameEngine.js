@@ -436,7 +436,7 @@ function MoveAnimatronic(Animatronic) {
 //The things below subject to change
 var movescreen = 0
 function TurnScreen(direction) {
-  if (&& direction.target.id == 'ivisObeject2') {
+  if (direction.target.id == 'ivisObeject2') {
     movescreen = -10
   }
   if (direction.target.id == 'ivisObeject1') {
