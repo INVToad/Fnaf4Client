@@ -56,6 +56,7 @@ function GameStart() {
     Mapdiv.style.width = '400px'
     Mapdiv.style.height = '400px'
     Mapdiv.id = 'MapContainer'
+    Mapdiv.hidden = true
     DivTrigger.append(Mapdiv)
     MapDiv = document.getElementById("MapContainer")
     let Map = document.createElement('img')
@@ -388,10 +389,12 @@ function BasicCameraFlipOut() {
     if (CameraView.hidden) {
       CameraView.hidden = false
       CameraStatic.hidden = false
+      MapDiv.hidden = false
       Map.hidden = false
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
+      MapDiv.hidden = true
       Map.hidden = true
     }
   }
@@ -437,10 +440,10 @@ function MoveAnimatronic(Animatronic) {
 var movescreen = 0
 function TurnScreen(direction) {
   if (direction.target.id == 'ivisObeject2') {
-    CamSuitTrig.hidden = true
     movescreen = -10
   }
   if (direction.target.id == 'ivisObeject1') {
+    CamSuitTrig.hidden = true
     movescreen = 10
   }
   checkScreen()
@@ -449,11 +452,11 @@ function checkScreen() {
   if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
     movescreen = 0
     theOffice.style.right = '0px'
-    CamSuitTrig.hidden = false
   }
   if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
     movescreen = 0
     theOffice.style.right = '-2490px'
+    CamSuitTrig.hidden = false
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
