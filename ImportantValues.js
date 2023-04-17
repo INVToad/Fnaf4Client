@@ -12,6 +12,7 @@ var rightDoor = false
 var AllTimers = []
 var NightShift = 1
 var Functions = [] //Lists all the office abilities
+var Deletables = [] //List for when the game ends so images cna be removed.
 
 //Changes what clicking the map camera buttons does
 const OpenFunction = {

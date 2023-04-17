@@ -38,6 +38,7 @@ function GameStart() {
     img1.hidden = true
     img1.id = 'CameraView'
     DivTrigger.prepend(img1)
+    Deletables.append(img1)
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
     img.style.position = 'absolute'
@@ -48,6 +49,7 @@ function GameStart() {
     img.hidden = true
     img.id = 'CameraStaticGIF'
     DivTrigger.prepend(img)
+    Deletables.append(img)
     let Mapdiv = document.createElement("div")
     Mapdiv.style.position = 'absolute'
     Mapdiv.style.right = '0px'
@@ -59,6 +61,7 @@ function GameStart() {
     Mapdiv.hidden = true
     DivTrigger.append(Mapdiv)
     MapDiv = document.getElementById("MapContainer")
+    Deletables.append(MapDiv)
     let Map = document.createElement('img')
     Map.src = 'Assests/Map.png'
     Map.style.position = 'absolute'
@@ -78,10 +81,12 @@ function GameStart() {
     img.src = 'Assests/LeftDoor.png'
     img.style.height = '647px'
     LeftDoorDiv.appendChild(img)
+    Deletables.append(img)
     let img1 = document.createElement("img")
     img1.src = 'Assests/RightDoor.png'
     img1.style.height = '647px'
     RightDoorDiv.appendChild(img1)
+    Deletables.append(img1)
   }
   if (i.suit) {
 
@@ -340,6 +345,11 @@ function GamePause() {
 //Ends all Game engine functions
 function GameEnd(condition) {
   Power = 1000
+  for (let i = 0; i < Deletables.length; i++) {
+    let temp = Deletables[i]
+    temp.remove()
+  }
+  Deletables = []
   if (!leftDoor) {
     ControlDoor('left')
   }
@@ -383,19 +393,23 @@ function CamChange(e) {
   }
 }
 
-//Flip out for the chamera
-function BasicCameraFlipOut() {
+//Function for trigger
+function BasicFlipOut() {
   if (Offices[Office].HasCameras) {
     if (CameraView.hidden) {
       CameraView.hidden = false
       CameraStatic.hidden = false
       MapDiv.hidden = false
       Map.hidden = false
+      Invis1.hidden = true
+      Invis2.hidden = true
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
       MapDiv.hidden = true
       Map.hidden = true
+      Invis1.hidden = false
+      Invis2.hidden = false
     }
   }
 }
