@@ -38,7 +38,7 @@ function GameStart() {
     img1.hidden = true
     img1.id = 'CameraView'
     DivTrigger.prepend(img1)
-    Deletables.append(img1)
+    Deletables.push(img1)
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
     img.style.position = 'absolute'
@@ -49,7 +49,7 @@ function GameStart() {
     img.hidden = true
     img.id = 'CameraStaticGIF'
     DivTrigger.prepend(img)
-    Deletables.append(img)
+    Deletables.push(img)
     let Mapdiv = document.createElement("div")
     Mapdiv.style.position = 'absolute'
     Mapdiv.style.right = '0px'
@@ -61,7 +61,7 @@ function GameStart() {
     Mapdiv.hidden = true
     DivTrigger.append(Mapdiv)
     MapDiv = document.getElementById("MapContainer")
-    Deletables.append(MapDiv)
+    Deletables.push(MapDiv)
     let Map = document.createElement('img')
     Map.src = 'Assests/Map.png'
     Map.style.position = 'absolute'
@@ -81,12 +81,12 @@ function GameStart() {
     img.src = 'Assests/LeftDoor.png'
     img.style.height = '647px'
     LeftDoorDiv.appendChild(img)
-    Deletables.append(img)
+    Deletables.push(img)
     let img1 = document.createElement("img")
     img1.src = 'Assests/RightDoor.png'
     img1.style.height = '647px'
     RightDoorDiv.appendChild(img1)
-    Deletables.append(img1)
+    Deletables.push(img1)
   }
   if (i.suit) {
 
