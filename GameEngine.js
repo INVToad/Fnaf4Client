@@ -376,7 +376,7 @@ function AudioContoll(e) {
 //Changes Camera View
 function CamChange(e) {
   if (Offices[Office].HasCameras) {
-    CameraStatic.style.opacity = '0%'
+    CameraStatic.style.opacity = '100%'
     setTimeout(() => {
       CameraStatic.style.opacity = '50%'
     }, 100)
