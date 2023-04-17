@@ -74,7 +74,7 @@ function GameStart() {
     map = document.getElementById('CamMap')
     CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIF')
-    CamSuitTrig.onmouseenter = BasicCameraFlipOut
+    CamSuitTrig.onmouseenter = BasicFlipOut
   }
   if (i.HasDoors) {
     let img = document.createElement("img")
