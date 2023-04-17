@@ -139,16 +139,16 @@ function GameStart() {
     map.style.top = '-405px'
     cam = document.createElement('img')
     cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
+    cam.style.left = '15px'
+    cam.style.top = '110px'
     cam.style.width = '58px'
     cam.id = 'Cam3'
     cam.src = 'Assests/Cam3Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
+    cam.style.left = '158px'
+    cam.style.top = '110px'
     cam.style.width = '58px'
     cam.id = 'Cam5'
     cam.src = 'Assests/Cam5Button.png'
@@ -156,22 +156,22 @@ function GameStart() {
     cam = document.createElement('img')
     cam.style.position = 'absolute'
     cam.style.left = '0px'
-    cam.style.top = '0px'
+    cam.style.top = '343px'
     cam.style.width = '58px'
     cam.id = 'Cam15'
     cam.src = 'Assests/Cam15Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
+    cam.style.left = '205px'
+    cam.style.top = '190px'
     cam.style.width = '58px'
     cam.id = 'Cam6'
     cam.src = 'Assests/Cam6Button.png'
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
-    cam.style.left = '0px'
+    cam.style.left = '18px'
     cam.style.top = '0px'
     cam.style.width = '58px'
     cam.id = 'Cam11'
@@ -179,7 +179,7 @@ function GameStart() {
     MapDiv.append(cam)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
-    cam.style.left = '0px'
+    cam.style.left = '315px'
     cam.style.top = '0px'
     cam.style.width = '58px'
     cam.id = 'Cam14'
