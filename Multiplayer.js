@@ -2,7 +2,7 @@ const socket = io("https://FnafServer.jarethcochrane.repl.co", {
   reconnection: false,
 });
 
-//These are tehe variables used
+//These are the variables used
 var ChatInput = document.getElementById('Input')
 var ChatSubmitButton = document.getElementById('SubmitButton')
 var RoomInput = document.getElementById('RoomInput')

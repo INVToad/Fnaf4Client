@@ -110,10 +110,10 @@ const PowerDrainAnamtronic = {
   AILevel: 0,
   Room: 4,
   Path: {
-        4: 10,
-        10: 2,
-        2: [8, 9]
-        },
+    4: 10,
+    10: 2,
+    2: [8, 9]
+  },
   Name: 'PowerDrainAnamtronic'
 }
 const ElectricianAnamtronic = {
@@ -121,13 +121,13 @@ const ElectricianAnamtronic = {
   AILevel: 0,
   Room: 9,
   Path: {
-        9: 2,
-        2: [8, 10, 17],
-        10: 11,
-        17: [18, 11],
-        18: 11,
-        11: 6
-        },
+    9: 2,
+    2: [8, 10, 17],
+    10: 11,
+    17: [18, 11],
+    18: 11,
+    11: 6
+  },
   EnergyLevels: 1000,
   ShockLimitor: 0,
   ShockAmount: 0,
@@ -137,36 +137,39 @@ const FreeRoamAnamtronic = {
   OriginRoom: 10,
   AILevel: 0,
   Room: 10,
-  Path: {10: [12, 11, 2],
-         12: ['Office', 1],
-         2: [8, 9, 17],
-         11: [3, 5],
-         3: 15,
-         5: 15,
-         15: ['Office', 13],
-         13: 'Office',
-         8: 1,
-         1: 'Office',
-         9: 7, 
-         7: 'Office',
-         17: [11, 21, 18],
-         18: 19,
-         19: ['Office', 14],
-         14: 'Office',
-         21: 'Office'
-        },
+  Path: {
+    10: [12, 11, 2],
+    12: ['Office', 1],
+    2: [8, 9, 17],
+    11: [3, 5],
+    3: 15,
+    5: 15,
+    15: ['Office', 13],
+    13: 'Office',
+    8: 1,
+    1: 'Office',
+    9: 7,
+    7: 'Office',
+    17: [11, 21, 18],
+    18: 19,
+    19: ['Office', 14],
+    14: 'Office',
+    21: 'Office'
+  },
   Name: 'FreeRoamAnamtronic'
 }
 const MothAnamtronic = {
   OriginRoom: 4,
   AILevel: 0,
   Room: 5,
-  Path: {5: [11, 15],
-        15: 'Office',
-        11: 18,
-        18: 19,
-        19: 14,
-        14: 'Office'},
+  Path: {
+    5: [11, 15],
+    15: 'Office',
+    11: 18,
+    18: 19,
+    19: 14,
+    14: 'Office'
+  },
   Name: 'MothAnamtronic'
 }
 const EyeScanAnamtronic = {
