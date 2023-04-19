@@ -173,7 +173,7 @@ function GameStart() {
     setup.style.width = 'px'
     setup.id = 'SetUp'
     SetUp = document.getElementById('SetUp')
-    CreateContain.append(setup)
+    CreateContain.append(SetUp)
     Deletables.push(SetUp)
     let Powerbor = document.createElement('img')
     Powerbor.src = 'Assests/PowerBar-03.png'
@@ -184,6 +184,7 @@ function GameStart() {
     Powerbor.style.height = 'px'
     Powerbor.id = 'PowerBar'
     PowerBar = document.getElementById('PowerBar')
+    CreateContain.append(PowerBar)
     Deletables.push(PowerBar)
     let Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
@@ -191,8 +192,9 @@ function GameStart() {
     Lever.style.left = 'px'
     Lever.style.top = 'px'
     Lever.style.width = 'px'
-    Lever.id = 'ShockLever'
-    ShockLever = document.getElementById('ShockLever')
+    Lever.id = 'LightLever'
+    LightLever = document.getElementById('LightLever')
+    CreateContain.append(LightLever)
     Deletables.push(ShockLever)
     Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
@@ -202,6 +204,7 @@ function GameStart() {
     Lever.style.width = 'px'
     Lever.id = 'ShockLever'
     ShockLever = document.getElementById('ShockLever')
+    CreateContain.append(ShockLever)
     Deletables.push(ShockLever)
     let Light = document.createElement('img')
     Light.src = 'Assests/LightOn-02.png'
@@ -210,7 +213,8 @@ function GameStart() {
     Light.style.top = 'px'
     Light.style.width = 'px'
     Light.id = 'ShockLight'
-    ShockLigh = document.getElementById('ShockLight')
+    ShockLight = document.getElementById('ShockLight')
+    CreateContain.append(ShockLight)
     Deletables.push(ShockLight)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
@@ -592,18 +596,18 @@ function checkScreen() {
   if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
     movescreen = 0
     theOffice.style.right = '0px'
-    CreateDiv.style.right = '0px'
+    CreateContain.style.right = '0px'
   }
   if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
     movescreen = 0
     theOffice.style.right = '-2490px'
-    CreateDiv.style.right = '-2490px'
+    CreateContain.style.right = '-2490px'
     CamSuitTrig.hidden = false
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  CreateDiv.style.right = (((CreateDiv.style.right.replace('px', '')) - '') - movescreen) + 'px'
+  CreateContain.style.right = (((CreateContain.style.right.replace('px', '')) - '') - movescreen) + 'px'
   if (movescreen != 0) {
     movementScreen = setTimeout(() => {
       checkScreen()
