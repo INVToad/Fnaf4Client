@@ -165,6 +165,43 @@ function GameStart() {
     AllTimers.push(MothMove)
     map.style.left = '-410px'
     map.style.top = '-405px'
+    let setup = document.createElement('img')
+    setup.src = 'Assests/Office2Setup.png'
+    setup.style.position = 'absolute'
+    setup.style.left = 'px'
+    setup.style.top = 'px'
+    setup.style.width = 'px'
+    setup.id = 'SetUp'
+    SetUp = document.getElementById('SetUp')
+    CreateContain.append(setup)
+    Deletables.push(SetUp)
+    let Lever = document.createElement('img')
+    Lever.src = 'Assests/Frame-1-Lever-01.png'
+    Lever.style.position = 'absolute'
+    Lever.style.left = 'px'
+    Lever.style.top = 'px'
+    Lever.style.width = 'px'
+    Lever.id = 'ShockLever'
+    ShockLever = document.getElementById('ShockLever')
+    Deletables.push(ShockLever)
+    let Lever = document.createElement('img')
+    Lever.src = 'Assests/Frame-1-Lever-01.png'
+    Lever.style.position = 'absolute'
+    Lever.style.left = 'px'
+    Lever.style.top = 'px'
+    Lever.style.width = 'px'
+    Lever.id = 'LightLever'
+    LightLever = document.getElementById('LightLever')
+    Deletables.push(LightLever)
+    let Light = document.createElement('img')
+    Light.src = 'Assests/LightOn-02.png'
+    Light.style.position = 'absolute'
+    Light.style.left = 'px'
+    Light.style.top = 'px'
+    Light.style.width = 'px'
+    Light.id = 'ShockLever'
+    ShockLever = document.getElementById('ShockLever')
+    Deletables.push(ShockLever)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
     cam.style.left = '15px'
