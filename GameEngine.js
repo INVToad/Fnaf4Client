@@ -475,18 +475,31 @@ function leverInfo(e) {
     e.target.src = 'Assests/LeverDown.gif'
     setTimeout(() => {
       e.target.src = 'Assests/Frame-16-Lever-01.png'
-      if (e.target.id.includes('ShockLever')) {
+      if (e.target.id.includes('LightLever')) {
         ShockLight.hidden = true
+        setTimeout(() => {
+          leverInfo('Light')
+        }, 10000)
+      } else {
+        setTimeout(() => {
+          leverInfo('Shock')
+        }, 12000)
       }
-    }, 800)
-  } else {
-    e.target.src = 'Assests/LeverUp.gif'
+    }, 790)
+  } else if(e == 'Shock' || e == 'Light') {
+    let i;
+    if (e == 'Shock') {
+      i = ShockLever
+    } else {
+      i = LightLever
+    }
+    i.src = 'Assests/LeverUp.gif'
     setTimeout(() => {
-      e.target.src = 'Assests/Frame-1-Lever-01.png'
-      if (e.target.id.includes('ShockLever')) {
+      i.src = 'Assests/Frame-1-Lever-01.png'
+      if (i.id.includes('LightLever')) {
         ShockLight.hidden = false
       }
-    }, 800)
+    }, 790)
   }
 }
 
@@ -503,16 +516,16 @@ function CamChange(e) {
 //Controls the door lights
 function DoorLight(e) {
   let i = Offices[Office]
-  var t;
+  let t;
   if (i.HasDoors) {
     if (e.target.id.includes('Left') && !LeftDoor) {
-      if (e.type == 'mousedown') {
+      if (e.type.includes('down')) {
         DoorLeft.src = 'Assests/LeftLight.png'
       } else {
         DoorLeft.src = 'Assests/LeftDoor.png'
       }
     } else if (!RightDoor) {
-      if (e.type == 'mousedown') {
+      if (e.type.includes('down')) {
         DoorRigh.src = 'Assests/RightLight.png'
       } else {
         DoorRight.src = 'Assests/RightDoor.png'
@@ -520,13 +533,13 @@ function DoorLight(e) {
     }
   } else {
     if (e.target.id.includes('Left')) {
-      if (e.type == 'mousedown') {
+      if (e.type.includes('down')) {
         LeftLight.hidden = false
       } else {
         LeftLight.hidden = true
       }
     } else {
-      if (e.type == 'mousedown') {
+      if (e.type.includes('down')) {
         RightLight.hidden = false
       } else {
         RightLight.hidden = true
