@@ -175,6 +175,16 @@ function GameStart() {
     SetUp = document.getElementById('SetUp')
     CreateContain.append(setup)
     Deletables.push(SetUp)
+    let Powerbor = document.createElement('img')
+    Powerbor.src = 'Assests/PowerBar-03.png'
+    Powerbor.style.position = 'absolute'
+    Powerbor.style.left = 'px'
+    Powerbor.style.top = 'px'
+    Powerbor.style.width = 'px'
+    Powerbor.style.height = 'px'
+    Powerbor.id = 'PowerBar'
+    PowerBar = document.getElementById('PowerBar')
+    Deletables.push(PowerBar)
     let Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
     Lever.style.position = 'absolute'
@@ -184,7 +194,7 @@ function GameStart() {
     Lever.id = 'ShockLever'
     ShockLever = document.getElementById('ShockLever')
     Deletables.push(ShockLever)
-    let Lever = document.createElement('img')
+    Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
     Lever.style.position = 'absolute'
     Lever.style.left = 'px'
@@ -561,15 +571,18 @@ function checkScreen() {
   if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
     movescreen = 0
     theOffice.style.right = '0px'
+    CreateDiv.style.right = '0px'
   }
   if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
     movescreen = 0
     theOffice.style.right = '-2490px'
+    CreateDiv.style.right = '-2490px'
     CamSuitTrig.hidden = false
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
+  CreateDiv.style.right = (((CreateDiv.style.right.replace('px', '')) - '') - movescreen) + 'px'
   if (movescreen != 0) {
     movementScreen = setTimeout(() => {
       checkScreen()
