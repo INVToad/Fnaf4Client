@@ -185,6 +185,7 @@ function GameStart() {
     PowerContain.style.top = '45px'
     PowerContain.style.width = '17px'
     PowerContain.style.height = '24px'
+    PowerContain.style.overflow-x = 'hidden'
     PowerContain.id = 'PowerContain'
     CreateContain.append(PowerContain)
     Powercontain = document.getElementById('PowerContain')
@@ -487,19 +488,18 @@ function leverInfo(e) {
       }
     }, 790)
   } else if(e == 'Shock' || e == 'Light') {
-    let i;
     if (e == 'Shock') {
-      i = ShockLever
+      ShockLever.src = 'Assests/LeverUp.gif'
+      setTimeout(() => {
+        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
+      }, 790)
     } else {
-      i = LightLever
-    }
-    i.src = 'Assests/LeverUp.gif'
-    setTimeout(() => {
-      i.src = 'Assests/Frame-1-Lever-01.png'
-      if (i.id.includes('LightLever')) {
+      LightLever.src = 'Assests/LeverUp.gif'
+      setTimeout(() => {
+        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
         ShockLight.hidden = false
-      }
-    }, 790)
+      }, 790)
+    }
   }
 }
 
