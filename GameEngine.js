@@ -185,7 +185,7 @@ function GameStart() {
     PowerContain.style.top = '45px'
     PowerContain.style.width = '17px'
     PowerContain.style.height = '24px'
-    PowerContain.style.overflow-x = 'hidden'
+    PowerContain.style.overflow = 'hidden'
     PowerContain.id = 'PowerContain'
     CreateContain.append(PowerContain)
     Powercontain = document.getElementById('PowerContain')
