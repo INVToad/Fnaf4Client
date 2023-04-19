@@ -172,8 +172,8 @@ function GameStart() {
     setup.style.top = 'px'
     setup.style.width = 'px'
     setup.id = 'SetUp'
+    CreateContain.append(setup)
     SetUp = document.getElementById('SetUp')
-    CreateContain.append(SetUp)
     Deletables.push(SetUp)
     let Powerbor = document.createElement('img')
     Powerbor.src = 'Assests/PowerBar-03.png'
@@ -183,8 +183,8 @@ function GameStart() {
     Powerbor.style.width = 'px'
     Powerbor.style.height = 'px'
     Powerbor.id = 'PowerBar'
-    PowerBar = document.getElementById('PowerBar')
     CreateContain.append(PowerBar)
+    PowerBar = document.getElementById('PowerBar')
     Deletables.push(PowerBar)
     let Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
@@ -193,8 +193,8 @@ function GameStart() {
     Lever.style.top = 'px'
     Lever.style.width = 'px'
     Lever.id = 'LightLever'
+    CreateContain.append(Lever)
     LightLever = document.getElementById('LightLever')
-    CreateContain.append(LightLever)
     Deletables.push(LightLever)
     Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
@@ -203,8 +203,8 @@ function GameStart() {
     Lever.style.top = 'px'
     Lever.style.width = 'px'
     Lever.id = 'ShockLever'
+    CreateContain.append(Lever)
     ShockLever = document.getElementById('ShockLever')
-    CreateContain.append(ShockLever)
     Deletables.push(ShockLever)
     let Light = document.createElement('img')
     Light.src = 'Assests/LightOn-02.png'
@@ -213,8 +213,8 @@ function GameStart() {
     Light.style.top = 'px'
     Light.style.width = 'px'
     Light.id = 'ShockLight'
+    CreateContain.append(Light)
     ShockLight = document.getElementById('ShockLight')
-    CreateContain.append(ShockLight)
     Deletables.push(ShockLight)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
