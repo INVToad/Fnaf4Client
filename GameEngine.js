@@ -195,7 +195,7 @@ function GameStart() {
     Lever.id = 'LightLever'
     LightLever = document.getElementById('LightLever')
     CreateContain.append(LightLever)
-    Deletables.push(ShockLever)
+    Deletables.push(LightLever)
     Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
     Lever.style.position = 'absolute'
