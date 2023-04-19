@@ -168,50 +168,58 @@ function GameStart() {
     let setup = document.createElement('img')
     setup.src = 'Assests/Office2Setup.png'
     setup.style.position = 'absolute'
-    setup.style.left = 'px'
-    setup.style.top = 'px'
-    setup.style.width = 'px'
+    setup.style.left = '10px'
+    setup.style.width = '750px'
     setup.id = 'SetUp'
     CreateContain.append(setup)
     SetUp = document.getElementById('SetUp')
     Deletables.push(SetUp)
+    //Might move power images in the order of creation
+    let PowerContain = document.createElement('div')
+    PowerContain.style.position = 'absolute'
+    PowerContain.style.left = '59px'
+    PowerContain.style.top = '45px'
+    PowerContain.style.width = '17px'
+    PowerContain.style.height = '120px'
+    PowerContain.id = 'PowerContain'
+    CreateContain.append(PowerContain)
+    Powercontain = document.getElementById('PowerContain')
+    Deletables.push(PowerContain)
     let Powerbor = document.createElement('img')
-    Powerbor.src = 'Assests/PowerBar-03.png'
     Powerbor.style.position = 'absolute'
-    Powerbor.style.left = 'px'
-    Powerbor.style.top = 'px'
-    Powerbor.style.width = 'px'
-    Powerbor.style.height = 'px'
+    Powerbor.style.width = '17px'
+    Powerbor.src = 'Assests/PowerBar-03.png'
     Powerbor.id = 'PowerBar'
-    CreateContain.append(Powerbor)
+    Powercontain.append(Powerbor)
     PowerBar = document.getElementById('PowerBar')
-    Deletables.push(PowerBar)
     let Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
     Lever.style.position = 'absolute'
-    Lever.style.left = 'px'
-    Lever.style.top = 'px'
-    Lever.style.width = 'px'
+    Lever.style.left = '300px'
+    Lever.style.top = '450px'
+    Lever.style.width = '80px'
     Lever.id = 'LightLever'
     CreateContain.append(Lever)
     LightLever = document.getElementById('LightLever')
+    LightLever.onclick = leverInfo
     Deletables.push(LightLever)
     Lever = document.createElement('img')
     Lever.src = 'Assests/Frame-1-Lever-01.png'
     Lever.style.position = 'absolute'
-    Lever.style.left = 'px'
-    Lever.style.top = 'px'
-    Lever.style.width = 'px'
+    Lever.style.left = '615px'
+    Lever.style.top = '450px'
+    Lever.style.width = '80px'
     Lever.id = 'ShockLever'
     CreateContain.append(Lever)
     ShockLever = document.getElementById('ShockLever')
+    ShockLever.onclick = leverInfo
     Deletables.push(ShockLever)
     let Light = document.createElement('img')
     Light.src = 'Assests/LightOn-02.png'
     Light.style.position = 'absolute'
-    Light.style.left = 'px'
-    Light.style.top = 'px'
-    Light.style.width = 'px'
+    Light.style.left = '398px'
+    Light.style.top = '503px'
+    Light.style.width = '30px'
     Light.id = 'ShockLight'
     CreateContain.append(Light)
     ShockLight = document.getElementById('ShockLight')
