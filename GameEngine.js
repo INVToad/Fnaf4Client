@@ -183,7 +183,7 @@ function GameStart() {
     Powerbor.style.width = 'px'
     Powerbor.style.height = 'px'
     Powerbor.id = 'PowerBar'
-    CreateContain.append(PowerBar)
+    CreateContain.append(Powerbor)
     PowerBar = document.getElementById('PowerBar')
     Deletables.push(PowerBar)
     let Lever = document.createElement('img')
