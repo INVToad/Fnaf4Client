@@ -85,6 +85,7 @@ function GameStart() {
     img.src = 'Assests/LeftDoor.png'
     img.style.height = '647px'
     img.id = 'DOOR_L'
+    img.hidden = true
     LeftDoorDiv.appendChild(img)
     LeftDoor = document.getElementById('DOOR_L')
     Deletables.push(img)
@@ -92,6 +93,7 @@ function GameStart() {
     img1.src = 'Assests/RightDoor.png'
     img1.style.height = '647px'
     img1.id = 'DOOR_R'
+    img1.hidden = true
     RightDoorDiv.appendChild(img1)
     RightDoor = document.getElementById('DOOR_R')
     Deletables.push(img1)
@@ -100,6 +102,7 @@ function GameStart() {
     img.src = 'Assests/LeftLight.png'
     img.style.height = '647px'
     img.id = 'Light_L'
+    img.hidden = true
     LeftDoorDiv.appendChild(img)
     LeftLight = document.getElementById('Light_L')
     Deletables.push(img)
@@ -107,6 +110,7 @@ function GameStart() {
     img1.src = 'Assests/RightLight.png'
     img1.style.height = '647px'
     img1.id = 'Light_R'
+    img1.hidden = true
     RightDoorDiv.appendChild(img1)
     RightLight = document.getElementById('Light_R')
     Deletables.push(img1)
@@ -180,7 +184,7 @@ function GameStart() {
     PowerContain.style.left = '59px'
     PowerContain.style.top = '45px'
     PowerContain.style.width = '17px'
-    PowerContain.style.height = '120px'
+    PowerContain.style.height = '24px'
     PowerContain.id = 'PowerContain'
     CreateContain.append(PowerContain)
     Powercontain = document.getElementById('PowerContain')
@@ -219,7 +223,7 @@ function GameStart() {
     Light.style.position = 'absolute'
     Light.style.left = '398px'
     Light.style.top = '503px'
-    Light.style.width = '30px'
+    Light.style.width = '40px'
     Light.id = 'ShockLight'
     CreateContain.append(Light)
     ShockLight = document.getElementById('ShockLight')
@@ -468,21 +472,21 @@ function AudioContoll(e) {
 //This is where all lever actvite is activated
 function leverInfo(e) {
   if (e.target.src.includes('-1-')) {
-    e.target.src = 'LeverDown.gif'
+    e.target.src = 'Assests/LeverDown.gif'
     setTimeout(() => {
-      e.target.src = 'Frame-16-Lever-01.png'
+      e.target.src = 'Assests/Frame-16-Lever-01.png'
       if (e.target.id.includes('ShockLever')) {
         ShockLight.hidden = true
       }
-    }, 80)
+    }, 800)
   } else {
-    e.target.src = 'LeverUp.gif'
+    e.target.src = 'Assests/LeverUp.gif'
     setTimeout(() => {
-      e.target.src = 'Frame-1-Lever-01.png'
+      e.target.src = 'Assests/Frame-1-Lever-01.png'
       if (e.target.id.includes('ShockLever')) {
         ShockLight.hidden = false
       }
-    }, 80)
+    }, 800)
   }
 }
 
@@ -541,6 +545,7 @@ function BasicFlipOut() {
       Map.hidden = false
       Invis1.hidden = true
       Invis2.hidden = true
+      PowerUpdate(1)
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
@@ -548,6 +553,7 @@ function BasicFlipOut() {
       Map.hidden = true
       Invis1.hidden = false
       Invis2.hidden = false
+      PowerUpdate(-1)
     }
   }
 }
@@ -586,6 +592,13 @@ function MoveAnimatronic(Animatronic) {
       }
     }
   }
+}
+
+//Updates PowerUsage Bar
+function PowerUpdate(num) {
+  let e = 24 * num
+  PowerUsage += num
+  LeftDoorDiv.style.height = (((LeftDoorDiv.style.height.replace('px', '')) - '') + e) + 'px'
 }
 
 //The things below subject to change
@@ -633,22 +646,22 @@ function ControlDoor(Door) {
     if (LeftDoor.hidden) {
       LeftDoor.hidden = false
       leftDoor = false
-      PowerUsage -= 1
+      PowerUpdate(-1)
     } else {
       LeftDoor.hidden = true
       leftDoor = true
-      PowerUsage += 1
+      PowerUpdate(1)
     }
   }
   if (Door == 'right') {
     if (RightDoor.hidden) {
       RightDoor.hidden = false
       rightDoor = false
-      PowerUsage -= 1
+      PowerUpdate(-1)
     } else {
       RightDoor.hidden = true
       rightDoor = true
-      PowerUsage += 1
+      PowerUpdate(1)
     }
   }
 }
