@@ -596,18 +596,16 @@ function checkScreen() {
   if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
     movescreen = 0
     theOffice.style.right = '0px'
-    CreateContain.style.right = '0px'
   }
   if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
     movescreen = 0
     theOffice.style.right = '-2490px'
-    CreateContain.style.right = '-2490px'
     CamSuitTrig.hidden = false
   }
   LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
   RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
   theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  CreateContain.style.right = (((CreateContain.style.right.replace('px', '')) - '') - movescreen) + 'px'
+  CreateContain.style.right = (((CreateContain.style.right.replace('px', '')) - '') + movescreen) + 'px'
   if (movescreen != 0) {
     movementScreen = setTimeout(() => {
       checkScreen()
