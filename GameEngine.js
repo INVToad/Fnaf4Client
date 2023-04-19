@@ -200,18 +200,18 @@ function GameStart() {
     Lever.style.left = 'px'
     Lever.style.top = 'px'
     Lever.style.width = 'px'
-    Lever.id = 'LightLever'
-    LightLever = document.getElementById('LightLever')
-    Deletables.push(LightLever)
+    Lever.id = 'ShockLever'
+    ShockLever = document.getElementById('ShockLever')
+    Deletables.push(ShockLever)
     let Light = document.createElement('img')
     Light.src = 'Assests/LightOn-02.png'
     Light.style.position = 'absolute'
     Light.style.left = 'px'
     Light.style.top = 'px'
     Light.style.width = 'px'
-    Light.id = 'ShockLever'
-    ShockLever = document.getElementById('ShockLever')
-    Deletables.push(ShockLever)
+    Light.id = 'ShockLight'
+    ShockLigh = document.getElementById('ShockLight')
+    Deletables.push(ShockLight)
     cam = document.createElement('img')
     cam.style.position = 'absolute'
     cam.style.left = '15px'
@@ -450,6 +450,27 @@ function GameEnd(condition) {
 function AudioContoll(e) {
   if (!GameMute) {
 
+  }
+}
+
+//This is where all lever actvite is activated
+function leverInfo(e) {
+  if (e.target.src.includes('-1-')) {
+    e.target.src = 'LeverDown.gif'
+    setTimeout(() => {
+      e.target.src = 'Frame-16-Lever-01.png'
+      if (e.target.id.includes('ShockLever')) {
+        ShockLight.hidden = true
+      }
+    }, 80)
+  } else {
+    e.target.src = 'LeverUp.gif'
+    setTimeout(() => {
+      e.target.src = 'Frame-1-Lever-01.png'
+      if (e.target.id.includes('ShockLever')) {
+        ShockLight.hidden = false
+      }
+    }, 80)
   }
 }
 
