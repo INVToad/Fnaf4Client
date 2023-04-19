@@ -611,7 +611,7 @@ function MoveAnimatronic(Animatronic) {
 function PowerUpdate(num) {
   let e = 24 * num
   PowerUsage += num
-  LeftDoorDiv.style.height = (((LeftDoorDiv.style.height.replace('px', '')) - '') + e) + 'px'
+  PowerContain.style.height = (((PowerContain.style.height.replace('px', '')) - '') + e) + 'px'
 }
 
 //The things below subject to change
