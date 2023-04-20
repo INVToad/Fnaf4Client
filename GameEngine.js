@@ -97,7 +97,7 @@ function GameStart() {
     Deletables.push(img1)
   } else {
     let img = document.createElement("img")
-    img.src = 'Assests/LeftLight.png'
+    img.src = 'Assests/DoorLight.png'
     img.style.height = '647px'
     img.id = 'Light_L'
     img.hidden = true
@@ -105,7 +105,7 @@ function GameStart() {
     LeftLight = document.getElementById('Light_L')
     Deletables.push(img)
     let img1 = document.createElement("img")
-    img1.src = 'Assests/RightLight.png'
+    img1.src = 'Assests/DoorLight.png'
     img1.style.height = '647px'
     img1.id = 'Light_R'
     img1.hidden = true
@@ -497,7 +497,7 @@ function leverInfo(e) {
           leverInfo('Shock')
         }, 12000)
       }
-    }, 790)
+    }, 780)
   }
 }
 
@@ -515,17 +515,17 @@ function CamChange(e) {
 function DoorLight(e) {
   let i = Offices[Office]
   if (i.HasDoors) {
-    if (e.target.id.includes('Left') && !LeftDoor) {
+    if (e.target.id.includes('Left') && !leftDoor) {
       if (DoorLeft.src.includes('Door')) {
-        DoorLeft.src = 'Assests/LeftLight.png'
+        DoorLeft.src = 'Assests/DoorLight.png'
         DoorLeft.hidden = false
       } else {
         DoorLeft.src = 'Assests/LeftDoor.png'
         DoorLeft.hidden = true
       }
-    } else if (!RightDoor) {
+    } else if (!rightDoor) {
       if (DoorLeft.src.includes('Door')) {
-        DoorRight.src = 'Assests/RightLight.png'
+        DoorRight.src = 'Assests/DoorLight.png'
         DoorRight.hidden = false
       } else {
         DoorRight.src = 'Assests/RightDoor.png'
