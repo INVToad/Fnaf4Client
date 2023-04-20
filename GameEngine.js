@@ -500,6 +500,7 @@ function leverInfo(e) {
         }, 12000)
       }
     }, 790)
+  }
 }
 
 //Changes Camera View
