@@ -472,7 +472,20 @@ function AudioContoll(e) {
 
 //This is where all lever actvite is activated
 function leverInfo(e) {
-  if (e.target.src.includes('-1-')) {
+  if(e == 'Shock' || e == 'Light') {
+    if (e == 'Shock') {
+      ShockLever.src = 'Assests/LeverUp.gif'
+      setTimeout(() => {
+        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
+      }, 780)
+    } else {
+      LightLever.src = 'Assests/LeverUp.gif'
+      setTimeout(() => {
+        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
+        ShockLight.hidden = false
+      }, 780)
+    }
+  } else {
     e.target.src = 'Assests/LeverDown.gif'
     setTimeout(() => {
       e.target.src = 'Assests/Frame-16-Lever-01.png'
@@ -487,20 +500,6 @@ function leverInfo(e) {
         }, 12000)
       }
     }, 790)
-  } else if(e == 'Shock' || e == 'Light') {
-    if (e == 'Shock') {
-      ShockLever.src = 'Assests/LeverUp.gif'
-      setTimeout(() => {
-        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
-      }, 790)
-    } else {
-      LightLever.src = 'Assests/LeverUp.gif'
-      setTimeout(() => {
-        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
-        ShockLight.hidden = false
-      }, 790)
-    }
-  }
 }
 
 //Changes Camera View
