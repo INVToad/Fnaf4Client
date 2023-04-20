@@ -25,10 +25,8 @@ function GameStart() {
   Invis2.hidden = false
   LeftDoorDiv.hidden = false
   RightDoorDiv.hidden = false
-  LeftDoorDiv.onmousedown = DoorLight
-  LeftDoorDiv.onmouseup = DoorLight
-  RightDoorDiv.onmousedown = DoorLight
-  RightDoorDiv.onmouseup = DoorLight
+  LeftDoorDiv.onclick = DoorLight
+  RightDoorDiv.onclick = DoorLight
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
@@ -516,30 +514,33 @@ function CamChange(e) {
 //Controls the door lights
 function DoorLight(e) {
   let i = Offices[Office]
-  let t;
   if (i.HasDoors) {
     if (e.target.id.includes('Left') && !LeftDoor) {
-      if (e.type.includes('down')) {
+      if (e.target.src.includes('Door')) {
         DoorLeft.src = 'Assests/LeftLight.png'
+        DoorLeft.hidden = false
       } else {
         DoorLeft.src = 'Assests/LeftDoor.png'
+        DoorLeft.hidden = true
       }
     } else if (!RightDoor) {
-      if (e.type.includes('down')) {
-        DoorRigh.src = 'Assests/RightLight.png'
+      if (e.target.src.includes('Door')) {
+        DoorRight.src = 'Assests/RightLight.png'
+        DoorRight.hidden = false
       } else {
         DoorRight.src = 'Assests/RightDoor.png'
+        DoorRight.hidden = true
       }
     }
   } else {
     if (e.target.id.includes('Left')) {
-      if (e.type.includes('down')) {
+      if (LeftLight.hidden) {
         LeftLight.hidden = false
       } else {
         LeftLight.hidden = true
       }
     } else {
-      if (e.type.includes('down')) {
+      if (RightLight.hidden) {
         RightLight.hidden = false
       } else {
         RightLight.hidden = true
