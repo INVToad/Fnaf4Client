@@ -481,7 +481,7 @@ function leverInfo(e) {
     } else {
       LightLever.src = 'Assests/LeverUp.gif'
       setTimeout(() => {
-        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
+        LightLever.src = 'Assests/Frame-1-Lever-01.png'
         ShockLight.hidden = false
       }, 780)
     }
