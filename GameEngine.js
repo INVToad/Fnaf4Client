@@ -25,8 +25,8 @@ function GameStart() {
   Invis2.hidden = false
   LeftDoorDiv.hidden = false
   RightDoorDiv.hidden = false
-  LeftDoorDiv.onclick = DoorLight
-  RightDoorDiv.onclick = DoorLight
+  LeftDoorTrigger.onclick = DoorLight
+  RightDoorTrigger.onclick = DoorLight
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
@@ -516,7 +516,7 @@ function DoorLight(e) {
   let i = Offices[Office]
   if (i.HasDoors) {
     if (e.target.id.includes('Left') && !LeftDoor) {
-      if (e.target.src.includes('Door')) {
+      if (DoorLeft.src.includes('Door')) {
         DoorLeft.src = 'Assests/LeftLight.png'
         DoorLeft.hidden = false
       } else {
@@ -524,7 +524,7 @@ function DoorLight(e) {
         DoorLeft.hidden = true
       }
     } else if (!RightDoor) {
-      if (e.target.src.includes('Door')) {
+      if (DoorLeft.src.includes('Door')) {
         DoorRight.src = 'Assests/RightLight.png'
         DoorRight.hidden = false
       } else {
