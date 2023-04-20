@@ -157,6 +157,7 @@ function GameStart() {
     AllTimers.push(BoxTimer)
   }
   if (Office == 'Office2') {
+    Office2VentSelected = 0
     Office2ShockActive = true
     Office2FlashActive = true
     Functions.push(Office2ShockActive)
@@ -179,9 +180,9 @@ function GameStart() {
     let ventbutton = document.createElement('img')
     ventbutton.src = 'Assests/Vent2Button-04.png'
     ventbutton.style.position = 'absolute'
-    ventbutton.style.top = '5px'
-    ventbutton.style.left = '5px'
-    ventbutton.style.width = '100pxpx'
+    ventbutton.style.top = '570px'
+    ventbutton.style.left = '195px'
+    ventbutton.style.width = '40px'
     ventbutton.id = 'Vent2'
     CreateContain.append(ventbutton)
     Vent2 = document.getElementById('Vent2')
@@ -189,9 +190,9 @@ function GameStart() {
     ventbutton = document.createElement('img')
     ventbutton.src = 'Assests/Vent3Button-04.png'
     ventbutton.style.position = 'absolute'
-    ventbutton.style.top = '5px'
-    ventbutton.style.left = '5px'
-    ventbutton.style.width = '100pxpx'
+    ventbutton.style.top = '566px'
+    ventbutton.style.left = '110px'
+    ventbutton.style.width = '40px'
     ventbutton.id = 'Vent3'
     CreateContain.append(ventbutton)
     Vent3 = document.getElementById('Vent3')
@@ -199,9 +200,9 @@ function GameStart() {
     ventbutton = document.createElement('img')
     ventbutton.src = 'Assests/Vent4Button-04.png'
     ventbutton.style.position = 'absolute'
-    ventbutton.style.top = '5px'
-    ventbutton.style.left = '5px'
-    ventbutton.style.width = '100pxpx'
+    ventbutton.style.top = '465px'
+    ventbutton.style.left = '87px'
+    ventbutton.style.width = '40px'
     ventbutton.id = 'Vent4'
     CreateContain.append(ventbutton)
     Vent4 = document.getElementById('Vent4')
@@ -664,6 +665,27 @@ function MoveAnimatronic(Animatronic) {
         Functions[rando] = false
       }
     }
+  }
+}
+
+function VentSelect(e) {
+  if (e.target.src.includes('2')) {
+    Office2VentSelected = 2
+    e.target.src = 'Vent2Sellect.png'
+    Vent3.src = 'Vent3Button.png'
+    Vent4.src = 'Vent3Button.png'
+  }
+  if (e.target.src.includes('3')) {
+    Office2VentSelected = 3
+    e.target.src = 'Vent3Sellect.png'
+    Vent2.src = 'Vent3Button.png'
+    Vent4 = 'Vent3Button.png'
+  }
+  if (e.target.src.includes('4')) {
+    Office2VentSelected = 4
+    e.target.src = 'Vent4Sellect.png'
+    Vent2.src = 'Vent3Button.png'
+    Vent3.src = 'Vent3Button.png'
   }
 }
 
