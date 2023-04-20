@@ -83,6 +83,7 @@ function GameStart() {
     img.src = 'Assests/LeftDoor.png'
     img.style.height = '647px'
     img.id = 'DOOR_L'
+    img.style.position = 'absolute'
     img.hidden = true
     LeftDoorDiv.prepend(img)
     LeftDoor = document.getElementById('DOOR_L')
@@ -90,6 +91,7 @@ function GameStart() {
     let img1 = document.createElement("img")
     img1.src = 'Assests/RightDoor.png'
     img1.style.height = '647px'
+    img1.style.position = 'absolute'
     img1.id = 'DOOR_R'
     img1.hidden = true
     RightDoorDiv.prepend(img1)
@@ -99,6 +101,7 @@ function GameStart() {
     let img = document.createElement("img")
     img.src = 'Assests/DoorLight.png'
     img.style.height = '647px'
+    img.style.position = 'absolute'
     img.id = 'Light_L'
     img.hidden = true
     LeftDoorDiv.prepend(img)
@@ -107,6 +110,7 @@ function GameStart() {
     let img1 = document.createElement("img")
     img1.src = 'Assests/DoorLight.png'
     img1.style.height = '647px'
+    img1.style.position = 'absolute'
     img1.id = 'Light_R'
     img1.hidden = true
     RightDoorDiv.prepend(img1)
@@ -547,10 +551,11 @@ function DoorLight(e) {
     } else if (!rightDoor) {
       if (RightDoor.src.includes('Door')) {
         RightDoor.src = 'Assests/DoorLight.png'
-        LeftDoor.style.left = '-110px'
+        RightDoor.style.right = '-110px'
         RightDoor.hidden = false
       } else {
         RightDoor.src = 'Assests/RightDoor.png'
+        RghtDoor.style.right = '0px'
         RightDoor.hidden = true
       }
     }
