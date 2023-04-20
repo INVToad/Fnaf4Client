@@ -516,20 +516,20 @@ function DoorLight(e) {
   let i = Offices[Office]
   if (i.HasDoors) {
     if (e.target.id.includes('Left') && !leftDoor) {
-      if (DoorLeft.src.includes('Door')) {
-        DoorLeft.src = 'Assests/DoorLight.png'
-        DoorLeft.hidden = false
+      if (LeftDoor.src.includes('Door')) {
+        LeftDoor.src = 'Assests/DoorLight.png'
+        LeftDoor.hidden = false
       } else {
-        DoorLeft.src = 'Assests/LeftDoor.png'
-        DoorLeft.hidden = true
+        LeftDoor.src = 'Assests/LeftDoor.png'
+        LeftDoor.hidden = true
       }
     } else if (!rightDoor) {
-      if (DoorLeft.src.includes('Door')) {
-        DoorRight.src = 'Assests/DoorLight.png'
-        DoorRight.hidden = false
+      if (RightDoor.src.includes('Door')) {
+        RightDoor.src = 'Assests/DoorLight.png'
+        RightDoor.hidden = false
       } else {
-        DoorRight.src = 'Assests/RightDoor.png'
-        DoorRight.hidden = true
+        RightDoor.src = 'Assests/RightDoor.png'
+        RightDoor.hidden = true
       }
     }
   } else {
