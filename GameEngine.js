@@ -192,7 +192,7 @@ function GameStart() {
     Text.style.top = 'px'
     Text.style.right = 'px'
     Text.style.color = 'white'
-    Text.style.fontsize = 'px''
+    Text.style.fontsize = 'px'
     Text.id = 'Time'
     CreateContain.append(Text)
     PowerPercent = document.getElementById('Time')
