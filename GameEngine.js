@@ -84,7 +84,7 @@ function GameStart() {
     img.style.height = '647px'
     img.id = 'DOOR_L'
     img.hidden = true
-    LeftDoorDiv.appendChild(img)
+    LeftDoorDiv.prepend(img)
     LeftDoor = document.getElementById('DOOR_L')
     Deletables.push(img)
     let img1 = document.createElement("img")
@@ -92,7 +92,7 @@ function GameStart() {
     img1.style.height = '647px'
     img1.id = 'DOOR_R'
     img1.hidden = true
-    RightDoorDiv.appendChild(img1)
+    RightDoorDiv.prepend(img1)
     RightDoor = document.getElementById('DOOR_R')
     Deletables.push(img1)
   } else {
@@ -101,7 +101,7 @@ function GameStart() {
     img.style.height = '647px'
     img.id = 'Light_L'
     img.hidden = true
-    LeftDoorDiv.appendChild(img)
+    LeftDoorDiv.prepend(img)
     LeftLight = document.getElementById('Light_L')
     Deletables.push(img)
     let img1 = document.createElement("img")
@@ -109,7 +109,7 @@ function GameStart() {
     img1.style.height = '647px'
     img1.id = 'Light_R'
     img1.hidden = true
-    RightDoorDiv.appendChild(img1)
+    RightDoorDiv.prepend(img1)
     RightLight = document.getElementById('Light_R')
     Deletables.push(img1)
   }
@@ -179,23 +179,22 @@ function GameStart() {
     //Might move power images in the order of creation
     let Text = document.createElement('p')
     Text.style.position = 'absolute'
-    Text.style.top = 'px'
-    Text.style.right = 'px'
+    Text.style.top = '385px'
+    Text.style.right = '460px'
     Text.style.color = 'white'
-    Text.style.fontsize = 'px'
+    Text.style.fontsize = '30px'
     Text.id = 'PowerPercent'
     CreateContain.append(Text)
     PowerPercent = document.getElementById('PowerPercent')
     Deletables.push(PowerPercent)
     Text = document.createElement('p')
     Text.style.position = 'absolute'
-    Text.style.top = 'px'
-    Text.style.right = 'px'
+    Text.style.top = '350px'
+    Text.style.right = '600px'
     Text.style.color = 'white'
-    Text.style.fontsize = 'px'
     Text.id = 'Time'
     CreateContain.append(Text)
-    PowerPercent = document.getElementById('Time')
+    Time = document.getElementById('Time')
     Deletables.push(PowerPercent)
     let PowerContain = document.createElement('div')
     PowerContain.style.position = 'absolute'
@@ -538,14 +537,17 @@ function DoorLight(e) {
     if (e.target.id.includes('Left') && !leftDoor) {
       if (LeftDoor.src.includes('Door')) {
         LeftDoor.src = 'Assests/DoorLight.png'
+        LeftDoor.style.left = '-100px'
         LeftDoor.hidden = false
       } else {
         LeftDoor.src = 'Assests/LeftDoor.png'
+        LeftDoor.style.left = '0px'
         LeftDoor.hidden = true
       }
     } else if (!rightDoor) {
       if (RightDoor.src.includes('Door')) {
         RightDoor.src = 'Assests/DoorLight.png'
+        LeftDoor.style.left = '-110px'
         RightDoor.hidden = false
       } else {
         RightDoor.src = 'Assests/RightDoor.png'
