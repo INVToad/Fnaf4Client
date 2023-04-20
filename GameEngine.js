@@ -159,10 +159,6 @@ function GameStart() {
   if (Office == 'Office2') {
     Office2ShockActive = true
     Office2FlashActive = true
-    ShockCharge = false
-    ShockTimer = 5000
-    FlashCharge = false
-    FlashTimer = 5000
     Functions.push(Office2ShockActive)
     Functions.push(Office2FlashActive)
     MothMove = setInterval(() => {
@@ -180,6 +176,36 @@ function GameStart() {
     CreateContain.append(setup)
     SetUp = document.getElementById('SetUp')
     Deletables.push(SetUp)
+    let ventbutton = document.createElement('img')
+    ventbutton.src = 'Assests/Vent2Button-04.png'
+    ventbutton.style.position = 'absolute'
+    ventbutton.style.top = '5px'
+    ventbutton.style.left = '5px'
+    ventbutton.style.width = '100pxpx'
+    ventbutton.id = 'Vent2'
+    CreateContain.append(ventbutton)
+    Vent2 = document.getElementById('Vent2')
+    Deletables.push(Vent2)
+    ventbutton = document.createElement('img')
+    ventbutton.src = 'Assests/Vent3Button-04.png'
+    ventbutton.style.position = 'absolute'
+    ventbutton.style.top = '5px'
+    ventbutton.style.left = '5px'
+    ventbutton.style.width = '100pxpx'
+    ventbutton.id = 'Vent3'
+    CreateContain.append(ventbutton)
+    Vent3 = document.getElementById('Vent3')
+    Deletables.push(Vent3)
+    ventbutton = document.createElement('img')
+    ventbutton.src = 'Assests/Vent4Button-04.png'
+    ventbutton.style.position = 'absolute'
+    ventbutton.style.top = '5px'
+    ventbutton.style.left = '5px'
+    ventbutton.style.width = '100pxpx'
+    ventbutton.id = 'Vent4'
+    CreateContain.append(ventbutton)
+    Vent4 = document.getElementById('Vent4')
+    Deletables.push(Vent4)
     //Might move power images in the order of creation
     let Text = document.createElement('p')
     Text.style.position = 'absolute'
@@ -187,6 +213,7 @@ function GameStart() {
     Text.style.right = '460px'
     Text.style.color = 'white'
     Text.style.fontsize = '30px'
+    Text.textcontent = '100%'
     Text.id = 'PowerPercent'
     CreateContain.append(Text)
     PowerPercent = document.getElementById('PowerPercent')
@@ -196,10 +223,11 @@ function GameStart() {
     Text.style.top = '350px'
     Text.style.right = '600px'
     Text.style.color = 'white'
+    Text.textcontent = '12:00'
     Text.id = 'Time'
     CreateContain.append(Text)
     Time = document.getElementById('Time')
-    Deletables.push(PowerPercent)
+    Deletables.push(Time)
     let PowerContain = document.createElement('div')
     PowerContain.style.position = 'absolute'
     PowerContain.style.left = '59px'
@@ -539,7 +567,7 @@ function DoorLight(e) {
   let i = Offices[Office]
   if (i.HasDoors) {
     if (e.target.id.includes('Left') && !leftDoor) {
-      if (LeftDoor.src.includes('DoorLight') && !RightDoor.src.includes('DoorLight')) {
+      if (!LeftDoor.src.includes('DoorLight') && !RightDoor.src.includes('DoorLight')) {
         LeftDoor.src = 'Assests/DoorLight.png'
         LeftDoor.style.left = '-100px'
         LeftDoor.hidden = false
@@ -551,13 +579,13 @@ function DoorLight(e) {
         }
       }
     } else if (!rightDoor) {
-      if (RightDoor.src.includes('DoorLight') && !LeftDoor.src.includes('DoorLight')) {
+      if (!RightDoor.src.includes('DoorLight') && !LeftDoor.src.includes('DoorLight')) {
         RightDoor.src = 'Assests/DoorLight.png'
         RightDoor.style.right = '-110px'
         RightDoor.hidden = false
       } else {
         RightDoor.src = 'Assests/RightDoor.png'
-        RghtDoor.style.right = '0px'
+        RightDoor.style.right = '0px'
         if(!rightDoor) {
           RightDoor.hidden = true
         }
