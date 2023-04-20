@@ -177,6 +177,26 @@ function GameStart() {
     SetUp = document.getElementById('SetUp')
     Deletables.push(SetUp)
     //Might move power images in the order of creation
+    let Text = document.createElement('p')
+    Text.style.position = 'absolute'
+    Text.style.top = 'px'
+    Text.style.right = 'px'
+    Text.style.color = 'white'
+    Text.style.fontsize = 'px''
+    Text.id = 'PowerPercent'
+    CreateContain.append(Text)
+    PowerPercent = document.getElementById('PowerPercent')
+    Deletables.push(PowerPercent)
+    Text = document.createElement('p')
+    Text.style.position = 'absolute'
+    Text.style.top = 'px'
+    Text.style.right = 'px'
+    Text.style.color = 'white'
+    Text.style.fontsize = 'px''
+    Text.id = 'Time'
+    CreateContain.append(Text)
+    PowerPercent = document.getElementById('Time')
+    Deletables.push(PowerPercent)
     let PowerContain = document.createElement('div')
     PowerContain.style.position = 'absolute'
     PowerContain.style.left = '59px'
