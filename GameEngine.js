@@ -14,6 +14,8 @@ function GameStart() {
   }
   OfficePowerDrain = setInterval(() => {
     Power -= PowerUsage
+    let p = Math.round(Power/10)
+    PowerBar.textcontent = p + '%'
     if (Power <= 0) {
       GameEnd('Loss')
     }
@@ -208,23 +210,25 @@ function GameStart() {
     Vent4 = document.getElementById('Vent4')
     Deletables.push(Vent4)
     //Might move power images in the order of creation
+    let context = document.createTextNode('100%')
     let Text = document.createElement('p')
+    Text.append(context)
     Text.style.position = 'absolute'
     Text.style.top = '385px'
     Text.style.right = '460px'
     Text.style.color = 'white'
     Text.style.fontsize = '30px'
-    Text.textcontent = '100%'
     Text.id = 'PowerPercent'
     CreateContain.append(Text)
     PowerPercent = document.getElementById('PowerPercent')
     Deletables.push(PowerPercent)
+    context = document.createTextNode('12:00')
     Text = document.createElement('p')
+    Text.append(context)
     Text.style.position = 'absolute'
     Text.style.top = '350px'
     Text.style.right = '600px'
     Text.style.color = 'white'
-    Text.textcontent = '12:00'
     Text.id = 'Time'
     CreateContain.append(Text)
     Time = document.getElementById('Time')
