@@ -15,7 +15,7 @@ function GameStart() {
   OfficePowerDrain = setInterval(() => {
     Power -= PowerUsage
     let p = Math.round(Power/10)
-    PowerPercent.firstchild.data = p + '%'
+    PowerPercent.firstChild.data = p + '%'
     PowerPercent.style.fontsize = '30px'
     if (Power <= 0) {
       GameEnd('Loss')
@@ -168,7 +168,10 @@ function GameStart() {
     MothMove = setInterval(() => {
       MoveAnimatronic(MothAnamtronic)
     }, 10000)
-    AllTimers.push(MothMove)
+    EyeMove = setInterval(() => {
+      MoveAnimatronic(EyeScanAnamtronic)
+    }, 15600)
+    AllTimers.push(EyeMove)
     map.style.left = '-410px'
     map.style.top = '-405px'
     let setup = document.createElement('img')
@@ -644,7 +647,22 @@ function BasicFlipOut() {
 function MoveAnimatronic(Animatronic) {
   let Ran = Math.floor(Math.random() * 20) + 1
   if (Ran <= Animatronic.AILevel) {
-    if (Animatronic.Room in Animatronic.Path) {
+    if (Animatronic == EyeScanAnamtronic) {
+      if (Animatronic.Room == 'middle') {
+        let rando = Math.floor(Math.random() * 4) + 1
+        Animatronic.Room = 'Office' + rando
+      } else {
+        GameEnd('Loss')
+      }
+    } else if (Animatronic == PhantomAnamtronic) {
+      if (PhantomAnamtronic.Room == 'none') {
+        let rando = Math.floor(Math.random() * 2) + 2
+        PhantomAnamtronic.Room = 'Office' + rando
+      } else {
+        let rando = Math.floor(Math.random() * Functions.length)
+        Functions[rando] = false
+      } 
+    } else if (Animatronic.Room in Animatronic.Path) {
       //Will remove animatronic name from room placement list
       let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
       RoomPlacement['Cam' + Animatronic.Room].splice(e)
@@ -662,39 +680,24 @@ function MoveAnimatronic(Animatronic) {
         RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
         SendData('moveAnimatronic', Animatronic, Animatronic.Room)
       }
-    } else if (Animatronic == EyeScanAnamtronic) {
-      if (Animatronic.Room == 'middle') {
-        let rando = Math.floor(Math.random() * 4) + 1
-        Animatronic.Room = 'Office' + rando
-      } else {
-        GameEnd('Loss')
-      }
-    } else if (Animatronic == PhantomAnamtronic) {
-      if (PhantomAnamtronic.Room == 'none') {
-        let rando = Math.floor(Math.random() * 2) + 2
-        PhantomAnamtronic.Room = 'Office' + rando
-      } else {
-        let rando = Math.floor(Math.random() * Functions.length)
-        Functions[rando] = false
-      }
     }
   }
 }
 
 function VentSelect(e) {
-  if (e.target.src.includes('2')) {
+  if (e.target.src.includes('Vent2')) {
     Office2VentSelected = 2
     e.target.src = 'Assests/Vent2Sellect-04.png'
     Vent3.src = 'Assests/Vent3Button-04.png'
     Vent4.src = 'Assests/Vent3Button-04.png'
   }
-  if (e.target.src.includes('3')) {
+  if (e.target.src.includes('Vent3')) {
     Office2VentSelected = 3
     e.target.src = 'Assests/Vent3Sellect-04.png'
     Vent2.src = 'Assests/Vent3Button-04.png'
     Vent4 = 'Assests/Vent3Button-04.png'
   }
-  if (e.target.src.includes('4')) {
+  if (e.target.src.includes('Vent4')) {
     Office2VentSelected = 4
     e.target.src = 'Assests/Vent4Sellect-04.png'
     Vent2.src = 'Assests/Vent3Button-04.png'
