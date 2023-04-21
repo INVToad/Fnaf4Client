@@ -188,6 +188,7 @@ function GameStart() {
     ventbutton.id = 'Vent2'
     CreateContain.append(ventbutton)
     Vent2 = document.getElementById('Vent2')
+    Vent2.onclick = VentSelect
     Deletables.push(Vent2)
     ventbutton = document.createElement('img')
     ventbutton.src = 'Assests/Vent3Button-04.png'
@@ -198,6 +199,7 @@ function GameStart() {
     ventbutton.id = 'Vent3'
     CreateContain.append(ventbutton)
     Vent3 = document.getElementById('Vent3')
+    Vent3.onclick = VentSelect
     Deletables.push(Vent3)
     ventbutton = document.createElement('img')
     ventbutton.src = 'Assests/Vent4Button-04.png'
@@ -208,6 +210,7 @@ function GameStart() {
     ventbutton.id = 'Vent4'
     CreateContain.append(ventbutton)
     Vent4 = document.getElementById('Vent4')
+    Vent4.onclick = VentSelect
     Deletables.push(Vent4)
     //Might move power images in the order of creation
     let context = document.createTextNode('100%')
@@ -215,19 +218,19 @@ function GameStart() {
     Text.append(context)
     Text.style.position = 'absolute'
     Text.style.top = '385px'
-    Text.style.right = '460px'
+    Text.style.left = '460px'
     Text.style.color = 'white'
-    Text.style.fontsize = '30px'
     Text.id = 'PowerPercent'
     CreateContain.append(Text)
     PowerPercent = document.getElementById('PowerPercent')
+    PowerPercent.style.fontsize = '30px'
     Deletables.push(PowerPercent)
     context = document.createTextNode('12:00')
     Text = document.createElement('p')
     Text.append(context)
     Text.style.position = 'absolute'
     Text.style.top = '350px'
-    Text.style.right = '600px'
+    Text.style.left = '600px'
     Text.style.color = 'white'
     Text.id = 'Time'
     CreateContain.append(Text)
@@ -620,7 +623,7 @@ function BasicFlipOut() {
       CameraView.hidden = false
       CameraStatic.hidden = false
       MapDiv.hidden = false
-      Map.hidden = false
+      map.hidden = false
       Invis1.hidden = true
       Invis2.hidden = true
       PowerUpdate(1)
@@ -628,7 +631,7 @@ function BasicFlipOut() {
       CameraView.hidden = true
       CameraStatic.hidden = true
       MapDiv.hidden = true
-      Map.hidden = true
+      map.hidden = true
       Invis1.hidden = false
       Invis2.hidden = false
       PowerUpdate(-1)
@@ -697,7 +700,7 @@ function VentSelect(e) {
 function PowerUpdate(num) {
   let e = 24 * num
   PowerUsage += num
-  PowerContain.style.height = (((PowerContain.style.height.replace('px', '')) - '') + e) + 'px'
+  Powercontain.style.height = (((Powercontain.style.height.replace('px', '')) - '') + e) + 'px'
 }
 
 //The things below subject to change

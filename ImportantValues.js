@@ -28,9 +28,9 @@ const RoomPlacement = {
   Cam1: [],
   Cam2: [],
   Cam3: [],
-  Cam4: ['PowerDrainAnamtronic', 'MothAnamtronic'],
+  Cam4: ['PowerDrainAnamtronic'],
   Cam5: [],
-  Cam6: [],
+  Cam6: ['MothAnamtronic'],
   Cam7: [],
   Cam8: [],
   Cam9: ['ElectricianAnamtronic'],
@@ -159,10 +159,11 @@ const FreeRoamAnamtronic = {
   Name: 'FreeRoamAnamtronic'
 }
 const MothAnamtronic = {
-  OriginRoom: 4,
+  OriginRoom: 6,
   AILevel: 0,
-  Room: 5,
+  Room: 6,
   Path: {
+    6: 11,
     5: [11, 15],
     15: 'Office',
     11: 18,
