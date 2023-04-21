@@ -15,7 +15,7 @@ function GameStart() {
   OfficePowerDrain = setInterval(() => {
     Power -= PowerUsage
     let p = Math.round(Power/10)
-    PowerBar.textcontent = p + '%'
+    PowerPercent.textcontent = p + '%'
     if (Power <= 0) {
       GameEnd('Loss')
     }
@@ -654,8 +654,13 @@ function MoveAnimatronic(Animatronic) {
         let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
         Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
       }
-      RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
-      SendData('moveAnimatronic', Animatronic, Animatronic.Room)
+      if (Animatronic.Room == undefined) {
+        Animatronic.Room = Animatronic.OriginRoom
+        MoveAnimatronic(Animatronic)
+      } else {
+        RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
+        SendData('moveAnimatronic', Animatronic, Animatronic.Room)
+      }
     } else if (Animatronic == EyeScanAnamtronic) {
       if (Animatronic.Room == 'middle') {
         let rando = Math.floor(Math.random() * 4) + 1
@@ -678,21 +683,21 @@ function MoveAnimatronic(Animatronic) {
 function VentSelect(e) {
   if (e.target.src.includes('2')) {
     Office2VentSelected = 2
-    e.target.src = 'Vent2Sellect.png'
-    Vent3.src = 'Vent3Button.png'
-    Vent4.src = 'Vent3Button.png'
+    e.target.src = 'Assests/Vent2Sellect.png'
+    Vent3.src = 'Assests/Vent3Button.png'
+    Vent4.src = 'Assests/Vent3Button.png'
   }
   if (e.target.src.includes('3')) {
     Office2VentSelected = 3
-    e.target.src = 'Vent3Sellect.png'
-    Vent2.src = 'Vent3Button.png'
-    Vent4 = 'Vent3Button.png'
+    e.target.src = 'Assests/Vent3Sellect.png'
+    Vent2.src = 'Assests/Vent3Button.png'
+    Vent4 = 'Assests/Vent3Button.png'
   }
   if (e.target.src.includes('4')) {
     Office2VentSelected = 4
-    e.target.src = 'Vent4Sellect.png'
-    Vent2.src = 'Vent3Button.png'
-    Vent3.src = 'Vent3Button.png'
+    e.target.src = 'Assests/Vent4Sellect.png'
+    Vent2.src = 'Assests/Vent3Button.png'
+    Vent3.src = 'Assests/Vent3Button.png'
   }
 }
 
