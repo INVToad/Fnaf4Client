@@ -15,7 +15,8 @@ function GameStart() {
   OfficePowerDrain = setInterval(() => {
     Power -= PowerUsage
     let p = Math.round(Power/10)
-    PowerPercent.textcontent = p + '%'
+    PowerPercent.firstchild.data = p + '%'
+    PowerPercent.style.fontsize = '30px'
     if (Power <= 0) {
       GameEnd('Loss')
     }
@@ -683,21 +684,21 @@ function MoveAnimatronic(Animatronic) {
 function VentSelect(e) {
   if (e.target.src.includes('2')) {
     Office2VentSelected = 2
-    e.target.src = 'Assests/Vent2Sellect.png'
-    Vent3.src = 'Assests/Vent3Button.png'
-    Vent4.src = 'Assests/Vent3Button.png'
+    e.target.src = 'Assests/Vent2Sellect-04.png'
+    Vent3.src = 'Assests/Vent3Button-04.png'
+    Vent4.src = 'Assests/Vent3Button-04.png'
   }
   if (e.target.src.includes('3')) {
     Office2VentSelected = 3
-    e.target.src = 'Assests/Vent3Sellect.png'
-    Vent2.src = 'Assests/Vent3Button.png'
-    Vent4 = 'Assests/Vent3Button.png'
+    e.target.src = 'Assests/Vent3Sellect-04.png'
+    Vent2.src = 'Assests/Vent3Button-04.png'
+    Vent4 = 'Assests/Vent3Button-04.png'
   }
   if (e.target.src.includes('4')) {
     Office2VentSelected = 4
-    e.target.src = 'Assests/Vent4Sellect.png'
-    Vent2.src = 'Assests/Vent3Button.png'
-    Vent3.src = 'Assests/Vent3Button.png'
+    e.target.src = 'Assests/Vent4Sellect-04.png'
+    Vent2.src = 'Assests/Vent3Button-04.png'
+    Vent3.src = 'Assests/Vent3Button-04.png'
   }
 }
 

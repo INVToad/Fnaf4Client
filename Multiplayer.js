@@ -96,7 +96,7 @@ socket.on('receiveGameData', function(type, data, data1) {
   }
   if (type == 'ShiftTime') {
     ShiftTime = data
-    Time.textcontent = '0' + data + ':00'
+    Time.firstchild.data = '0' + data + ':00'
   }
   if (type == 'Difficulty') {
     PowerDrainAnamtronic.AILevel = data.PowerDraintronic
