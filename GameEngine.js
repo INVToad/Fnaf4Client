@@ -33,18 +33,6 @@ function GameStart() {
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
-    let img1 = document.createElement("img")
-    img1.src = ''
-    img1.style.position = 'absolute'
-    img1.style.left = '0px'
-    img1.style.top = '0px'
-    img1.style.height = '791px'
-    img1.style.width = '1424px'
-    img1.hidden = true
-    img1.id = 'CameraView'
-    DivTrigger.append(img1)
-    CameraView = document.getElementById('CameraView')
-    Deletables.push(img1)
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
     img.style.position = 'absolute'
@@ -56,6 +44,27 @@ function GameStart() {
     img.id = 'CameraStaticGIF'
     DivTrigger.prepend(img)
     Deletables.push(img)
+    let img2 = document.createElement('img')
+    img2.src = ''
+    img2.style.position = 'absolute'
+    img2.style.left = '0px'
+    img2.style.top = '0px'
+    img2.style.width = '0px'
+    img2.hidden = true
+    img2.id = 'Animatronic1'
+    DivTrigger.prepend(img2)
+    deletables.push(img2)
+    let img1 = document.createElement("img")
+    img1.src = ''
+    img1.style.position = 'absolute'
+    img1.style.left = '0px'
+    img1.style.top = '0px'
+    img1.style.height = '791px'
+    img1.style.width = '1424px'
+    img1.hidden = true
+    img1.id = 'CameraView'
+    DivTrigger.prepend(img1)
+    Deletables.push(img1)
     let Mapdiv = document.createElement("div")
     Mapdiv.style.position = 'absolute'
     Mapdiv.style.right = '0px'
@@ -80,6 +89,7 @@ function GameStart() {
     map = document.getElementById('CamMap')
     CameraView = document.getElementById('CameraView')
     CameraStatic = document.getElementById('CameraStaticGIF')
+    Animatronic1 = document.getElementById('Animatronic1')
     CamSuitTrig.onmouseenter = BasicFlipOut
   }
   if (i.HasDoors) {
@@ -614,6 +624,13 @@ function CamChange(e) {
       p = 15
     }
     CameraView.src = 'Assests/Cam' + p + 'View.png'
+    if (RoomPlacement['Cam' + p].includes('MothAnamtronic')) {
+      Animatronic1.hidden = false
+      Animatronic1.src = MothPresets['Cam' + p].Source
+      Animatronic1.style.left = MothPresets['Cam' + p].Left
+      Animatronic1.style.top = MothPresets['Cam' + p].Top
+      Animatronic1.style.width = MothPresets['Cam' + p].Width
+    }
     setTimeout(() => {
       CameraStatic.style.opacity = '50%'
     }, 100)
