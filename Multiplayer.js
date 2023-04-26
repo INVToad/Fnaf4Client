@@ -114,6 +114,23 @@ socket.on('receiveGameData', function(type, data, data1) {
       ControlDoor(data1)
     }
   }
+  if (type == 'moveAnimatronic') {
+    if (data == EyeScanAnamtronic) {
+      EyeScanAnamtronic.Room = data1
+    } else if (data == PhantomAnamtronic) {
+      MoveAnimatronic(PhantomAnamtronic)
+    } else {
+      if (data == PowerDrainAnamtronic) {
+        MoveAnimatronic(PowerDrainAnamtronic)
+      } else if (data == ElectricianAnamtronic) {
+        MoveAnimatronic(ElectricianAnamtronic)
+      } else if (data == FreeRoamAnamtronic) {
+        MoveAnimatronic(FreeRoamAnamtronic)
+      } else {
+        MoveAnimatronic(MothAnamotronic)
+      }
+    }
+  }
 })
 
 function SendChatMsg() {

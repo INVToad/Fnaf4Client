@@ -5,6 +5,7 @@ var InGame = false
 var IsHost = false
 var ShiftTime = 0
 var Power = 1000
+var OfficeOn = true
 var PowerUsage = 1
 var ActiveAnimatronics = []
 var leftDoor = false
@@ -120,17 +121,14 @@ const ElectricianAnamtronic = {
   OriginRoom: 9,
   AILevel: 0,
   Room: 9,
+  DrainAmount: 1,
   Path: {
     9: 2,
-    2: [8, 10, 17],
-    10: 11,
-    17: [18, 11],
-    18: 11,
-    11: 6
+    2: 17,
+    17: [18, 20],
+    18: [20]
   },
-  EnergyLevels: 1000,
-  ShockLimitor: 0,
-  ShockAmount: 0,
+  EnergyLevels: 100,
   Name: 'ElectricianAnamtronic'
 }
 const FreeRoamAnamtronic = {
@@ -161,23 +159,27 @@ const FreeRoamAnamtronic = {
 const MothAnamtronic = {
   OriginRoom: 6,
   AILevel: 0,
+  Target: 0,
   Room: 6,
   Path: {
     6: 11,
-    5: [11, 15],
+    11: [5, 10, 10],
+    5: 15,
     15: 'Office',
-    11: 18,
-    18: 19,
-    19: 14,
-    14: 'Office'
+    10: [undefined, 12, 2],
+    12: 'Office',
+    2: 9,
+    9: 7,
+    7: 'Office'
   },
   Name: 'MothAnamtronic'
 }
 const EyeScanAnamtronic = {
   Room: 'middle',
+  Stage: 0,
   AILevel: 0,
-  ShockLimitor: 0,
-  ShockAmount: 0
+  LightLimitor: 0,
+  LightAmount: 0
 }
 const PhantomAnamtronic = {
   AILevel: 0,

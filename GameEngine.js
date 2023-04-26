@@ -16,7 +16,7 @@ function GameStart() {
     Power -= PowerUsage
     let p = Math.round(Power/10)
     PowerPercent.firstChild.data = p + '%'
-    PowerPercent.style.fontsize = '30px'
+    PowerPercent.style.fontSize = '30px'
     if (Power <= 0) {
       GameEnd('Loss')
     }
@@ -43,6 +43,7 @@ function GameStart() {
     img1.hidden = true
     img1.id = 'CameraView'
     DivTrigger.prepend(img1)
+    CameraView = document.getElementById('CameraView')
     Deletables.push(img1)
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
@@ -542,6 +543,17 @@ function leverInfo(e) {
     } else {
       LightLever.src = 'Assests/LeverUp.gif'
       setTimeout(() => {
+        if (EyeScanAnamtronic.Room.includes(Office2VentSelected)) {
+          if (EyeScanAnamtronic.Stage = 1) {
+            EyeScanAnamtronic.LightAmount += 2
+          } else if (EyeScanAnamtronic.Stage = 2) {
+            EyeScanAnamtronic.LightAmount += 1
+          } 
+          if (EyeScaneAnamtronc.LightLimitor != 0 && EyeScaneAnamtronc.LightAmount >= EyeScaneAnamtronc.LightLimitor) {
+            GameEnd('Loss')
+          }
+          EyeScanAnamtronic.Room = 'middle'
+        }
         LightLever.src = 'Assests/Frame-1-Lever-01.png'
         ShockLight.hidden = false
       }, 780)
@@ -568,6 +580,40 @@ function leverInfo(e) {
 function CamChange(e) {
   if (Offices[Office].HasCameras) {
     CameraStatic.style.opacity = '100%'
+    let p;
+    if (e.target.src.includes('1')) {
+      p = 1
+    } else if (e.target.src.includes('2')) {
+      p = 2
+    } else if (e.target.src.includes('3')) {
+      p = 3
+    } else if (e.target.src.includes('4')) {
+      p = 4
+    } else if (e.target.src.includes('5')) {
+      p = 5
+    } else if (e.target.src.includes('6')) {
+      p = 6
+    } else if (e.target.src.includes('7')) {
+      p = 7
+    } else if (e.target.src.includes('8')) {
+      p = 8
+    } else if (e.target.src.includes('9')) {
+      p = 9
+    }
+    if (e.target.src.includes('10')) {
+      p = 10
+    } else if (e.target.src.includes('11')) {
+      p = 11
+    } else if (e.target.src.includes('12')) {
+      p = 12
+    } else if (e.target.src.includes('13')) {
+      p = 13
+    } else if (e.target.src.includes('14')) {
+      p = 14
+    } else if (e.target.src.includes('15')) {
+      p = 15
+    }
+    CameraView.src = 'Assests/Cam' + p + 'View.png'
     setTimeout(() => {
       CameraStatic.style.opacity = '50%'
     }, 100)
@@ -651,6 +697,9 @@ function MoveAnimatronic(Animatronic) {
       if (Animatronic.Room == 'middle') {
         let rando = Math.floor(Math.random() * 4) + 1
         Animatronic.Room = 'Office' + rando
+        Animatronic.Stage += 1
+      } else  if (Animatronic.Stage <= 3) {
+        Animatronic.Stage += 1
       } else {
         GameEnd('Loss')
       }
@@ -668,11 +717,19 @@ function MoveAnimatronic(Animatronic) {
       RoomPlacement['Cam' + Animatronic.Room].splice(e)
       if (Animatronic.Path[Animatronic.Room].length <= 1) {
         Animatronic.Room = Animatronic.Path[Animatronic.Room]
+      } else if(Animatronic == MothAnamtronic) {
+        if (Animatronic.Target == 0) {
+          Animatronic.Target = Math.floor(Math.random() * 3)
+        }
+        Animatronic.Room = Animatronic.Path[Animatronic.Room][Animatronic.Target]
+      } else if(Animatronic == ElectricianAnamtronic && Animatronic.Room == 20) {
+        Animatronic.Room = 9
+        Animatronic.EnergyLevels = 100
       } else {
-        // adds animatronic to room placement list
         let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
         Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
       }
+      // adds animatronic to room placement list
       if (Animatronic.Room == undefined) {
         Animatronic.Room = Animatronic.OriginRoom
         MoveAnimatronic(Animatronic)
@@ -689,18 +746,18 @@ function VentSelect(e) {
     Office2VentSelected = 2
     e.target.src = 'Assests/Vent2Sellect-04.png'
     Vent3.src = 'Assests/Vent3Button-04.png'
-    Vent4.src = 'Assests/Vent3Button-04.png'
+    Vent4.src = 'Assests/Vent4Button-04.png'
   }
   if (e.target.src.includes('Vent3')) {
     Office2VentSelected = 3
     e.target.src = 'Assests/Vent3Sellect-04.png'
-    Vent2.src = 'Assests/Vent3Button-04.png'
-    Vent4 = 'Assests/Vent3Button-04.png'
+    Vent2.src = 'Assests/Vent2Button-04.png'
+    Vent4 = 'Assests/Vent4Button-04.png'
   }
   if (e.target.src.includes('Vent4')) {
     Office2VentSelected = 4
     e.target.src = 'Assests/Vent4Sellect-04.png'
-    Vent2.src = 'Assests/Vent3Button-04.png'
+    Vent2.src = 'Assests/Vent2Button-04.png'
     Vent3.src = 'Assests/Vent3Button-04.png'
   }
 }
