@@ -42,7 +42,7 @@ function GameStart() {
     img1.style.width = '1424px'
     img1.hidden = true
     img1.id = 'CameraView'
-    DivTrigger.prepend(img1)
+    DivTrigger.append(img1)
     CameraView = document.getElementById('CameraView')
     Deletables.push(img1)
     let img = document.createElement("img")
