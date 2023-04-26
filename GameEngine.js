@@ -53,7 +53,7 @@ function GameStart() {
     img2.hidden = true
     img2.id = 'Animatronic1'
     DivTrigger.prepend(img2)
-    deletables.push(img2)
+    Deletables.push(img2)
     let img1 = document.createElement("img")
     img1.src = ''
     img1.style.position = 'absolute'
