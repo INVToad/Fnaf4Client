@@ -33,6 +33,7 @@ function GameStart() {
   //reveals/Creates basic values for each office
   let i = Offices[Office]
   if (i.HasCameras) {
+    currentcam = 'none'
     let img = document.createElement("img")
     img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
     img.style.position = 'absolute'
@@ -589,6 +590,7 @@ function leverInfo(e) {
 //Changes Camera View
 function CamChange(e) {
   if (Offices[Office].HasCameras) {
+    Animatronic1.hidden = true
     CameraStatic.style.opacity = '100%'
     let p;
     if (e.target.src.includes('1')) {
@@ -623,6 +625,7 @@ function CamChange(e) {
     } else if (e.target.src.includes('15')) {
       p = 15
     }
+    currentcam = p
     CameraView.src = 'Assests/Cam' + p + 'View.png'
     if (RoomPlacement['Cam' + p].includes('MothAnamtronic')) {
       Animatronic1.hidden = false
@@ -693,10 +696,18 @@ function BasicFlipOut() {
       map.hidden = false
       Invis1.hidden = true
       Invis2.hidden = true
+      if (RoomPlacement['Cam' + currentcam].includes('MothAnamtronic') && currentcam != 'none') {
+      Animatronic1.hidden = false
+      Animatronic1.src = MothPresets['Cam' + currentcam].Source
+      Animatronic1.style.left = MothPresets['Cam' + currentcam].Left
+      Animatronic1.style.top = MothPresets['Cam' + currentcam].Top
+      Animatronic1.style.width = MothPresets['Cam' + currentcam].Width
+    }
       PowerUpdate(1)
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
+      Animatronic1.hidden = true
       MapDiv.hidden = true
       map.hidden = true
       Invis1.hidden = false
