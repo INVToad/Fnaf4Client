@@ -34,8 +34,8 @@ const RoomPlacement = {
   Cam6: ['MothAnamtronic'],
   Cam7: [],
   Cam8: [],
-  Cam9: ['ElectricianAnamtronic'],
-  Cam10: ['FreeRoamAnamtronic'],
+  Cam9: [],
+  Cam10: ['FreeRoamAnamtronic', 'ElectricianAnamtronic'],
   Cam11: [],
   Cam12: [],
   Cam13: [],
@@ -118,15 +118,19 @@ const PowerDrainAnamtronic = {
   Name: 'PowerDrainAnamtronic'
 }
 const ElectricianAnamtronic = {
-  OriginRoom: 9,
+  OriginRoom: 10,
   AILevel: 0,
-  Room: 9,
+  Room: 10,
   DrainAmount: 1,
   Path: {
-    9: 2,
-    2: 17,
-    17: [18, 20],
-    18: [20]
+    10: [11, 2],
+    11: [17, 18],
+    2: [9, 17],
+    9: 7,
+    7: 21,
+    21: 17,
+    17: 20,
+    18: 20
   },
   EnergyLevels: 100,
   Name: 'ElectricianAnamtronic'

@@ -195,6 +195,51 @@ function GameStart() {
     CreateContain.append(setup)
     SetUp = document.getElementById('SetUp')
     Deletables.push(SetUp)
+    Office2RoomSelected = 0
+    let ShockButtons = document.createElement('img')
+    ShockButtons.src = 'Assests/Shock2Button.png'
+    ShockButtons.style.position = 'absolute'
+    ShockButtons.style.top = '0px'
+    ShockButtons.style.left = '0px'
+    ShockButtons.style.width = '300px'
+    ShockButtons.id = 'Shock2'
+    CreateContain.append(ShockButtons)
+    Shock2 = document.getElementById('Shock2')
+    Shock2.onclick = ShockSelect
+    Deletables.push(Shock2)
+    ShockButtons = document.createElement('img')
+    ShockButtons.src = 'Assests/Shock7Button.png'
+    ShockButtons.style.position = 'absolute'
+    ShockButtons.style.top = '0px'
+    ShockButtons.style.left = '0px'
+    ShockButtons.style.width = '300px'
+    ShockButtons.id = 'Shock7'
+    CreateContain.append(ShockButtons)
+    Shock7 = document.getElementById('Shock7')
+    Shock7.onclick = ShockSelect
+    Deletables.push(Shock7)
+    ShockButtons = document.createElement('img')
+    ShockButtons.src = 'Assests/Shock9Button.png'
+    ShockButtons.style.position = 'absolute'
+    ShockButtons.style.top = '0px'
+    ShockButtons.style.left = '0px'
+    ShockButtons.style.width = '300px'
+    ShockButtons.id = 'Shock9'
+    CreateContain.append(ShockButtons)
+    Shock9 = document.getElementById('Shock9')
+    Shock9.onclick = ShockSelect
+    Deletables.push(Shock9)
+    ShockButtons = document.createElement('img')
+    ShockButtons.src = 'Assests/Shock11Button.png'
+    ShockButtons.style.position = 'absolute'
+    ShockButtons.style.top = '0px'
+    ShockButtons.style.left = '0px'
+    ShockButtons.style.width = '300px'
+    ShockButtons.id = 'Shock11'
+    CreateContain.append(ShockButtons)
+    Shock11 = document.getElementById('Shock11')
+    Shock11.onclick = ShockSelect
+    Deletables.push(Shock11)
     let ventbutton = document.createElement('img')
     ventbutton.src = 'Assests/Vent2Button-04.png'
     ventbutton.style.position = 'absolute'
@@ -552,6 +597,10 @@ function leverInfo(e) {
       ShockLever.src = 'Assests/LeverUp.gif'
       setTimeout(() => {
         ShockLever.src = 'Assests/Frame-1-Lever-01.png'
+        if (ElectricianAnamtronic.Room == Office2RoomSelected) {
+          PlaceAnimatronic(ElectricianAnamtronic, ElectricianAnamtronic.OriginRoom)
+          SendData('moveAnimatronic', ElectricianAnamtronic, ElectricianAnamtronic.OriginRoom)
+        }
       }, 780)
     } else {
       LightLever.src = 'Assests/LeverUp.gif'
@@ -692,6 +741,7 @@ function DoorLight(e) {
 function BasicFlipOut() {
   if (Offices[Office].HasCameras) {
     if (CameraView.hidden) {
+      PowerUpdate(1)
       CameraView.hidden = false
       CameraStatic.hidden = false
       MapDiv.hidden = false
@@ -705,7 +755,6 @@ function BasicFlipOut() {
         Animatronic1.style.top = MothPresets['Cam' + currentcam].Top
         Animatronic1.style.width = MothPresets['Cam' + currentcam].Width
       }
-      PowerUpdate(1)
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
       CameraStatic.hidden = true
@@ -717,6 +766,13 @@ function BasicFlipOut() {
       PowerUpdate(-1)
     }
   }
+}
+//For telling other offices where things move to
+function PlaceAnimatronic(Animatronic, Room) {
+  let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
+  RoomPlacement['Cam' + Animatronic.Room].splice(e)
+  Animatronic.Room = Room
+  RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
 }
 
 //Will move the corresponding animatronic
@@ -770,7 +826,39 @@ function MoveAnimatronic(Animatronic) {
     }
   }
 }
+//Selects which room should be shocked
+function ShockSelect(e) {
+  if (e.target.src.includes('Shock2')) {
+    Office2RoomSelected = 2
+    e.target.src = 'Assests/Shock2Press.png'
+    Shock7.src = 'Assests/Shock7Button.png'
+    Shock9.src = 'Assests/Shock9Button.png'
+    Shock11.src = 'Assests/Shock11Button.png'
+  }
+  if (e.target.src.includes('Shock7')) {
+    Office2RoomSelected = 7
+    e.target.src = 'Assests/Shock7Press.png'
+    Shock2.src = 'Assests/Shock2Button.png'
+    Shock9.src = 'Assests/Shock9Button.png'
+    Shock11.src = 'Assests/Shock11Button.png'
+  }
+  if (e.target.src.includes('Shock9')) {
+    Office2RoomSelected = 9
+    e.target.src = 'Assests/Shock9Press.png'
+    Shock2.src = 'Assests/Shock2Button.png'
+    Shock7.src = 'Assests/Shock7Button.png'
+    Shock11.src = 'Assests/Shock11Button.png'
+  }
+  if (e.target.src.includes('Shock11')) {
+    Office2RoomSelected = 11
+    e.target.src = 'Assests/Shock11Press.png'
+    Shock2.src = 'Assests/Shock2Button.png'
+    Shock7.src = 'Assests/Shock7Button.png'
+    Shock9.src = 'Assests/Shock9Button.png'
+  }
+}
 
+//Selects which vent should be flashed
 function VentSelect(e) {
   if (e.target.src.includes('Vent2')) {
     Office2VentSelected = 2

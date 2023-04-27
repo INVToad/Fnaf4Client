@@ -83,7 +83,7 @@ socket.on('refreshTransmit', function(data) {
 })
 
 //Important, this socket is constantly used for game data across clients
-socket.on('receiveGameData', function(type, data, data1) {
+socket.on('receiveGameData', function(type, data, data1, data2) {
   if (type == 'GameInitiate') {
     InGame = true
     GameStart()
@@ -118,16 +118,16 @@ socket.on('receiveGameData', function(type, data, data1) {
     if (data == EyeScanAnamtronic) {
       EyeScanAnamtronic.Room = data1
     } else if (data == PhantomAnamtronic) {
-      MoveAnimatronic(PhantomAnamtronic)
+      PlaceAnimatronic(PhantomAnamtronic, data1)
     } else {
       if (data == PowerDrainAnamtronic) {
-        MoveAnimatronic(PowerDrainAnamtronic)
+        PlaceAnimatronic(PowerDrainAnamtronic, data1)
       } else if (data == ElectricianAnamtronic) {
-        MoveAnimatronic(ElectricianAnamtronic)
+        PlaceAnimatronic(ElectricianAnamtronic, data1)
       } else if (data == FreeRoamAnamtronic) {
-        MoveAnimatronic(FreeRoamAnamtronic)
+        PlaceAnimatronic(FreeRoamAnamtronic, data1)
       } else {
-        MoveAnimatronic(MothAnamotronic)
+        PlaceAnimatronic(MothAnamotronic, data1)
       }
     }
   }
