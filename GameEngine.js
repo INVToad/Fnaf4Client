@@ -199,9 +199,9 @@ function GameStart() {
     let ShockButtons = document.createElement('img')
     ShockButtons.src = 'Assests/Shock2Button.png'
     ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '0px'
-    ShockButtons.style.left = '0px'
-    ShockButtons.style.width = '300px'
+    ShockButtons.style.top = '470px'
+    ShockButtons.style.left = '540px'
+    ShockButtons.style.width = '60px'
     ShockButtons.id = 'Shock2'
     CreateContain.append(ShockButtons)
     Shock2 = document.getElementById('Shock2')
@@ -210,9 +210,9 @@ function GameStart() {
     ShockButtons = document.createElement('img')
     ShockButtons.src = 'Assests/Shock7Button.png'
     ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '0px'
-    ShockButtons.style.left = '0px'
-    ShockButtons.style.width = '300px'
+    ShockButtons.style.top = '500px'
+    ShockButtons.style.left = '540px'
+    ShockButtons.style.width = '60px'
     ShockButtons.id = 'Shock7'
     CreateContain.append(ShockButtons)
     Shock7 = document.getElementById('Shock7')
@@ -221,9 +221,9 @@ function GameStart() {
     ShockButtons = document.createElement('img')
     ShockButtons.src = 'Assests/Shock9Button.png'
     ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '0px'
-    ShockButtons.style.left = '0px'
-    ShockButtons.style.width = '300px'
+    ShockButtons.style.top = '530px'
+    ShockButtons.style.left = '540px'
+    ShockButtons.style.width = '60px'
     ShockButtons.id = 'Shock9'
     CreateContain.append(ShockButtons)
     Shock9 = document.getElementById('Shock9')
@@ -232,9 +232,9 @@ function GameStart() {
     ShockButtons = document.createElement('img')
     ShockButtons.src = 'Assests/Shock11Button.png'
     ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '0px'
-    ShockButtons.style.left = '0px'
-    ShockButtons.style.width = '300px'
+    ShockButtons.style.top = '560px'
+    ShockButtons.style.left = '540px'
+    ShockButtons.style.width = '60px'
     ShockButtons.id = 'Shock11'
     CreateContain.append(ShockButtons)
     Shock11 = document.getElementById('Shock11')
@@ -597,6 +597,7 @@ function leverInfo(e) {
       ShockLever.src = 'Assests/LeverUp.gif'
       setTimeout(() => {
         ShockLever.src = 'Assests/Frame-1-Lever-01.png'
+        Power -= 100
         if (ElectricianAnamtronic.Room == Office2RoomSelected) {
           PlaceAnimatronic(ElectricianAnamtronic, ElectricianAnamtronic.OriginRoom)
           SendData('moveAnimatronic', ElectricianAnamtronic, ElectricianAnamtronic.OriginRoom)
@@ -605,6 +606,7 @@ function leverInfo(e) {
     } else {
       LightLever.src = 'Assests/LeverUp.gif'
       setTimeout(() => {
+        Power -= 100
         if (EyeScanAnamtronic.Room.includes(Office2VentSelected)) {
           if (EyeScanAnamtronic.Stage = 1) {
             EyeScanAnamtronic.LightAmount += 2
@@ -816,7 +818,7 @@ function MoveAnimatronic(Animatronic) {
         Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
       }
       // adds animatronic to room placement list
-      if (Animatronic.Room == undefined) {
+      if (Animatronic.Room == undefined || Animatronic.Room == '0') {
         Animatronic.Room = Animatronic.OriginRoom
         MoveAnimatronic(Animatronic)
       } else {
