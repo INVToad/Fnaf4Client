@@ -266,6 +266,8 @@ function GameStart() {
     let Powerbor = document.createElement('img')
     Powerbor.style.position = 'absolute'
     Powerbor.style.width = '17px'
+    Powerbor.style.top = '0px'
+    Powerbor.style.left = '0px'
     Powerbor.src = 'Assests/PowerBar-03.png'
     Powerbor.id = 'PowerBar'
     Powercontain.append(Powerbor)
@@ -697,12 +699,12 @@ function BasicFlipOut() {
       Invis1.hidden = true
       Invis2.hidden = true
       if (RoomPlacement['Cam' + currentcam].includes('MothAnamtronic') && currentcam != 'none') {
-      Animatronic1.hidden = false
-      Animatronic1.src = MothPresets['Cam' + currentcam].Source
-      Animatronic1.style.left = MothPresets['Cam' + currentcam].Left
-      Animatronic1.style.top = MothPresets['Cam' + currentcam].Top
-      Animatronic1.style.width = MothPresets['Cam' + currentcam].Width
-    }
+        Animatronic1.hidden = false
+        Animatronic1.src = MothPresets['Cam' + currentcam].Source
+        Animatronic1.style.left = MothPresets['Cam' + currentcam].Left
+        Animatronic1.style.top = MothPresets['Cam' + currentcam].Top
+        Animatronic1.style.width = MothPresets['Cam' + currentcam].Width
+      }
       PowerUpdate(1)
     } else if (!CameraView.hidden) {
       CameraView.hidden = true
@@ -743,7 +745,7 @@ function MoveAnimatronic(Animatronic) {
       //Will remove animatronic name from room placement list
       let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
       RoomPlacement['Cam' + Animatronic.Room].splice(e)
-      if (Animatronic.Path[Animatronic.Room].length <= 1) {
+      if (Animatronic.Path[Animatronic.Room].length == undefined) {
         Animatronic.Room = Animatronic.Path[Animatronic.Room]
       } else if(Animatronic == MothAnamtronic) {
         if (Animatronic.Target == 0) {
@@ -780,7 +782,7 @@ function VentSelect(e) {
     Office2VentSelected = 3
     e.target.src = 'Assests/Vent3Sellect-04.png'
     Vent2.src = 'Assests/Vent2Button-04.png'
-    Vent4 = 'Assests/Vent4Button-04.png'
+    Vent4.src = 'Assests/Vent4Button-04.png'
   }
   if (e.target.src.includes('Vent4')) {
     Office2VentSelected = 4
