@@ -127,7 +127,7 @@ socket.on('receiveGameData', function(type, data, data1, data2) {
       } else if (data == FreeRoamAnamtronic) {
         PlaceAnimatronic(FreeRoamAnamtronic, data1)
       } else {
-        PlaceAnimatronic(MothAnamotronic, data1)
+        PlaceAnimatronic(MothAnamotronic, data1, data2)
       }
     }
   }

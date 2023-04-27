@@ -7,6 +7,7 @@ var ShiftTime = 0
 var Power = 1000
 var OfficeOn = true
 var PowerUsage = 1
+var MothCheck = null
 var ActiveAnimatronics = []
 var leftDoor = false
 var rightDoor = false
@@ -62,7 +63,8 @@ const Offices = {
     HeatControl: false,
     LightControl: false,
     ShockControl: false,
-    Cameras: []
+    Cameras: [],
+    num: 1
   },
   Office2: {
     HasCameras: true,
@@ -75,7 +77,8 @@ const Offices = {
     HeatControl: false,
     LightControl: true,
     ShockControl: true,
-    Cameras: [15, 3, 5, 6, 11, 14]
+    Cameras: [15, 3, 5, 6, 11, 14],
+    num: 2
   },
   Office3: {
     HasCameras: true,
@@ -88,7 +91,8 @@ const Offices = {
     HeatControl: true,
     LightControl: false,
     ShockControl: false,
-    Cameras: [13, 4, 10, 12]
+    Cameras: [13, 4, 10, 12],
+    num: 3
   },
   Office4: {
     HasCameras: true,
@@ -101,7 +105,8 @@ const Offices = {
     HeatControl: false,
     LightControl: false,
     ShockControl: false,
-    Cameras: [1, 2, 8, 9, 7]
+    Cameras: [1, 2, 8, 9, 7],
+    num: 4
   }
 }
 

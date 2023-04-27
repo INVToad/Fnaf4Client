@@ -697,7 +697,10 @@ function CamChange(e) {
 function DoorLight(e) {
   let i = Offices[Office]
   if (i.HasDoors) {
-    if (e.target.id.includes('Left') && !leftDoor) {
+    if (e == 'reset') {
+      LeftDoor.src = 'Assests/LeftDoor.png'
+      RightDoor.src = 'Assests/RightDoor.png'
+    } else if (e.target.id.includes('Left') && !leftDoor) {
       if (!LeftDoor.src.includes('DoorLight') && !RightDoor.src.includes('DoorLight')) {
         LeftDoor.src = 'Assests/DoorLight.png'
         LeftDoor.style.left = '-100px'
@@ -723,7 +726,10 @@ function DoorLight(e) {
       }
     }
   } else {
-    if (e.target.id.includes('Left')) {
+    if (e == 'reset') {
+      LeftLight.hidden = true
+      RightLight.hidden = true
+    } else if (e.target.id.includes('Left')) {
       if (LeftLight.hidden) {
         LeftLight.hidden = false
       } else {
@@ -823,7 +829,11 @@ function MoveAnimatronic(Animatronic) {
         MoveAnimatronic(Animatronic)
       } else {
         RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
-        SendData('moveAnimatronic', Animatronic, Animatronic.Room)
+        if (Animatronic == MothAnamtronic) {
+          SendData('moveAnimatronic', Animatronic, Animatronic.Room, MothAnamtronic.target)
+        } else {
+          SendData('moveAnimatronic', Animatronic, Animatronic.Room)
+        }
       }
     }
   }
@@ -857,6 +867,23 @@ function ShockSelect(e) {
     Shock2.src = 'Assests/Shock2Button.png'
     Shock7.src = 'Assests/Shock7Button.png'
     Shock9.src = 'Assests/Shock9Button.png'
+  }
+}
+//Makes the power off work
+function PowerDown(e) {
+  if (e == 'Down') {
+    if (MothAnamtronic.target == (Offices[Office].num - 1)) {
+      let kj = Math.floor(Math.random() * 2000) + 5000
+      if (MothCheck != null) {
+        clearInterval(MothCheck)
+      }
+      MothCheck = setTimeout(() => {
+        if (!OfficeOn && MothAnamtronic.target == (Offices[Office].num - 1)) {
+          MothAnamtronic.target = 0
+          MothAnamtronic.Room = MothAnamtronic.OriginRoom
+        }
+      }, kj)
+    }
   }
 }
 
