@@ -9,7 +9,7 @@ var RoomInput = document.getElementById('RoomInput')
 var RoomSubmitButton = document.getElementById('RoomSubmitButton')
 var refreshLobbiesButton = document.getElementById('refreshLobbiesButton')
 
-var Username = prompt('Username')
+var Username = 'Admin'//prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
 var Lobbylist = document.getElementById("lobbies")
 
@@ -19,7 +19,10 @@ var Room = 'null'
 //Connection socket to tell when the player connects
 socket.on('connect', function() {
   socket.emit("connection")
-  socket.emit("connected", Username, socket.id)
+  socket.emit("connected", Username, socket.id, window.location, AdminPassword)
+});
+socket.on('Forcedisonnection', function() {
+  socket.disconnect()
 });
 socket.on('user', function(data, name) {
   if (data == 'Taken') {
@@ -84,8 +87,50 @@ socket.on('refreshTransmit', function(data) {
 
 //Important, this socket is constantly used for game data across clients
 socket.on('receiveGameData', function(type, data, data1, data2) {
+  if (type == 'Deactivate' && Office == data) {
+    if (data1 != 'Cams') {
+      FunctionControls[FunctionList[data1]].Active = false
+    } else {
+      Offices[Office].HasCameras = false
+    }
+  }
+  if (type == 'Reactivate' && Office == data) {
+    if (data1 != 'Cams') {
+      FunctionControls[FunctionList[data1]].Active = true
+    } else {
+      Offices[Office].HasCameras = true
+    }
+  }
+  if (type == 'PowerCheck') {
+    SendData('PowerLevelRecieve', Office, Power)
+  }
+  if (type == 'Energy_Check' && Office == 'Office3') {
+    SendData('ConsoleData', 'Energy_Levels', ElectricianAnamtronic.EnergyLevels)
+  }
+  if (type == 'ConsoleData' && Office == 'Office1') {
+    if (data == 'Energy_Levels') {
+      EnergyLevels = data1
+    }
+    DataReceived = true
+  }
+  if (type == 'PowerLevelRecieve' && Office == 'Office4') {
+    if (data == 'Office1') {
+      Office1Power = Math.floor(Power / 100)
+    }
+    if (data == 'Office2') {
+      Office2Power = Math.floor(Power / 100)
+    }
+    if (data == 'Office3') {
+      Office3Power = Math.floor(Power / 100)
+    }
+  }
+  if (type == 'PowerDown') {
+    if(data == Office) {
+      PowerDown(data1)
+    }
+  }
   if (type == 'GameInitiate') {
-    InGame = true
+    Ingame = true
     GameStart()
   }
   if (type == 'LobbyLoad') {
@@ -110,8 +155,8 @@ socket.on('receiveGameData', function(type, data, data1, data2) {
     NightShift = data
   }
   if (type == 'Door') {
-    if (data == Office) {
-      ControlDoor(data1)
+    if (data[0] == Office) {
+      ControlDoor(data[1])
     }
   }
   if (type == 'moveAnimatronic') {
@@ -127,7 +172,7 @@ socket.on('receiveGameData', function(type, data, data1, data2) {
       } else if (data == FreeRoamAnamtronic) {
         PlaceAnimatronic(FreeRoamAnamtronic, data1)
       } else {
-        PlaceAnimatronic(MothAnamotronic, data1, data2)
+        PlaceAnimatronic(MothAnamtronic, data1, data2)
       }
     }
   }
@@ -196,8 +241,8 @@ function sendRoomRequest() {
   }
 }
 
-function SendData(type, data) {
-  socket.emit('SendGameData', Room, type, data)
+function SendData(type, data, data1) {
+  socket.emit('SendGameData', Room, type, data, data1)
 }
 
 ChatSubmitButton.onclick = SendChatMsg

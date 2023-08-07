@@ -1,1 +1,0 @@
-Animatronic move every 4 to 5 seconds, when they move there is a chance for them to succeed. A random number is rolled and if the number is less than or equal to the AI level it'll move.

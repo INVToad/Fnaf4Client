@@ -1,6 +1,9 @@
 //Begins all Game engine functions
 function GameStart() {
-  console.log('work in progress')
+  MouseCollisions = []
+  MouseCollisions.push('LookLeftTrigger', 'LookRightTrigger', 'DoorLeft', 'DoorRight', 'ScreenTrigger')
+  Ingame = true
+  AudioControl('Mechanised', 'Play')
   if (IsHost) {
     socket.emit('SendGameData', 'Night', NightShift)
     GameTime = setInterval(() => {
@@ -12,159 +15,82 @@ function GameStart() {
     }, 60000)
     AllTimers.push(GameTime)
   }
+  OfficeFlicker = setInterval(() => {
+    let m = Math.floor(Math.random() * 25) + 1
+    let o = OfficesRender.ScreenCover
+    if (m <= 1 && o.Alpha != 0.7) {
+      o.Alpha = 0.5
+      setTimeout(() => {
+        if (o.Alpha != 0.7) {
+          o.Alpha = 0.2 + (Math.floor(Math.random() * 2) - 1) / 10
+        }
+      }, 20)
+    }
+  }, 100)
+  AllTimers.push(OfficeFlicker)
+  PowerUpdate('reset')
   OfficePowerDrain = setInterval(() => {
-    Power -= PowerUsage
-    let p = Math.round(Power/10)
-    PowerPercent.firstChild.data = p + '%'
-    PowerPercent.style.fontSize = '30px'
+    if (Office == 'Office4') {
+      let k = 1
+      if (PowerOffices.Office1) {
+        k += 1
+        SendData('PowerOffice', 'Office1')
+      }
+      if (PowerOffices.Office2) {
+        k += 1
+        SendData('PowerOffice', 'Office2')
+      }
+      if (PowerOffices.Office3) {
+        k += 1
+        SendData('PowerOffice', 'Office3')
+      }
+      PowerChange -= PowerUsage * k
+    } else {
+      PowerChange -= PowerUsage
+    }
+    if (PowerUsage > 5) {
+      if ((Math.floor(Math.random() * 20) + 1) <= 3) {
+        let h = Math.floor(Math.random() * Functions.length)
+        FunctionControls[Functions[h]].Active = false
+        let o = OfficesRender[FunctionControls[Functions[h]].Connections]
+        for (j in o) {
+          if (o[j].Reverse == true)  {
+            o[j].FreezeFrame = false
+          }
+        }
+      }
+    }
     if (Power <= 0) {
-      GameEnd('Loss')
+      PowerDown('Down')
     }
   }, 1000)
+  OfficeDraining = setInterval(() => {
+    Power = lerp(Power, PowerChange, 0.1)
+  }, 100)
   AllTimers.push(OfficePowerDrain)
+  AllTimers.push(OfficeDraining)
   socket.emit('NightSettings', NightShift)
-  theOffice.hidden = false
-  Invis1.hidden = false
-  Invis2.hidden = false
-  LeftDoorDiv.hidden = false
-  RightDoorDiv.hidden = false
-  LeftDoorTrigger.onclick = DoorLight
-  RightDoorTrigger.onclick = DoorLight
   //reveals/Creates basic values for each office
   let i = Offices[Office]
-  if (i.HasCameras) {
-    currentcam = 'none'
-    let img = document.createElement("img")
-    img.src = 'Assests/fnaf_static_gif_by_supermariojustin4_d9r0qpv.gif'
-    img.style.position = 'absolute'
-    img.style.left = '0px'
-    img.style.top = '0px'
-    img.style.height = '791px'
-    img.style.width = '1424px'
-    img.hidden = true
-    img.id = 'CameraStaticGIF'
-    DivTrigger.prepend(img)
-    Deletables.push(img)
-    let img2 = document.createElement('img')
-    img2.src = ''
-    img2.style.position = 'absolute'
-    img2.style.left = '0px'
-    img2.style.top = '0px'
-    img2.style.width = '0px'
-    img2.hidden = true
-    img2.id = 'Animatronic1'
-    DivTrigger.prepend(img2)
-    Deletables.push(img2)
-    let img1 = document.createElement("img")
-    img1.src = ''
-    img1.style.position = 'absolute'
-    img1.style.left = '0px'
-    img1.style.top = '0px'
-    img1.style.height = '791px'
-    img1.style.width = '1424px'
-    img1.hidden = true
-    img1.id = 'CameraView'
-    DivTrigger.prepend(img1)
-    Deletables.push(img1)
-    let Mapdiv = document.createElement("div")
-    Mapdiv.style.position = 'absolute'
-    Mapdiv.style.right = '0px'
-    Mapdiv.style.bottom = '0px'
-    Mapdiv.style.overflow = 'hidden'
-    Mapdiv.style.width = '400px'
-    Mapdiv.style.height = '400px'
-    Mapdiv.id = 'MapContainer'
-    Mapdiv.hidden = true
-    DivTrigger.append(Mapdiv)
-    MapDiv = document.getElementById("MapContainer")
-    Deletables.push(MapDiv)
-    let Map = document.createElement('img')
-    Map.src = 'Assests/Map.png'
-    Map.style.position = 'absolute'
-    Map.style.left = '0px'
-    Map.style.top = '0px'
-    Map.style.height = '800px'
-    Map.hidden = true
-    Map.id = 'CamMap'
-    MapDiv.append(Map)
-    map = document.getElementById('CamMap')
-    CameraView = document.getElementById('CameraView')
-    CameraStatic = document.getElementById('CameraStaticGIF')
-    Animatronic1 = document.getElementById('Animatronic1')
-    CamSuitTrig.onmouseenter = BasicFlipOut
-  }
-  if (i.HasDoors) {
-    let img = document.createElement("img")
-    img.src = 'Assests/LeftDoor.png'
-    img.style.height = '647px'
-    img.id = 'DOOR_L'
-    img.style.position = 'absolute'
-    img.hidden = true
-    LeftDoorDiv.prepend(img)
-    LeftDoor = document.getElementById('DOOR_L')
-    Deletables.push(img)
-    let img1 = document.createElement("img")
-    img1.src = 'Assests/RightDoor.png'
-    img1.style.height = '647px'
-    img1.style.position = 'absolute'
-    img1.id = 'DOOR_R'
-    img1.hidden = true
-    RightDoorDiv.prepend(img1)
-    RightDoor = document.getElementById('DOOR_R')
-    Deletables.push(img1)
-  } else {
-    let img = document.createElement("img")
-    img.src = 'Assests/DoorLight.png'
-    img.style.height = '647px'
-    img.style.position = 'absolute'
-    img.id = 'Light_L'
-    img.hidden = true
-    LeftDoorDiv.prepend(img)
-    LeftLight = document.getElementById('Light_L')
-    Deletables.push(img)
-    let img1 = document.createElement("img")
-    img1.src = 'Assests/DoorLight.png'
-    img1.style.height = '647px'
-    img1.style.position = 'absolute'
-    img1.id = 'Light_R'
-    img1.hidden = true
-    RightDoorDiv.prepend(img1)
-    RightLight = document.getElementById('Light_R')
-    Deletables.push(img1)
-  }
-  if (i.suit) {
-
-  }
-  if (i.BoxAnimatronic) {
-
-  }
-  if (i.SystemReset) {
-
-  }
-  if (i.DoorControl) {
-
-  }
-  if (i.PowerControl) {
-
-  }
-  if (i.HeatControl) {
-
-  }
-  if (i.LightControl) {
-
-  }
-  if (i.ShockControl) {
-
-  }
   //The next part gives the offices their specifc values needed for their functions
   if (Office == 'Office1') {
+    Reset = undefined
+    ConnectedOffice = undefined
+    FlickCodes = {Office2: [1, 4, 6, 7], Office3: [3, 6, 10, 1], Office4: [5, 3, 11, 4]}
+    FlickCurrent = [false, false, false, false, false, false, false, false, false, false, false, false]
+    OfficesRender.ConsoleObjects.ConsoleText.Colour = 'green'
+    EnergyLevels = undefined
+    MotherlyRage = undefined
+    ConsoleWorking = false
+    ConsoleActive = false
+    DataReceived = true
     Office2ShockActive = true
     Office2FlashActive = true
     Office3DoorsActive = true
     Office3HeatActive = true
     BoxTime = 10
     BoxTimer = setInterval(() => {
-      BoxTime -= 1
+      //BoxTime -= 1
       if (BoxTime <= 0) {
         GameEnd('Loss')
       }
@@ -172,11 +98,17 @@ function GameStart() {
     AllTimers.push(BoxTimer)
   }
   if (Office == 'Office2') {
+    TimeSpotX = 830
+    TimeSpotY = 555
     Office2VentSelected = 0
     Office2ShockActive = true
     Office2FlashActive = true
-    Functions.push(Office2ShockActive)
-    Functions.push(Office2FlashActive)
+    StoppedShockReset = false
+    StoppedFlashReset = false
+    FunctionControls['Office2ShockActive'] = true
+    FunctionControls['Office2FlashActive'] = true
+    Functions.push('Office2ShockActive')
+    Functions.push('Office2FlashActive')
     MothMove = setInterval(() => {
       MoveAnimatronic(MothAnamtronic)
     }, 10000)
@@ -184,251 +116,93 @@ function GameStart() {
       MoveAnimatronic(EyeScanAnamtronic)
     }, 15600)
     AllTimers.push(EyeMove)
-    map.style.left = '-410px'
-    map.style.top = '-405px'
-    let setup = document.createElement('img')
-    setup.src = 'Assests/Office2Setup.png'
-    setup.style.position = 'absolute'
-    setup.style.left = '10px'
-    setup.style.width = '750px'
-    setup.id = 'SetUp'
-    CreateContain.append(setup)
-    SetUp = document.getElementById('SetUp')
-    Deletables.push(SetUp)
-    Office2RoomSelected = 0
-    let ShockButtons = document.createElement('img')
-    ShockButtons.src = 'Assests/Shock2Button.png'
-    ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '470px'
-    ShockButtons.style.left = '540px'
-    ShockButtons.style.width = '60px'
-    ShockButtons.id = 'Shock2'
-    CreateContain.append(ShockButtons)
-    Shock2 = document.getElementById('Shock2')
-    Shock2.onclick = ShockSelect
-    Deletables.push(Shock2)
-    ShockButtons = document.createElement('img')
-    ShockButtons.src = 'Assests/Shock7Button.png'
-    ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '500px'
-    ShockButtons.style.left = '540px'
-    ShockButtons.style.width = '60px'
-    ShockButtons.id = 'Shock7'
-    CreateContain.append(ShockButtons)
-    Shock7 = document.getElementById('Shock7')
-    Shock7.onclick = ShockSelect
-    Deletables.push(Shock7)
-    ShockButtons = document.createElement('img')
-    ShockButtons.src = 'Assests/Shock9Button.png'
-    ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '530px'
-    ShockButtons.style.left = '540px'
-    ShockButtons.style.width = '60px'
-    ShockButtons.id = 'Shock9'
-    CreateContain.append(ShockButtons)
-    Shock9 = document.getElementById('Shock9')
-    Shock9.onclick = ShockSelect
-    Deletables.push(Shock9)
-    ShockButtons = document.createElement('img')
-    ShockButtons.src = 'Assests/Shock11Button.png'
-    ShockButtons.style.position = 'absolute'
-    ShockButtons.style.top = '560px'
-    ShockButtons.style.left = '540px'
-    ShockButtons.style.width = '60px'
-    ShockButtons.id = 'Shock11'
-    CreateContain.append(ShockButtons)
-    Shock11 = document.getElementById('Shock11')
-    Shock11.onclick = ShockSelect
-    Deletables.push(Shock11)
-    let ventbutton = document.createElement('img')
-    ventbutton.src = 'Assests/Vent2Button-04.png'
-    ventbutton.style.position = 'absolute'
-    ventbutton.style.top = '570px'
-    ventbutton.style.left = '195px'
-    ventbutton.style.width = '40px'
-    ventbutton.id = 'Vent2'
-    CreateContain.append(ventbutton)
-    Vent2 = document.getElementById('Vent2')
-    Vent2.onclick = VentSelect
-    Deletables.push(Vent2)
-    ventbutton = document.createElement('img')
-    ventbutton.src = 'Assests/Vent3Button-04.png'
-    ventbutton.style.position = 'absolute'
-    ventbutton.style.top = '566px'
-    ventbutton.style.left = '110px'
-    ventbutton.style.width = '40px'
-    ventbutton.id = 'Vent3'
-    CreateContain.append(ventbutton)
-    Vent3 = document.getElementById('Vent3')
-    Vent3.onclick = VentSelect
-    Deletables.push(Vent3)
-    ventbutton = document.createElement('img')
-    ventbutton.src = 'Assests/Vent4Button-04.png'
-    ventbutton.style.position = 'absolute'
-    ventbutton.style.top = '465px'
-    ventbutton.style.left = '87px'
-    ventbutton.style.width = '40px'
-    ventbutton.id = 'Vent4'
-    CreateContain.append(ventbutton)
-    Vent4 = document.getElementById('Vent4')
-    Vent4.onclick = VentSelect
-    Deletables.push(Vent4)
-    //Might move power images in the order of creation
-    let context = document.createTextNode('100%')
-    let Text = document.createElement('p')
-    Text.append(context)
-    Text.style.position = 'absolute'
-    Text.style.top = '385px'
-    Text.style.left = '460px'
-    Text.style.color = 'white'
-    Text.id = 'PowerPercent'
-    CreateContain.append(Text)
-    PowerPercent = document.getElementById('PowerPercent')
-    PowerPercent.style.fontsize = '30px'
-    Deletables.push(PowerPercent)
-    context = document.createTextNode('12:00')
-    Text = document.createElement('p')
-    Text.append(context)
-    Text.style.position = 'absolute'
-    Text.style.top = '350px'
-    Text.style.left = '600px'
-    Text.style.color = 'white'
-    Text.id = 'Time'
-    CreateContain.append(Text)
-    Time = document.getElementById('Time')
-    Deletables.push(Time)
-    let PowerContain = document.createElement('div')
-    PowerContain.style.position = 'absolute'
-    PowerContain.style.left = '59px'
-    PowerContain.style.top = '45px'
-    PowerContain.style.width = '17px'
-    PowerContain.style.height = '24px'
-    PowerContain.style.overflow = 'hidden'
-    PowerContain.id = 'PowerContain'
-    CreateContain.append(PowerContain)
-    Powercontain = document.getElementById('PowerContain')
-    Deletables.push(PowerContain)
-    let Powerbor = document.createElement('img')
-    Powerbor.style.position = 'absolute'
-    Powerbor.style.width = '17px'
-    Powerbor.style.top = '0px'
-    Powerbor.style.left = '0px'
-    Powerbor.src = 'Assests/PowerBar-03.png'
-    Powerbor.id = 'PowerBar'
-    Powercontain.append(Powerbor)
-    PowerBar = document.getElementById('PowerBar')
-    let Lever = document.createElement('img')
-    Lever.src = 'Assests/Frame-1-Lever-01.png'
-    Lever.style.position = 'absolute'
-    Lever.style.left = '300px'
-    Lever.style.top = '450px'
-    Lever.style.width = '80px'
-    Lever.id = 'LightLever'
-    CreateContain.append(Lever)
-    LightLever = document.getElementById('LightLever')
-    LightLever.onclick = leverInfo
-    Deletables.push(LightLever)
-    Lever = document.createElement('img')
-    Lever.src = 'Assests/Frame-1-Lever-01.png'
-    Lever.style.position = 'absolute'
-    Lever.style.left = '615px'
-    Lever.style.top = '450px'
-    Lever.style.width = '80px'
-    Lever.id = 'ShockLever'
-    CreateContain.append(Lever)
-    ShockLever = document.getElementById('ShockLever')
-    ShockLever.onclick = leverInfo
-    Deletables.push(ShockLever)
-    let Light = document.createElement('img')
-    Light.src = 'Assests/LightOn-02.png'
-    Light.style.position = 'absolute'
-    Light.style.left = '398px'
-    Light.style.top = '503px'
-    Light.style.width = '40px'
-    Light.id = 'ShockLight'
-    CreateContain.append(Light)
-    ShockLight = document.getElementById('ShockLight')
-    Deletables.push(ShockLight)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '15px'
-    cam.style.top = '110px'
-    cam.style.width = '58px'
-    cam.id = 'Cam3'
-    cam.src = 'Assests/Cam3Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '158px'
-    cam.style.top = '110px'
-    cam.style.width = '58px'
-    cam.id = 'Cam5'
-    cam.src = 'Assests/Cam5Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '343px'
-    cam.style.width = '58px'
-    cam.id = 'Cam15'
-    cam.src = 'Assests/Cam15Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '205px'
-    cam.style.top = '190px'
-    cam.style.width = '58px'
-    cam.id = 'Cam6'
-    cam.src = 'Assests/Cam6Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '18px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam11'
-    cam.src = 'Assests/Cam11Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '315px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam14'
-    cam.src = 'Assests/Cam14Button.png'
-    MapDiv.append(cam)
-    cam3 = document.getElementById('Cam3')
-    cam5 = document.getElementById('Cam5')
-    cam15 = document.getElementById('Cam15')
-    cam6 = document.getElementById('Cam6')
-    cam11 = document.getElementById('Cam11')
-    cam14 = document.getElementById('Cam14')
-    cam3.onclick = CamChange
-    cam5.onclick = CamChange
-    cam15.onclick = CamChange
-    cam6.onclick = CamChange
-    cam11.onclick = CamChange
-    cam14.onclick = CamChange
+    AllTimers.push(MothMove)
+    MouseCollisionsValues.MapChangeButton.Effect.CameraMapChange = 'ShockMap'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.CameraObjects.MapChangeButton.UIN) {
+        Images[i].src = 'Assests/ShockMapChange.png'
+      }
+    }
   }
   if (Office == 'Office3') {
-    Office3DoorsActive = true
-    Office3HeatActive = true
-    Office2LeftDoor = false
-    Office2RightDoor = false
-    Office3LeftDoor = false
-    Office3RightDoor = false
-    Office4LeftDoor = false
-    Office4RightDoor = false
+    TimeSpotX = 928
+    TimeSpotY = 570
+    OfficesDoors = {Office2LeftDoor: false,
+      Office2RightDoor: false,
+      Office3LeftDoor: false,
+      Office3RightDoor: false,
+      Office4LeftDoor: false,
+      Office4RightDoor: false}
     Office1Heat = 20
+    OfficesRender.FanControll.Office1SwitchText.Text = '20˚C'
+    let Office1heatTimer = setInterval(() => {
+      if (Office1Fan) {
+        Office1Heat -= 1
+      }
+      if (Math.floor(Math.random() * 30) <= 1) {
+        Office1Heat += 1
+        if (Office1Heat >= 50 || Office1Heat <= 10) {
+          GameEnd('Loss')
+        }
+      }
+      OfficesRender.FanControll.Office1SwitchText.Text = Office1Heat + '˚C'
+    }, 1000)
+    AllTimers.push(Office1heatTimer)
     Office1Fan = false
     Office2Heat = 20
+    OfficesRender.FanControll.Office2SwitchText.Text = '20˚C'
+    let Office2heatTimer = setInterval(() => {
+      if (Office2Fan) {
+        Office2Heat -= 1
+      }
+      if (Math.floor(Math.random() * 30) <= 1) {
+        Office2Heat += 1
+        if (Office2Heat >= 50 || Office2Heat <= 10) {
+          GameEnd('Loss')
+        }
+      }
+      OfficesRender.FanControll.Office2SwitchText.Text = Office2Heat + '˚C'
+    }, 1000)
+    AllTimers.push(Office2heatTimer)
     Office2Fan = false
     Office3Heat = 20
+    OfficesRender.FanControll.Office3SwitchText.Text = '20˚C'
+    let Office3heatTimer = setInterval(() => {
+      if (Office3Fan) {
+        Office3Heat -= 1
+      }
+      if (Math.floor(Math.random() * 30) <= 1) {
+        Office3Heat += 1
+        if (Office3Heat >= 50 || Office3Heat <= 10) {
+          GameEnd('Loss')
+        }
+      }
+      OfficesRender.FanControll.Office3SwitchText.Text = Office3Heat + '˚C'
+    }, 1000)
+    AllTimers.push(Office3heatTimer)
     Office3Fan = false
     Office4Heat = 20
+    OfficesRender.FanControll.Office4SwitchText.Text = '20˚C'
+    let Office4heatTimer = setInterval(() => {
+      if (Office4Fan) {
+        Office4Heat -= 1
+      }
+      if (Math.floor(Math.random() * 30) <= 1) {
+        Office4Heat += 1
+        if (Office4Heat >= 50 || Office4Heat <= 10) {
+          GameEnd('Loss')
+        }
+      }
+      OfficesRender.FanControll.Office4SwitchText.Text = Office4Heat + '˚C'
+    }, 1000)
+    AllTimers.push(Office4heatTimer)
     Office4Fan = false
-    Functions.push(Office3HeatActive)
-    Functions.push(Office3DoorsActive)
+    Functions.push('Office3HeatActive')
+    Functions.push('Office3DoorsActive')
+    FunctionControls['Office3HeatActive'] = {Active: true, Connections: 'FanControll'}
+    FunctionControls['Office3DoorsActive'] = {Active: true, Connections: 'DoorControllObjects'}
+    FunctionList['Heat'] = 'Office3HeatActive'
+    FunctionList['Door'] = 'Office3DoorActive'
     FreeRoamMove = setInterval(() => {
       MoveAnimatronic(FreeRoamAnamtronic)
     }, 5600)
@@ -437,150 +211,82 @@ function GameStart() {
       MoveAnimatronic(PowerDrainAnamtronic)
     }, 7800)
     AllTimers.push(PowerDrainMove)
-    Map.style.top = '-405px'
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam13'
-    cam.src = 'Assests/Cam13Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam4'
-    cam.src = 'Assests/Cam4Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam10'
-    cam.src = 'Assests/Cam10Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam12'
-    cam.src = 'Assests/Cam12Button.png'
-    MapDiv.append(cam)
-    cam13 = document.getElementById('Cam13')
-    cam4 = document.getElementById('Cam4')
-    cam10 = document.getElementById('Cam10')
-    cam12 = document.getElementById('Cam12')
-    cam13.onclick = CamChange
-    cam4.onclick = CamChange
-    cam10.onclick = CamChange
-    cam12.onclick = CamChange
+    ElectricianMove = setInterval(() => {
+      if (ElectricianAnamtronic.EnergyLevels <= 0) {
+        MoveAnimatronic(ElectricianAnamtronic)
+      } else {
+        ElectricianAnamtronic.EnergyLevels -= 1
+      }
+    }, 1000)
   }
   if (Office == 'Office4') {
-    Power = 3000
-    Office1Power = 1000
-    Office1Recieving = false
-    Office2Power = 1000
-    Office2Recieving = false
-    Office3Power = 1000
-    Office3Recieving = false
-    ElectrianMove = setInterval(() => {
-      MoveAnimatronic(ElectricianAnamtronic)
-    }, 6400)
-    AllTimers.push(ElectrianMove)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam1'
-    cam.src = 'Assests/Cam1Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam2'
-    cam.src = 'Assests/Cam2Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam7'
-    cam.src = 'Assests/Cam7Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam8'
-    cam.src = 'Assests/Cam8Button.png'
-    MapDiv.append(cam)
-    cam = document.createElement('img')
-    cam.style.position = 'absolute'
-    cam.style.left = '0px'
-    cam.style.top = '0px'
-    cam.style.width = '58px'
-    cam.id = 'Cam9'
-    cam.src = 'Assests/Cam9Button.png'
-    MapDiv.append(cam)
-    cam1 = document.getElementById('Cam1')
-    cam2 = document.getElementById('Cam2')
-    cam7 = document.getElementById('Cam7')
-    cam8 = document.getElementById('Cam8')
-    cam9 = document.getElementById('Cam9')
-    cam1.onclick = CamChange
-    cam2.onclick = CamChange
-    cam7.onclick = CamChange
-    cam8.onclick = CamChange
-    cam9.onclick = CamChange
+    OfficesRender.ConsoleObjects.OfficePowerConsole.EndEffect = 'BigRedButtonPowerCheck'
+    TimeSpotX = 960
+    TimeSpotY = 568
+    Power = 10000
+    PowerChange = Power
+    ConsoleActive = false
+    ConsoleWorking = false
+    Office1Power = 100
+    Office2Power = 100
+    Office3Power = 100
+    Office4Power = 100
+    PowerOffices = {Office1: false, Office2: false, Office3: false}
+    DigitialCommandPrompt = false
+    FunctionControls['Office4PowerCheck'] = {Active: true, Connections: 'PowerObjects'}
+    FunctionList['Power'] = 'Office4PowerCheck'
+    MouseCollisionsValues.MapChangeButton.Effect.CameraMapChange = 'PowerMap'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.CameraObjects.MapChangeButton.UIN) {
+        Images[i].src = 'Assests/MaPChangePower.png'
+      }
+    }
   }
 }
 
-//Pauses Game
-function GamePause() {
-  alert('work in progress and stop using inspect')
+function JunctionConnect() {
+  for (i in FlickCodes) {
+    let ConnectPossible = true
+    for (let m = 0; m < FlickCodes[i].length; m++) {
+      if (!FlickCurrent[FlickCodes[i][m] - 1]) {
+        ConnectPossible = false
+      }
+    }
+    for (let m = 1; m < 13; m++) {
+      if (FlickCodes[i].indexOf[m] == -1 && FlickCurrent[m]) {
+        ConnectPossible = false
+      }
+    }
+    if (ConnectPossible) {
+      if (ConsoleWorking && ConsoleActive) {
+        ConnectedOffice = i
+      }
+      DisplayUpdate('OfficeConnect')
+      break
+    }
+  }
+}
+
+//Controls Game Events
+function EventControl() {
+  
 }
 
 //Ends all Game engine functions
 function GameEnd(condition) {
+  Ingame = false
   Power = 1000
-  for (let i = 0; i < Deletables.length; i++) {
-    let temp = Deletables[i]
-    temp.remove()
+  TimerControl('Stop')
+  CreateObjects('HomeScreen')
+}
+
+function TimerControl(e) {
+  if (e == 'Stop') {
+    for (let i = 0; i < AllTimers.length; i++) {
+      clearInterval(AllTimers[i])
+    }
+    AllTimers = []
   }
-  Deletables = []
-  if (!leftDoor) {
-    ControlDoor('left')
-  }
-  if (!rightDoor) {
-    ControlDoor('right')
-  }
-  PowerUsage = 1
-  theOffice.hidden = true
-  Invis1.hidden = true
-  Invis2.hidden = true
-  LeftDoorDiv.hidden = true
-  RightDoorDiv.hidden = true
-  CamSuitTrig.hidden = true
-  for (i in AllTimers) {
-    clearInterval(AllTimers[i])
-  }
-  //next determines what the condition for the game ending was
-  if (condition == 'Loss') {
-    alert('Congratulations, Your a loser')
-  }
-  if (condition == 'Win') {
-    alert('Congratulations, you won')
-  }
-  console.log('Are you the one that ruined it for everyone?')
 }
 
 //This will help control what audio plays and stops when
@@ -590,188 +296,836 @@ function AudioContoll(e) {
   }
 }
 
-//This is where all lever actvite is activated
-function leverInfo(e) {
-  if(e == 'Shock' || e == 'Light') {
-    if (e == 'Shock') {
-      ShockLever.src = 'Assests/LeverUp.gif'
-      setTimeout(() => {
-        ShockLever.src = 'Assests/Frame-1-Lever-01.png'
-        Power -= 100
-        if (ElectricianAnamtronic.Room == Office2RoomSelected) {
-          PlaceAnimatronic(ElectricianAnamtronic, ElectricianAnamtronic.OriginRoom)
-          SendData('moveAnimatronic', ElectricianAnamtronic, ElectricianAnamtronic.OriginRoom)
+function DisplayUpdate(e) {
+  if ((ConsoleActive || (e == 'StartUp' || e == 'PowerCheck')) && !ConsoleWorking) {
+    ConsoleWorking = true
+    if (e == 'StartUp') {
+      ConsoleActive = true
+    }
+    //DataReceived = false
+    let Speed = 100
+    if (Office == 'Office1') {
+      Speed = 500
+    }
+    let k = Math.floor(Math.random()*200) + 1
+    if (e == 'PowerCheck') {
+      SendData('PowerCheck')
+    } else if (e == 'ElectriacianEnergyLevel') {
+      SendData('Energy_Check')
+    }
+    DigitialCommandPrompt = false
+    OfficesRender.ConsoleObjects.ConsoleText.Lines = 0
+    OfficesRender.ConsoleObjects.ConsoleText.Text = ComputerDialog[e]
+    BarTimer = 0
+    BarIncrease = 1
+    if (Office == 'Office1') {
+      BarIncrease = 3
+      if (e == 'StartUp') {
+        BarIncrease = 2
+      }
+    }
+    let o = setInterval(() => {
+      if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines] == 'RECEIVE DELAY' && !DataReceived) {
+
+      } else if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines - 1] != undefined && (OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines - 1].includes('—')) {
+        if (BarTimer >= BarIncrease) {
+          BarTimer = 0
+          OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('—', '▊')
+        } else {
+          BarTimer += 1
         }
-      }, 780)
-    } else {
-      LightLever.src = 'Assests/LeverUp.gif'
-      setTimeout(() => {
-        Power -= 100
-        if (EyeScanAnamtronic.Room.includes(Office2VentSelected)) {
-          if (EyeScanAnamtronic.Stage = 1) {
-            EyeScanAnamtronic.LightAmount += 2
-          } else if (EyeScanAnamtronic.Stage = 2) {
-            EyeScanAnamtronic.LightAmount += 1
-          } 
-          if (EyeScaneAnamtronc.LightLimitor != 0 && EyeScaneAnamtronc.LightAmount >= EyeScaneAnamtronc.LightLimitor) {
-            GameEnd('Loss')
+      } else {
+        if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines] == 'RECEIVE DELAY') {
+          OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('|RECEIVE DELAY', '')
+          if (e == 'ElectriacianEnergyLevel') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined', EnergyLevels)
+          } else if (e == 'PowerCheck') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined1', Office1Power)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined2', Office2Power)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined3', Office3Power)
+          } else if (e == 'MotherlyRage') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined', MotherlyRage)
           }
-          EyeScanAnamtronic.Room = 'middle'
         }
-        LightLever.src = 'Assests/Frame-1-Lever-01.png'
-        ShockLight.hidden = false
-      }, 780)
+        if (OfficesRender.ConsoleObjects.ConsoleText.Text.includes('undefined')) {
+          if (e == 'OfficeConnect') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined', ConnectedOffice)
+          } else if (e == 'OfficeFunctionCheck') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined', OfficesFunctions[ConnectedOffice].join('| '))
+          } else if (e == 'OfficeReset') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined1', ConnectedOffice)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined2', Reset)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined3', ConnectedOffice)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined4', Reset)
+          }
+        }
+        if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines] != undefined && (OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines].includes('Send: ')) {
+          let p = (OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines].split(': ')
+          let k = p[1].split('/')
+          SendData(k[0], k[1], k[2].replace('<', ''))
+          BarIncrease = 4
+          if (k[2] == 'All') {
+            BarIncrease = 6
+          }
+        }
+        if (OfficesRender.ConsoleObjects.ConsoleText.Text.split('|').length >= 16) {
+          if (OfficesRender.ConsoleObjects.ConsoleText.Lines <= 17) {
+            OfficesRender.ConsoleObjects.ConsoleText.Lines += 1
+          } else {
+            OfficesRender.ConsoleObjects.ConsoleText.Lines = 0
+            let m = OfficesRender.ConsoleObjects.ConsoleText.Text.split('|')
+            m.splice(0, 18)
+            m = m.join('|')
+            OfficesRender.ConsoleObjects.ConsoleText.Text = m
+          }
+        } else {
+          if (k <= 1 && OfficesRender.ConsoleObjects.ConsoleText.Lines < OfficesRender.ConsoleObjects.ConsoleText.Text.split('|').length + 15) {
+            if (OfficesRender.ConsoleObjects.ConsoleText.Lines <= 17) {
+              OfficesRender.ConsoleObjects.ConsoleText.Lines += 1
+            } else {
+              OfficesRender.ConsoleObjects.ConsoleText.Lines = 0
+              let m = OfficesRender.ConsoleObjects.ConsoleText.Text.split('|')
+              m.splice(0, 17)
+              m = m.join('|')
+              OfficesRender.ConsoleObjects.ConsoleText.Text = m
+            }
+          } else if (OfficesRender.ConsoleObjects.ConsoleText.Lines < OfficesRender.ConsoleObjects.ConsoleText.Text.split('|').length) {
+            OfficesRender.ConsoleObjects.ConsoleText.Lines += 1
+          } else {
+            if (k <= 1) {
+              if (Office == 'Office4') {
+                FunctionControls.Office4PowerCheck.Active = false
+              }
+              OfficesRender.ConsoleObjects.ConsoleText.Text = ''
+              OfficesRender.ConsoleObjects.ConsoleText.Lines = 0
+            }
+            ConsoleWorking = false
+            if (DigitialCommandPromptAllowed == true && Office == 'Office1') {
+              DigitialCommandPrompt = true
+              OfficesRender.ConsoleObjects.ConsoleText.Text += '||Command: <'
+              OfficesRender.ConsoleObjects.ConsoleText.Lines += 2
+            }
+            if (Math.floor(Math.random()* 500)+1 <= 1) {
+              DisplayUpdate('Threaten')
+            } 
+            clearInterval(o)
+          }
+        }
+      }
+    }, Math.floor(Math.random() * Speed) + 100)
+  }
+}
+
+function EndFrameEffect(e, Object) { //Preforms an action when called, used with end animations
+  if (e == 'LightLever') {
+    OfficesRender.LightControl.Lever.FreezeFrame = true
+    if (OfficesRender.LightControl.Lever.Reverse) {
+      OfficesRender.LightControl.Lever.Reverse = false
+      OfficesRender.LightControl.Light.Render = true;
+      if (EyeScanAnamtronic.Room.includes(Office2VentSelected)) {
+        if (EyeScanAnamtronic.Stage = 1) {
+          EyeScanAnamtronic.LightAmount += 2
+        } else if (EyeScanAnamtronic.Stage = 2) {
+          EyeScanAnamtronic.LightAmount += 1
+        } 
+        if (EyeScaneAnamtronc.LightLimitor != 0 && EyeScaneAnamtronc.LightAmount >= EyeScaneAnamtronc.LightLimitor) {
+          GameEnd('Loss')
+        }
+        EyeScanAnamtronic.Room = 'middle'
+      }
+    } else {
+      PowerChange -= 100
+      OfficesRender.LightControl.Lever.Reverse = true
+      OfficesRender.LightControl.Light.Render = false;
+    }
+  } else if (e == 'ShockLever') {
+    OfficesRender.ShockControl.Lever.FreezeFrame = true
+    if (OfficesRender.ShockControl.Lever.Reverse) {
+      OfficesRender.ShockControl.Lever.Reverse = false
+    } else {
+      PowerChange -= 100
+      OfficesRender.ShockControl.Lever.Reverse = true;
+    }
+  } else if (e == 'DoorLever') {
+    Object.FreezeFrame = true
+    let k = Object.Name.split(',')
+    if (Object.Name.includes('Office3')) {
+      ControlDoor(k[1])
+    } else {
+      SendData('Door', Object.Name.split(','))
+    }
+    if (Object.Reverse) {
+      Object.Reverse = false
+      if (!Object.Name.includes('1')) {
+        PowerUpdate(-1)
+        OfficesDoors[k[0] + k[1] + ['Door']] = false
+      }
+    } else {
+      Object.Reverse = true
+      if (!Object.Name.includes('1')) {
+        PowerUpdate(1)
+        OfficesDoors[k[0] + k[1] + ['Door']] = true
+      }
+    }
+  } else if (e == 'FanLever') {
+    Object.FreezeFrame = true
+    if (Object.Reverse) {
+      Object.Reverse = false
+      PowerUpdate(-1)
+      if (Object.Name == 'Office1') {
+        Office1Fan = false
+      } else if (Object.Name == 'Office2') {
+        Office2Fan = false
+      } else if (Object.Name == 'Office3') {
+        Office3Fan = false
+      } else if (Object.Name == 'Office4') {
+        Office4Fan = false
+      }
+    } else {
+      Object.Reverse = true
+      PowerUpdate(1)
+      if (Object.Name == 'Office1') {
+        Office1Fan = true
+      } else if (Object.Name == 'Office2') {
+        Office2Fan = true
+      } else if (Object.Name == 'Office3') {
+        Office3Fan = true
+      } else if (Object.Name == 'Office4') {
+        Office4Fan = true
+      }
+    }
+  } else if (e == 'BigRedButtonPowerCheck') {
+    if (Object.Reverse) {
+      if (!ConsoleWorking && FunctionControls.Office4PowerCheck.Active) {
+        DisplayUpdate('PowerCheck')
+        PowerChange -= 50
+      }
+      Object.FreezeFrame = true
+      Object.Reverse = false
+    } else {
+      Object.Reverse = true
+    }
+  } else if (e == 'BigRedButtonPower') {
+    if (Object.Reverse) {
+      if (!ConsoleWorking && Office == 'Office1') {
+        DisplayUpdate('StartUp')
+        PowerChange -= 50
+      }
+      Object.FreezeFrame = true
+      Object.Reverse = false
+    } else {
+      Object.Reverse = true
+    }
+  } else if (e == 'PowerSwitch' && Powered) {
+    if (Object.Reverse) {
+      SendData('PowerDown', Object.Name, 'Down')
+      Object.FreezeFrame = true
+      Object.Reverse = false
+    } else {
+      SendData('PowerDown', Object.Name, 'Norway')
+      Object.FreezeFrame = true
+      Object.Reverse = true
+    }
+  } else if (e == 'FlickSwitch') {
+    Object.FreezeFrame = true
+    if (Object.Reverse) {
+      Object.Reverse = false
+      FlickCurrent[Object.Name - 1] = false
+    } else {
+      Object.Reverse = true
+      FlickCurrent[Object.Name - 1] = true
+      textshown = true
+    }
+  } else if (e == 'ConnectDial') {
+    Object.FreezeFrame = true
+    if (Object.Reverse) {
+      JunctionConnect()
+      Object.Reverse = false
+    } else {
+      if (ConnectedOffice != undefined) {
+        DisplayUpdate('OfficeDisconnect')
+        ConnectedOffice = undefined
+      }
+      Object.Reverse = true
+    }
+  } else if (e == 'Stop') {
+    Object.FreezeFrame = true
+    if (Object.Reverse) {
+      Object.Reverse = false
+    } else {
+      Object.Reverse = true
+      textshown = true
+    }
+  }
+}
+//Remove these
+Office2VentSelected = 0
+Office2ShockActive = true
+Office2FlashActive = true
+StoppedShockReset = false
+StoppedFlashReset = false
+
+//This is where all lever actvite is activated
+function leverInfo(e, Value1) {
+  if(e.includes('Ready')) {
+    if (e == 'ShockReady') {
+      if (Office2ShockActive) {
+        OfficesRender.ShockControl.Lever.FreezeFrame = false
+      } else {
+        StoppedShockReset = true
+      }
+    } else if (e == 'LightReady') {
+      if (Office2FlashActive) {
+        OfficesRender.LightControl.Lever.FreezeFrame = false
+      } else {
+        StoppedFlashReset = true
+      }
     }
   } else {
-    e.target.src = 'Assests/LeverDown.gif'
-    setTimeout(() => {
-      e.target.src = 'Assests/Frame-16-Lever-01.png'
-      if (e.target.id.includes('LightLever')) {
-        ShockLight.hidden = true
-        setTimeout(() => {
-          leverInfo('Light')
-        }, 10000)
-      } else {
-        setTimeout(() => {
-          leverInfo('Shock')
-        }, 12000)
-      }
-    }, 780)
+    if (e == 'ShockActivate' && Office2ShockActive) {
+      OfficesRender.ShockControl.Lever.FreezeFrame = false
+      setTimeout(() => {
+        leverInfo('ShockReady')
+      }, 12000)
+    } else if (e == 'LightActivate' && Office2FlashActive && !OfficesRender.LightControl.Lever.Reverse) {
+      OfficesRender.LightControl.Lever.FreezeFrame = false
+      setTimeout(() => {
+        leverInfo('LightReady')
+      }, 10000)
+    } else if (e == 'DoorActivate' && FunctionControls['Office3DoorsActive'].Active) {
+      OfficesRender.DoorControllObjects[Value1.Switch].FreezeFrame = false
+    } else if (e == 'FanActivate' && FunctionControls['Office3HeatActive'].Active) {
+      OfficesRender.FanControll[Value1.Switch].FreezeFrame = false
+    } else if (e == 'BigRedButtonPower') {
+      OfficesRender.ConsoleObjects.OfficePowerConsole.FreezeFrame = false
+    } else if (e == 'PowerSwitch') {
+      OfficesRender.PowerObjects[Value1.Switch].FreezeFrame = false
+    } else if (e == 'PowerDial') {
+      OfficesRender.JunctionObjects.PowerDial.FreezeFrame = false
+    } else if (e == 'Flick') {
+      OfficesRender.JunctionObjects[Value1.Name].FreezeFrame = false
+    }
   }
 }
 
 //Changes Camera View
 function CamChange(e) {
   if (Offices[Office].HasCameras) {
-    Animatronic1.hidden = true
-    CameraStatic.style.opacity = '100%'
-    let p;
-    if (e.target.src.includes('1')) {
-      p = 1
-    } else if (e.target.src.includes('2')) {
-      p = 2
-    } else if (e.target.src.includes('3')) {
-      p = 3
-    } else if (e.target.src.includes('4')) {
-      p = 4
-    } else if (e.target.src.includes('5')) {
-      p = 5
-    } else if (e.target.src.includes('6')) {
-      p = 6
-    } else if (e.target.src.includes('7')) {
-      p = 7
-    } else if (e.target.src.includes('8')) {
-      p = 8
-    } else if (e.target.src.includes('9')) {
-      p = 9
+    //Animatronic1.hidden = true
+    OfficesRender.CameraObjects.Static.Opacity = 1
+    OfficesRender.CameraObjects.CameraView.Render = true
+    OfficesRender.CameraObjects.Animatronic_2.Render = false
+    OfficesRender.CameraObjects.Animatronic_3.Render = false
+    let j = OfficesRender.CameraObjects.Animatronic_1
+    j.Render = false
+    currentcam = e
+    AudioControl('ChangeCam', 'Play')
+    for (let l = 0; l < Images.length; l++) {
+      if (Images[l].alt == String(OfficesRender.CameraObjects.CameraView.UIN)) {
+        Images[l].src = 'Assests/Cam' + e + 'View.png'
+      }
     }
-    if (e.target.src.includes('10')) {
-      p = 10
-    } else if (e.target.src.includes('11')) {
-      p = 11
-    } else if (e.target.src.includes('12')) {
-      p = 12
-    } else if (e.target.src.includes('13')) {
-      p = 13
-    } else if (e.target.src.includes('14')) {
-      p = 14
-    } else if (e.target.src.includes('15')) {
-      p = 15
+    OfficesRender.CameraObjects.CameraView.src = 'Assests/Cam' + e + 'View.png'
+    if (RoomPlacement['Cam' + e].includes('MothAnamtronic')) {
+      j.Render = true
+      j.x = MothPresets['Cam' + e].Left
+      j.y = MothPresets['Cam' + e].Top
+      j.width = MothPresets['Cam' + e].Width
+      j.height = MothPresets['Cam' + e].Height
+      j.ScaleX = MothPresets['Cam' + e].ScaleX
+      j.ScaleY = MothPresets['Cam' + e].ScaleY
+      for (let g = 0; g < Images.length; g++) {
+        if (Images[g].alt == j.UIN) {
+          Images[g].src = MothPresets['Cam' + e].Source
+        }
+      }
+      j = OfficesRender.CameraObjects.Animatronic_2
     }
-    currentcam = p
-    CameraView.src = 'Assests/Cam' + p + 'View.png'
-    if (RoomPlacement['Cam' + p].includes('MothAnamtronic')) {
-      Animatronic1.hidden = false
-      Animatronic1.src = MothPresets['Cam' + p].Source
-      Animatronic1.style.left = MothPresets['Cam' + p].Left
-      Animatronic1.style.top = MothPresets['Cam' + p].Top
-      Animatronic1.style.width = MothPresets['Cam' + p].Width
+    if (RoomPlacement['Cam' + e].includes('PowerDrainAnamtronic')) {
+      j.Render = true
+      j.x = RatPresets['Cam' + e].Left
+      j.y = RatPresets['Cam' + e].Top
+      j.width = RatPresets['Cam' + e].Width
+      j.height = RatPresets['Cam' + e].Height
+      j.ScaleX = RatPresets['Cam' + e].ScaleX
+      j.ScaleY = RatPresets['Cam' + e].ScaleY
+      for (let g = 0; g < Images.length; g++) {
+        if (Images[g].alt == j.UIN) {
+          Images[g].src = RatPresets['Cam' + e].Source
+        }
+      }
+      if (j == OfficesRender.CameraObjects.Animatronic_2) {
+        j = OfficesRender.CameraObjects.Animatronic_3
+      } else {
+        j = OfficesRender.CameraObjects.Animatronic_2
+      }
+    }
+    if (RoomPlacement['Cam' + e].includes('FreeRoamAnamtronic')) {
+      j.Render = true
+      j.x = FoxPresets['Cam' + e].Left
+      j.y = FoxPresets['Cam' + e].Top
+      j.width = FoxPresets['Cam' + e].Width
+      j.height = FoxPresets['Cam' + e].Height
+      j.ScaleX = FoxPresets['Cam' + e].ScaleX
+      j.ScaleY = FoxPresets['Cam' + e].ScaleY
+      for (let g = 0; g < Images.length; g++) {
+        if (Images[g].alt == j.UIN) {
+          Images[g].src = FoxPresets['Cam' + e].Source
+        }
+      }
+      if (j == OfficesRender.CameraObjects.Animatronic_2) {
+        j = OfficesRender.CameraObjects.Animatronic_3
+      } else {
+        j = OfficesRender.CameraObjects.Animatronic_2
+      }
+    }
+    if (RoomPlacement['Cam' + e].includes('ElectricianAnamtronic')) {
+      j.Render = true
+      j.x = CyberPresets['Cam' + e].Left
+      j.y = CyberPresets['Cam' + e].Top
+      j.width = CyberPresets['Cam' + e].Width
+      j.height = CyberPresets['Cam' + e].Height
+      j.ScaleX = CyberPresets['Cam' + e].ScaleX
+      j.ScaleY = CyberPresets['Cam' + e].ScaleY
+      for (let g = 0; g < Images.length; g++) {
+        if (Images[g].alt == j.UIN) {
+          Images[g].src = CyberPresets['Cam' + e].Source
+        }
+      }
+      if (j == OfficesRender.CameraObjects.Animatronic_2) {
+        j = OfficesRender.CameraObjects.Animatronic_3
+      } else {
+        j = OfficesRender.CameraObjects.Animatronic_2
+      }
     }
     setTimeout(() => {
-      CameraStatic.style.opacity = '50%'
+      OfficesRender.CameraObjects.Static.Opacity = 0.5
     }, 100)
+  }
+}
+
+window.addEventListener('mousemove', (e) => {
+  MouseInfo.x = e.clientX
+  MouseInfo.y = e.clientY
+  if (Ingame) {
+    for (let y = 0; y < MouseCollisions.length; y++) {
+      let BoxLeft = MouseCollisionsValues[MouseCollisions[y]].x
+      let BoxTop = MouseCollisionsValues[MouseCollisions[y]].y
+      let BoxWidth = MouseCollisionsValues[MouseCollisions[y]].width
+      let BoxHeight = MouseCollisionsValues[MouseCollisions[y]].height
+      if (MouseCollisionsValues[MouseCollisions[y]].Hitbox &&
+        MouseInfo.x > BoxLeft && 
+        MouseInfo.x < BoxLeft + BoxWidth &&
+        MouseInfo.y > BoxTop &&
+        MouseInfo.y < BoxTop + BoxHeight) {
+          let Action = MouseCollisionsValues[MouseCollisions[y]]
+          if (Action.Triggered != undefined && !Action.Triggered && (Powered || !MouseCollisions[y].includes('Screen'))) {
+            Action.Triggered = true
+            if (Action.Effect.OfficeMove != undefined) {
+              TurnScreen(Action.Effect.OfficeMove)
+            } else if (Action.Effect.FlipOut != undefined) {
+              BasicFlipOut()
+            }
+          }
+        } else if (MouseCollisionsValues[MouseCollisions[y]].Triggered != undefined) {
+          MouseCollisionsValues[MouseCollisions[y]].Triggered = false
+        }
+    }
+  }
+})
+
+window.onclick = MouseLocationTriggers
+
+function MouseLocationTriggers() {
+  if (Office == 'Office1' && OfficesRender.OfficeObjects.Office.x !=  0 && OfficesRender.Mask.Reverse) {
+    if (OfficesRender.FlashLight.Render) {
+      OfficesRender.FlashLight.Render = false
+    } else {
+      OfficesRender.FlashLight.Render = true
+    }
+  }
+  for (let y = 0; y < MouseCollisions.length; y++) {
+    let BoxLeft = MouseCollisionsValues[MouseCollisions[y]].x
+    let BoxTop = MouseCollisionsValues[MouseCollisions[y]].y
+    let BoxWidth = MouseCollisionsValues[MouseCollisions[y]].width
+    let BoxHeight = MouseCollisionsValues[MouseCollisions[y]].height
+    if(MouseCollisionsValues[MouseCollisions[y]].Hitbox &&
+      MouseInfo.x > BoxLeft && 
+      MouseInfo.x < BoxLeft + BoxWidth &&
+      MouseInfo.y > BoxTop &&
+      MouseInfo.y < BoxTop + BoxHeight && (Powered || MouseCollisions[y].includes('Door'))) {
+        console.log('e')
+        let Action = MouseCollisionsValues[MouseCollisions[y]]
+        if (Action.Effect.CameraChange != undefined) {
+          CamChange(Action.Effect.CameraChange)
+        } else if (Action.Effect.LightDoor != undefined) {
+          DoorLight(Action.Effect.LightDoor)
+        } else if (Action.Effect.lever != undefined) {
+          leverInfo(Action.Effect.lever, Action)
+        } else if (Action.Effect.SelectVent) {
+          VentSelect(Action.Effect.SelectVent)
+        } else if (Action.Effect.CameraMapChange) {
+          ChangeCameraMap(Action.Effect.CameraMapChange)
+        } else if (Action.Effect.SelectShock) {
+          ShockSelect(Action.Effect.SelectShock)
+        } else if (Action.Effect.SelectPower) {
+          PowerSelect(Action.Effect.SelectPower)
+        } else if (Action.Effect.Lobby) {
+          LobbyStuff(Action.Effect.Lobby)
+        }
+    }
+  }
+}
+
+function LobbyStuff(e) {
+  if (e == 'Find') {
+    MouseCollisions = []
+    Objects = []
+    Objects.push(OfficesRender.StaticTitle)
+    OfficesRender.StaticTitle.x = OfficesRender.StaticTitle.Ox
+    OfficesRender.StaticTitle.y = OfficesRender.StaticTitle.Oy
+    Images = []
+    for (let i = 0; i < Objects.length; i++) {
+      if (!Objects[i].Class.includes('Text')) {
+        let Img = new Image()
+        Img.src = Objects[i].src
+        Img.alt = Objects[i].UIN
+        Images.push(Img)
+      }
+    }
+    document.getElementById('chatInput').hidden = false
+    document.getElementById('RoomRonnector').hidden = false
+    document.getElementById('lobbies').hidden = false
+    document.getElementById('refreshLobbiesButton').hidden = false
+  }
+}
+
+function PowerSelect(e) {
+  if (PowerOffices[e]) {
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.CameraObjects[e + 'PowerDirect'].UIN) {
+        Images[i].src = 'Assests/NotPowered.png'
+      }
+    }
+    PowerOffices[e] = false
+  } else {
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.CameraObjects[e + 'PowerDirect'].UIN) {
+        Images[i].src = 'Assests/Powered.png'
+      }
+    }
+    PowerOffices[e] = true
+  }
+}
+
+function ChangeCameraMap(e) {
+  if (e == 'ShockMap') {
+    if (CamMap == 'Cam') {
+      OfficesRender.CameraObjects.Map.Dy = 0
+      OfficesRender.CameraObjects.Map.Dx = 0
+      OfficesRender.CameraObjects.Map.width = 500
+      OfficesRender.CameraObjects.Map.height = 500
+      CamMap = 'Shock'
+      OfficesRender.CameraObjects.Shock11.Render = true
+      OfficesRender.CameraObjects.Shock9.Render = true
+      MouseCollisionsValues.Shock11.Hitbox = true
+      MouseCollisionsValues.Shock9.Hitbox = true
+      for (let i = 0; i < Images.length; i++) {
+        if (Images[i].alt == OfficesRender.CameraObjects.Map.UIN) {
+          Images[i].src = 'Assests/ShockMap.png'
+        }
+      }
+      for (o in MouseCollisions) {
+        if (MouseCollisions[o].includes('Cam')) {
+          MouseCollisionsValues[MouseCollisions[o]].Hitbox = false
+        }
+      }
+    } else {
+      OfficesRender.CameraObjects.Map.Dy = Offices[Office].My
+      OfficesRender.CameraObjects.Map.Dx = Offices[Office].Mx
+      OfficesRender.CameraObjects.Map.width = 440
+      OfficesRender.CameraObjects.Map.height = 435
+      CamMap = 'Cam'
+      OfficesRender.CameraObjects.Shock11.Render = false
+      OfficesRender.CameraObjects.Shock9.Render = false
+      MouseCollisionsValues.Shock9.Hitbox = false
+      MouseCollisionsValues.Shock11.Hitbox = false
+      for (let i = 0; i < Images.length; i++) {
+        if (Images[i].alt == OfficesRender.CameraObjects.Map.UIN) {
+          Images[i].src = 'Assests/Map.png'
+        }
+      }
+      for (o in MouseCollisions) {
+        if (MouseCollisions[o].includes('Cam')) {
+          MouseCollisionsValues[MouseCollisions[o]].Hitbox = true
+        }
+      }
+    }
+  } else if (e == 'PowerMap') {
+    if (CamMap == 'Cam') {
+      MouseCollisionsValues.Office1PowerDirectBox.Hitbox = true
+      MouseCollisionsValues.Office2PowerDirectBox.Hitbox = true
+      MouseCollisionsValues.Office3PowerDirectBox.Hitbox = true
+      OfficesRender.CameraObjects.Office1PowerDirect.Render = true
+      OfficesRender.CameraObjects.Office2PowerDirect.Render = true
+      OfficesRender.CameraObjects.Office3PowerDirect.Render = true
+      OfficesRender.CameraObjects.Map.Dy = 0
+      OfficesRender.CameraObjects.Map.Dx = 0
+      OfficesRender.CameraObjects.Map.width = 200
+      OfficesRender.CameraObjects.Map.height = 211
+      CamMap = 'Power'
+      for (let i = 0; i < Images.length; i++) {
+        if (Images[i].alt == OfficesRender.CameraObjects.Map.UIN) {
+          Images[i].src = 'Assests/MapPowerDirect.png'
+        }
+      }
+      for (o in MouseCollisions) {
+        if (MouseCollisions[o].includes('Cam')) {
+          MouseCollisionsValues[MouseCollisions[o]].Hitbox = false
+        }
+      }
+    } else {
+      MouseCollisionsValues.Office1PowerDirectBox.Hitbox = false
+      MouseCollisionsValues.Office2PowerDirectBox.Hitbox = false
+      MouseCollisionsValues.Office3PowerDirectBox.Hitbox = false
+      OfficesRender.CameraObjects.Office1PowerDirect.Render = false
+      OfficesRender.CameraObjects.Office2PowerDirect.Render = false
+      OfficesRender.CameraObjects.Office3PowerDirect.Render = false
+      OfficesRender.CameraObjects.Map.Dy = Offices[Office].My
+      OfficesRender.CameraObjects.Map.Dx = Offices[Office].Mx
+      OfficesRender.CameraObjects.Map.width = 440
+      OfficesRender.CameraObjects.Map.height = 435
+      CamMap = 'Cam'
+      for (let i = 0; i < Images.length; i++) {
+        if (Images[i].alt == OfficesRender.CameraObjects.Map.UIN) {
+          Images[i].src = 'Assests/Map.png'
+        }
+      }
+      for (o in MouseCollisions) {
+        if (MouseCollisions[o].includes('Cam')) {
+          MouseCollisionsValues[MouseCollisions[o]].Hitbox = true
+        }
+      }
+    }
   }
 }
 
 //Controls the door lights
 function DoorLight(e) {
-  let i = Offices[Office]
+  let i = Offices[Office];
+  let l = OfficesRender.Doors.LeftDoor;
+  let r = OfficesRender.Doors.RightDoor;
+  let ri = undefined;
+  let li = undefined;
+  for (let i = 0; i < Images.length; i++) {
+    if (String(l.UIN) == Images[i].alt) {
+      li = Images[i]
+    } else if (String(r.UIN) == Images[i].alt) {
+      ri = Images[i]
+    };
+  };
   if (i.HasDoors) {
     if (e == 'reset') {
-      LeftDoor.src = 'Assests/LeftDoor.png'
-      RightDoor.src = 'Assests/RightDoor.png'
-    } else if (e.target.id.includes('Left') && !leftDoor) {
-      if (!LeftDoor.src.includes('DoorLight') && !RightDoor.src.includes('DoorLight')) {
-        LeftDoor.src = 'Assests/DoorLight.png'
-        LeftDoor.style.left = '-100px'
-        LeftDoor.hidden = false
+      li.src = 'Assests/LeftDoor.png'
+      ri.src = 'Assests/RightDoor.png'
+    } else if (e == 'Left' && !leftDoor) {
+      if (!li.src.includes('DoorLight') && !ri.src.includes('DoorLight')) {
+        if (OfficesRender.Doors.LeftAnimatronic.Show) {
+          OfficesRender.Doors.LeftAnimatronic.Render = true
+        }
+        li.src = 'Assests/DoorLight.png'
+        l.Dx = 150
+        l.Render = true
+        l.ScaleY = l.MaxScaleY
+        l.height = 899
       } else {
-        LeftDoor.src = 'Assests/LeftDoor.png'
-        LeftDoor.style.left = '0px'
+        if (OfficesRender.Doors.LeftAnimatronic.Show) {
+          OfficesRender.Doors.LeftAnimatronic.Render = false
+        }
+        li.src = 'Assests/LeftDoor.png'
+        l.Dx = 0
+        l.height = 0
         if(!leftDoor) {
-          LeftDoor.hidden = true
+          l.Render = false
+          l.ScaleY = 0
         }
       }
-    } else if (!rightDoor) {
-      if (!RightDoor.src.includes('DoorLight') && !LeftDoor.src.includes('DoorLight')) {
-        RightDoor.src = 'Assests/DoorLight.png'
-        RightDoor.style.right = '-110px'
-        RightDoor.hidden = false
+    } else if (!rightDoor && e == 'Right') {
+      if (!ri.src.includes('DoorLight') && !li.src.includes('DoorLight')) {
+        if (OfficesRender.Doors.RightAnimatronic.Show) {
+          OfficesRender.Doors.RightAnimatronic.Render = true
+        }
+        ri.src = 'Assests/DoorLight.png'
+        r.Render = true
+        r.Dx = 150
+        r.ScaleY = r.MaxScaleY
+        r.height = 899
       } else {
-        RightDoor.src = 'Assests/RightDoor.png'
-        RightDoor.style.right = '0px'
+        if (OfficesRender.Doors.RightAnimatronic.Show) {
+          OfficesRender.Doors.RightAnimatronic.Render = false
+        }
+        ri.src = 'Assests/RightDoor.png'
+        r.Dx = 0
+        r.height = 0
         if(!rightDoor) {
-          RightDoor.hidden = true
+          r.Render = true
+          r.ScaleY = 0
         }
-      }
-    }
-  } else {
-    if (e == 'reset') {
-      LeftLight.hidden = true
-      RightLight.hidden = true
-    } else if (e.target.id.includes('Left')) {
-      if (LeftLight.hidden) {
-        LeftLight.hidden = false
-      } else {
-        LeftLight.hidden = true
-      }
-    } else {
-      if (RightLight.hidden) {
-        RightLight.hidden = false
-      } else {
-        RightLight.hidden = true
       }
     }
   }
 }
 
+let CamMap = 'Cam'
 //Function for trigger
 function BasicFlipOut() {
   if (Offices[Office].HasCameras) {
-    if (CameraView.hidden) {
-      PowerUpdate(1)
-      CameraView.hidden = false
-      CameraStatic.hidden = false
-      MapDiv.hidden = false
-      map.hidden = false
-      Invis1.hidden = true
-      Invis2.hidden = true
-      if (RoomPlacement['Cam' + currentcam].includes('MothAnamtronic') && currentcam != 'none') {
-        Animatronic1.hidden = false
-        Animatronic1.src = MothPresets['Cam' + currentcam].Source
-        Animatronic1.style.left = MothPresets['Cam' + currentcam].Left
-        Animatronic1.style.top = MothPresets['Cam' + currentcam].Top
-        Animatronic1.style.width = MothPresets['Cam' + currentcam].Width
-      }
-    } else if (!CameraView.hidden) {
-      CameraView.hidden = true
-      CameraStatic.hidden = true
-      Animatronic1.hidden = true
-      MapDiv.hidden = true
-      map.hidden = true
-      Invis1.hidden = false
-      Invis2.hidden = false
+    if (OfficesRender.CameraObjects.Static.Render) {
+      AudioControl('MonitorDown', 'Play')
+      AudioControl('Static', 'Pause')
+      AudioControl('Mechanised', 'Play')
       PowerUpdate(-1)
+      OfficesRender.CameraObjects.Static.Render = false
+      OfficesRender.CameraObjects.CameraView.Render = false
+      OfficesRender.CameraObjects.Map.Render = false
+      MouseCollisionsValues.LookLeftTrigger.Hitbox = true
+      OfficesRender.OfficeOverlaysObjects.LookLeft.Render = true
+      OfficesRender.OfficeOverlaysObjects.LookRight.Render = true
+      MouseCollisionsValues.LookRightTrigger.Hitbox = true
+      MouseCollisionsValues.ShockLeverBox.Hitbox = true
+      MouseCollisionsValues.MapChangeButton.Hitbox = false
+      OfficesRender.CameraObjects.MapChangeButton.Render = false
+      if (Office == 'Office3') {
+        for (k in OfficesRender.DoorControllObjects) {
+          OfficesRender.DoorControllObjects[k].Render = true
+        }
+        for (k in OfficesRender.FanControll) {
+          OfficesRender.FanControll[k].Render = true
+        }
+        for (let i = 0; i < MouseCollisions.length; i++) {
+          if ((MouseCollisions[i].includes("Door") || MouseCollisions[i].includes("Fan")) && MouseCollisions[i].includes("Box")) {
+            MouseCollisionsValues[MouseCollisions[i]].Hitbox = true
+          }
+        }
+      }
+      if (Office == 'Office4') {
+        for (k in OfficesRender.PowerObjects) {
+          OfficesRender.PowerObjects[k].Render = true
+        }
+        for (let i = 0; i < MouseCollisions.length; i++) {
+          if (MouseCollisions[i].includes("Power")) {
+            MouseCollisionsValues[MouseCollisions[i]].Hitbox = true
+          }
+        }
+        MouseCollisionsValues.Office1PowerDirectBox.Hitbox = false
+        MouseCollisionsValues.Office2PowerDirectBox.Hitbox = false
+        MouseCollisionsValues.Office3PowerDirectBox.Hitbox = false
+      }
+      for (let i = 0; i < MouseCollisions.length; i++) {
+        if (MouseCollisions[i].includes('Light')) {
+          MouseCollisionsValues[MouseCollisions[i]].Hitbox = true
+        }
+      }
+      let j = OfficesRender.CameraObjects.Animatronic_1
+      j.Render = false
+      OfficesRender.CameraObjects.Animatronic_2.Render = false
+      OfficesRender.CameraObjects.Animatronic_3.Render = false
+      textshown = true
+      if (CamMap == 'Cam') {
+        for (let i = 0; i < Offices[Office].Cameras.length; i++) {
+          MouseCollisionsValues[Offices[Office].Cameras[i]].Hitbox = false
+        };
+      } else if (CamMap == 'Shock') {
+        OfficesRender.CameraObjects.Shock11.Render = false
+        OfficesRender.CameraObjects.Shock9.Render = false
+        MouseCollisionsValues.Shock9.Hitbox = false
+        MouseCollisionsValues.Shock11.Hitbox = false
+      } else if (CamMap == 'Power') {
+        MouseCollisionsValues.Office1PowerDirectBox.Hitbox = false
+        MouseCollisionsValues.Office2PowerDirectBox.Hitbox = false
+        MouseCollisionsValues.Office3PowerDirectBox.Hitbox = false
+        OfficesRender.CameraObjects.Office1PowerDirect.Render = false
+        OfficesRender.CameraObjects.Office2PowerDirect.Render = false
+        OfficesRender.CameraObjects.Office3PowerDirect.Render = false
+      }
+    } else if (!OfficesRender.CameraObjects.Static.Render) {
+      AudioControl('MonitorUp', 'Play')
+      AudioControl('Static', 'Play')
+      AudioControl('Mechanised', 'Pause')
+      OfficesRender.CameraObjects.Static.Render = true
+      OfficesRender.CameraObjects.CameraView.Render = true
+      OfficesRender.CameraObjects.Map.Render = true
+      textshown = false
+      MouseCollisionsValues.LookLeftTrigger.Hitbox = false
+      OfficesRender.CameraObjects.Static.Opacity = 1
+      MouseCollisionsValues.LookRightTrigger.Hitbox = false
+      OfficesRender.OfficeOverlaysObjects.LookLeft.Render = false
+      OfficesRender.OfficeOverlaysObjects.LookRight.Render = false
+      MouseCollisionsValues.ShockLeverBox.Hitbox = false
+      MouseCollisionsValues.MapChangeButton.Hitbox = true
+      OfficesRender.CameraObjects.MapChangeButton.Render = true
+      if (Office == 'Office3') {
+        for (k in OfficesRender.DoorControllObjects) {
+          OfficesRender.DoorControllObjects[k].Render = false
+        }
+        for (k in OfficesRender.FanControll) {
+          OfficesRender.FanControll[k].Render = false
+        }
+        for (let i = 0; i < MouseCollisions.length; i++) {
+          if ((MouseCollisions[i].includes("Door") || MouseCollisions[i].includes("Fan")) && MouseCollisions[i].includes("Box")) {
+            MouseCollisionsValues[MouseCollisions[i]].Hitbox = false
+          }
+        }
+      }
+      if (Office == 'Office4') {
+        for (k in OfficesRender.PowerObjects) {
+            OfficesRender.PowerObjects[k].Render = false
+        }
+        for (let i = 0; i < MouseCollisions.length; i++) {
+          if (MouseCollisions[i].includes("Power")) {
+            MouseCollisionsValues[MouseCollisions[i]].Hitbox = false
+          }
+        }
+      }
+      for (let i = 0; i < MouseCollisions.length; i++) {
+        if (MouseCollisions[i].includes('Light')) {
+          MouseCollisionsValues[MouseCollisions[i]].Hitbox = false
+        }
+      }
+      if (CamMap == 'Cam') {
+        for (let i = 0; i < Offices[Office].Cameras.length; i++) {
+          MouseCollisionsValues[Offices[Office].Cameras[i]].Hitbox = true
+        };
+      } else if (CamMap == 'Shock') {
+        OfficesRender.CameraObjects.Shock11.Render = true
+        OfficesRender.CameraObjects.Shock9.Render = true
+        MouseCollisionsValues.Shock9.Hitbox = true
+        MouseCollisionsValues.Shock11.Hitbox = true
+      } else if (CamMap == 'Power') {
+        MouseCollisionsValues.Office1PowerDirectBox.Hitbox = true
+        MouseCollisionsValues.Office2PowerDirectBox.Hitbox = true
+        MouseCollisionsValues.Office3PowerDirectBox.Hitbox = true
+        OfficesRender.CameraObjects.Office1PowerDirect.Render = true
+        OfficesRender.CameraObjects.Office2PowerDirect.Render = true
+        OfficesRender.CameraObjects.Office3PowerDirect.Render = true
+      }
+      PowerUpdate(1)
+    }
+  } else if (Offices[Office].Suit) {
+    OfficesRender.Mask.FreezeFrame = false
+    if (OfficesRender.Mask.Reverse) {
+      for (let o = 0; o < MouseCollisions.length; o++) {
+        MouseCollisionsValues[MouseCollisions[o]].Hitbox = false
+      }
+      MouseCollisionsValues.LookLeftTrigger.Hitbox = true
+      MouseCollisionsValues.LookRightTrigger.Hitbox = true
+      MouseCollisionsValues.ScreenTrigger.Hitbox = true
+      OfficesRender.FlashLight.Render = false
+      textshown = false
+    } else {
+      for (let o = 0; o < MouseCollisions.length; o++) {
+        MouseCollisionsValues[MouseCollisions[o]].Hitbox = true
+      }
     }
   }
 }
@@ -806,7 +1160,16 @@ function MoveAnimatronic(Animatronic) {
         Functions[rando] = false
       } 
     } else if (Animatronic.Room in Animatronic.Path) {
+      let cam = undefined
+      let precam = Animatronic.Room
+      if (currentcam == Animatronic.Room) {
+        cam = Animatronic.Room
+      }
       //Will remove animatronic name from room placement list
+      if ((Animatronic.Room == 'Left' || Animatronic.Room == 'Right') && Animatronic.Office == Office) {
+        OfficesRender.Doors[Animatronic.Room + 'Animatronic'].Show = false
+        OfficesRender.Doors[Animatronic.Room + 'Animatronic'].Render = false
+      }
       let e = RoomPlacement['Cam' + Animatronic.Room].indexOf(Animatronic.Name)
       RoomPlacement['Cam' + Animatronic.Room].splice(e)
       if (Animatronic.Path[Animatronic.Room].length == undefined) {
@@ -816,18 +1179,67 @@ function MoveAnimatronic(Animatronic) {
           Animatronic.Target = Math.floor(Math.random() * 3)
         }
         Animatronic.Room = Animatronic.Path[Animatronic.Room][Animatronic.Target]
-      } else if(Animatronic == ElectricianAnamtronic && Animatronic.Room == 20) {
-        Animatronic.Room = 9
+      } else if(Animatronic == ElectricianAnamtronic && (Animatronic.Room == 9 || Animatronic.Room == 8)) {
+        Animatronic.Room = Animatronic.OriginRoom
         Animatronic.EnergyLevels = 100
+      } else if (Animatronic == PowerDrainAnamtronic && Animatronic.Room == 20) {
+        Power -= Animatronic.DrainAmount
       } else {
         let i = Math.floor(Math.random() * Animatronic.Path[Animatronic.Room].length)
-        Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
+        if (Animatronic == FreeRoamAnamtronic && (Animatronic.Room == 'Left' || Animatronic.Room == 'Right')) {
+          if (OfficesDoors[Animatronic.Office + Animatronic.Room + 'Door'] == false) {
+            Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
+          } else {
+            Animatronic.Room = Animatronic.OriginRoom
+          }
+        } else {
+          Animatronic.Room = Animatronic.Path[Animatronic.Room][i]
+        }
       }
       // adds animatronic to room placement list
-      if (Animatronic.Room == undefined || Animatronic.Room == '0') {
+      if (RoomPlacement['Cam' + Animatronic.Room] == undefined) {
         Animatronic.Room = Animatronic.OriginRoom
         MoveAnimatronic(Animatronic)
       } else {
+        if (OfficesRender.CameraObjects.CameraView.Render) {
+          if (currentcam == Animatronic.Room) {
+            CamChange(Animatronic.Room)
+          }
+          if (cam != undefined) {
+            CamChange(cam)
+          }
+        }
+        if (Animatronic.Room == 'Left' || Animatronic.Room == 'Right') {
+          if (precam == 12 || precam == 13) {
+            Animatronic.Office = 'Office3'
+          } else if (precam == 15 || precam == 14) {
+            Animatronic.Office = 'Office2'
+          } if (precam == 1 || precam == 7) {
+            Animatronic.Office = 'Office4'
+          } if (precam == 21 || precam == 19) {
+            Animatronic.Office = 'Office1'
+          }
+          if (Animatronic.Office == Office) {
+            OfficesRender.Doors[Animatronic.Room + 'Animatronic'].Show = true
+          }
+        }
+        if ((Animatronic.Room == 'Left' || Animatronic.Room == 'Right') && Animatronic.Office == Office && Animatronic != MothAnamtronic) {
+          OfficesRender.Doors[Animatronic.Room + 'Animatronic'].Show = true
+          OfficesRender.Doors[Animatronic.Room + 'Animatronic'].y = RoomPresets[Animatronic.Name][Animatronic.Room].Top
+          OfficesRender.Doors[Animatronic.Room + 'Animatronic'].width = RoomPresets[Animatronic.Name][Animatronic.Room].Width
+          OfficesRender.Doors[Animatronic.Room + 'Animatronic'].height = RoomPresets[Animatronic.Name][Animatronic.Room].Height
+          OfficesRender.Doors[Animatronic.Room + 'Animatronic'].ScaleX = RoomPresets[Animatronic.Name][Animatronic.Room].ScaleX
+          OfficesRender.Doors[Animatronic.Room + 'Animatronic'].ScaleY = RoomPresets[Animatronic.Name][Animatronic.Room].ScaleY
+          for (let i = 0; i < Images.length; i++) {
+            if (Images[i].alt == OfficesRender.Doors[Animatronic.Room + 'Animatronic'].UIN) {
+              let p = RoomPresets[Animatronic.Name][Animatronic.Room].src
+              if (Math.floor(Math.random() * 1000) + 1 <= 1) {
+                p = RoomPresets[Animatronic.Name][Animatronic.Room].src.replace('.', 'Rare.')
+              }
+              Images[i].src = p
+            }
+          }
+        }
         RoomPlacement['Cam' + Animatronic.Room].push(Animatronic.Name)
         if (Animatronic == MothAnamtronic) {
           SendData('moveAnimatronic', Animatronic, Animatronic.Room, MothAnamtronic.target)
@@ -840,38 +1252,68 @@ function MoveAnimatronic(Animatronic) {
 }
 //Selects which room should be shocked
 function ShockSelect(e) {
-  if (e.target.src.includes('Shock2')) {
-    Office2RoomSelected = 2
-    e.target.src = 'Assests/Shock2Press.png'
-    Shock7.src = 'Assests/Shock7Button.png'
-    Shock9.src = 'Assests/Shock9Button.png'
-    Shock11.src = 'Assests/Shock11Button.png'
-  }
-  if (e.target.src.includes('Shock7')) {
-    Office2RoomSelected = 7
-    e.target.src = 'Assests/Shock7Press.png'
-    Shock2.src = 'Assests/Shock2Button.png'
-    Shock9.src = 'Assests/Shock9Button.png'
-    Shock11.src = 'Assests/Shock11Button.png'
-  }
-  if (e.target.src.includes('Shock9')) {
+  if (e == 'Shock9') {
     Office2RoomSelected = 9
-    e.target.src = 'Assests/Shock9Press.png'
-    Shock2.src = 'Assests/Shock2Button.png'
-    Shock7.src = 'Assests/Shock7Button.png'
-    Shock11.src = 'Assests/Shock11Button.png'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.CameraObjects.Shock9.UIN) {
+        Images[i].src = 'Assests/Shock9Press.png'
+      }
+      if (Images[i].alt == OfficesRender.CameraObjects.Shock11.UIN) {
+        Images[i].src = 'Assests/Shock11Button.png'
+        
+      }
+    }
   }
-  if (e.target.src.includes('Shock11')) {
+  if (e == 'Shock11') {
     Office2RoomSelected = 11
-    e.target.src = 'Assests/Shock11Press.png'
-    Shock2.src = 'Assests/Shock2Button.png'
-    Shock7.src = 'Assests/Shock7Button.png'
-    Shock9.src = 'Assests/Shock9Button.png'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.CameraObjects.Shock9.UIN) {
+        Images[i].src = 'Assests/Shock9Button.png'
+      }
+      if (Images[i].alt == OfficesRender.CameraObjects.Shock11.UIN) {
+        Images[i].src = 'Assests/Shock11Press.png'
+        
+      }
+    }
   }
 }
 //Makes the power off work
 function PowerDown(e) {
   if (e == 'Down') {
+    OfficesRender.PowerBar.Render = false
+    AudioControl('PowerOut', 'Play')
+    OfficesRender.OfficeObjects.OfficeLight.Render = false
+    OfficesRender.ScreenCover.Alpha = 0.7
+    Powered = false
+    for (g in FunctionControls) {
+      FunctionControls[g] = false
+    }
+    if (Office == 'Office2') {
+      OfficesRender.LightControl.Vent2.Render = false
+      OfficesRender.LightControl.Vent3.Render = false
+      OfficesRender.LightControl.Vent4.Render = false
+      OfficesRender.LightControl.Light.Render = false
+      MouseCollisionsValues.Vent2.Hitbox = false
+      MouseCollisionsValues.Vent3.Hitbox = false
+      MouseCollisionsValues.Vent4.Hitbox = false
+    } else if (Office == 'Office3') {
+      OfficesRender.FanControll.Office1SwitchText.Render = false
+      OfficesRender.FanControll.Office2SwitchText.Render = false
+      OfficesRender.FanControll.Office3SwitchText.Render = false
+      OfficesRender.FanControll.Office4SwitchText.Render = false
+      for (h in FunctionControls) {
+        FunctionControls[h].Active = false
+        let o = OfficesRender[FunctionControls[h].Connections]
+        for (j in o) {
+          if (o[j].Reverse == true)  {
+            o[j].FreezeFrame = false
+          }
+        }
+      }
+    }
+    if (Offices[Office].HasCameras && OfficesRender.CameraObjects.Static.Render) {
+      BasicFlipOut()
+    }
     if (MothAnamtronic.target == (Offices[Office].num - 1)) {
       let kj = Math.floor(Math.random() * 2000) + 5000
       if (MothCheck != null) {
@@ -884,99 +1326,262 @@ function PowerDown(e) {
         }
       }, kj)
     }
+    PowerUsage = 0
+  } else {
+    OfficesRender.ScreenCover.Alpha = 0.2
+    OfficesRender.PowerBar.Render = true
+    OfficesRender.OfficeObjects.OfficeLight.Render = true
+    Powered = true
+    for (g in FunctionControls) {
+      FunctionControls[g] = true
+    }
+    if (Office == 'Office2') {
+      OfficesRender.LightControl.Vent2.Render = true
+      OfficesRender.LightControl.Vent3.Render = true
+      OfficesRender.LightControl.Vent4.Render = true
+      OfficesRender.LightControl.Light.Render = true
+      MouseCollisionsValues.Vent2.Hitbox = true
+      MouseCollisionsValues.Vent3.Hitbox = true
+      MouseCollisionsValues.Vent4.Hitbox = true
+      if(StoppedShockReset) {
+        StoppedShockReset = false
+        leverInfo('Shock')
+      }
+      if (StoppedFlashReset) {
+        StoppedFlashReset = false
+        leverInfo('Flash')
+      }
+    }
+    PowerUsage = 1
   }
 }
 
 //Selects which vent should be flashed
 function VentSelect(e) {
-  if (e.target.src.includes('Vent2')) {
+  if (e == 'Vent2') {
     Office2VentSelected = 2
-    e.target.src = 'Assests/Vent2Sellect-04.png'
-    Vent3.src = 'Assests/Vent3Button-04.png'
-    Vent4.src = 'Assests/Vent4Button-04.png'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.LightControl.Vent2.UIN) {
+        Images[i].src = 'Assests/Vent2Sellect-04.png'
+      }
+      if (Images[i].alt == OfficesRender.LightControl.Vent3.UIN) {
+        Images[i].src = 'Assests/Vent3Button-04.png'
+        
+      }
+      if (Images[i].alt == OfficesRender.LightControl.Vent4.UIN) {
+        Images[i].src = 'Assests/Vent4Button-04.png'
+        
+      }
+    }
   }
-  if (e.target.src.includes('Vent3')) {
+  if (e == 'Vent3') {
     Office2VentSelected = 3
-    e.target.src = 'Assests/Vent3Sellect-04.png'
-    Vent2.src = 'Assests/Vent2Button-04.png'
-    Vent4.src = 'Assests/Vent4Button-04.png'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.LightControl.Vent2.UIN) {
+        Images[i].src = 'Assests/Vent2Button-04.png'
+      }
+      if (Images[i].alt == OfficesRender.LightControl.Vent3.UIN) {
+        Images[i].src = 'Assests/Vent3Sellect-04.png'
+        
+      }
+      if (Images[i].alt == OfficesRender.LightControl.Vent4.UIN) {
+        Images[i].src = 'Assests/Vent4Button-04.png'
+        
+      }
+    }
   }
-  if (e.target.src.includes('Vent4')) {
+  if (e == 'Vent4') {
     Office2VentSelected = 4
-    e.target.src = 'Assests/Vent4Sellect-04.png'
-    Vent2.src = 'Assests/Vent2Button-04.png'
-    Vent3.src = 'Assests/Vent3Button-04.png'
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.LightControl.Vent2.UIN) {
+        Images[i].src = 'Assests/Vent2Button-04.png'
+      }
+      if (Images[i].alt == OfficesRender.LightControl.Vent3.UIN) {
+        Images[i].src = 'Assests/Vent3Button-04.png'
+        
+      }
+      if (Images[i].alt == OfficesRender.LightControl.Vent4.UIN) {
+        Images[i].src = 'Assests/Vent4Sellect-04.png'
+        
+      }
+    }
   }
 }
 
 //Updates PowerUsage Bar
 function PowerUpdate(num) {
-  let e = 24 * num
-  PowerUsage += num
-  Powercontain.style.height = (((Powercontain.style.height.replace('px', '')) - '') + e) + 'px'
+  let p = OfficesRender.PowerBar;
+  if (num != 'reset') {
+    PowerUsage += num;
+    p.height = (171 / 5) * PowerUsage
+    p.ScaleY = (130 / 5) * PowerUsage
+  } else {
+    PowerUsage = 1;
+    p.height = (171 / 5) * PowerUsage
+    p.ScaleY = (130 / 5) * PowerUsage
+  }
 }
+
+PowerUpdate('reset')
 
 //The things below subject to change
 var movescreen = 0
 function TurnScreen(direction) {
-  if (direction.target.id == 'ivisObeject2') {
-    movescreen = -10
+  if (direction == 'Left' && OfficesRender.OfficeObjects.Office.x < OfficesRender.OfficeObjects.Office.MaxRight && movescreen != 10) {
+    movescreen = 20
+    if (Offices[Office].HasCameras) {
+      MouseCollisionsValues.ScreenTrigger.Hitbox = false
+      OfficesRender.OfficeOverlaysObjects.TriggerUp.Render = false
+    }
   }
-  if (direction.target.id == 'ivisObeject1') {
-    CamSuitTrig.hidden = true
-    movescreen = 10
+  if (direction == 'Right' && OfficesRender.OfficeObjects.Office.x > OfficesRender.OfficeObjects.Office.MaxLeft && movescreen != -10) {
+    movescreen = -20
   }
   checkScreen()
 }
+
+var movementScreen = null
 function checkScreen() {
-  if (((theOffice.style.right.replace('px', '')) - '') >= 0 && movescreen > 0) {
+  if (OfficesRender.OfficeObjects.Office.x > OfficesRender.OfficeObjects.Office.MaxRight && movescreen > 0) {
     movescreen = 0
-    theOffice.style.right = '0px'
+    clearInterval(movementScreen)
+    movementScreen = null
+    let k = OfficesRender.OfficeObjects.Office.MaxRight - OfficesRender.OfficeObjects.Office.x
+    for (let i = 0; i < Objects.length; i++) {
+      if (!Objects[i].Class.includes('Fixed')) {
+        if (Objects[i].Class.includes("ReverseMove")) {
+          Objects[i].x += k
+        } else {
+          Objects[i].x += -k
+        }
+      }
+    }
+    for (let i = 0; i < MouseCollisions.length; i++) {
+      if (MouseCollisionsValues[MouseCollisions[i]].Move) {
+        MouseCollisionsValues[MouseCollisions[i]].x += -k
+      }
+    }
   }
-  if (((theOffice.style.right.replace('px', '')) - '') <= -2490 && movescreen < 0) {
+  if (OfficesRender.OfficeObjects.Office.x < OfficesRender.OfficeObjects.Office.MaxLeft && movescreen < 0) {
     movescreen = 0
-    theOffice.style.right = '-2490px'
-    CamSuitTrig.hidden = false
+    clearInterval(movementScreen)
+    movementScreen = null
+    let k = OfficesRender.OfficeObjects.Office.MaxLeft - OfficesRender.OfficeObjects.Office.x
+    for (let i = 0; i < Objects.length; i++) {
+      if (!Objects[i].Class.includes('Fixed')) {
+        if (Objects[i].Class.includes("ReverseMove")) {
+          Objects[i].x += k
+        } else {
+          Objects[i].x += -k
+        }
+      }
+    }
+    for (let i = 0; i < MouseCollisions.length; i++) {
+      if (MouseCollisionsValues[MouseCollisions[i]].Move) {
+        MouseCollisionsValues[MouseCollisions[i]].x += -k
+      }
+    }
+    if (Offices[Office].HasCameras) {
+      MouseCollisionsValues.ScreenTrigger.Hitbox = true
+      OfficesRender.OfficeOverlaysObjects.TriggerUp.Render = true
+    }
+    OfficesRender.FlashLight.Render = false
   }
-  LeftDoorDiv.style.left = (((LeftDoorDiv.style.left.replace('px', '')) - '') - movescreen) + 'px'
-  RightDoorDiv.style.right = (((RightDoorDiv.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  theOffice.style.right = (((theOffice.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  CreateContain.style.right = (((CreateContain.style.right.replace('px', '')) - '') + movescreen) + 'px'
-  if (movescreen != 0) {
-    movementScreen = setTimeout(() => {
+  if (movescreen != 0 && movementScreen == null) {
+    movementScreen = setInterval(() => {
+      for (let i = 0; i < Objects.length; i++) {
+        if (!Objects[i].Class.includes("Fixed")) {
+          if (Objects[i].Class.includes("ReverseMove")) {
+            Objects[i].x += movescreen
+          } else {
+            Objects[i].x -= movescreen
+          }
+        }
+      }
+      for (let i = 0; i < MouseCollisions.length; i++) {
+        if (MouseCollisionsValues[MouseCollisions[i]].Move) {
+          MouseCollisionsValues[MouseCollisions[i]].x += -movescreen
+        }
+      }
       checkScreen()
-      AllTimers.pop()
     }, 1)
     AllTimers.push(movementScreen)
   }
 };
-
-Invis1.onmouseenter = TurnScreen
-Invis2.onmouseenter = TurnScreen
 //it ends at this point
 
 //This opens and closes the doors
 function ControlDoor(Door) {
-  if (Door == 'left') {
-    if (LeftDoor.hidden) {
-      LeftDoor.hidden = false
+  if (Door == 'Left') {
+    if (OfficesRender.Doors.LeftDoor.Render && !OfficesRender.Doors.RightDoor.Animating) {
+      AudioControl('DoorSlam', 'Play')
+      let DoorOpen = setInterval(() => {
+        if (OfficesRender.Doors.LeftDoor.ScaleY > 0) {
+          OfficesRender.Doors.LeftDoor.ScaleY -= 20
+          OfficesRender.Doors.LeftDoor.height -= 28
+        } else {
+          OfficesRender.Doors.LeftDoor.Render = false
+          OfficesRender.Doors.RightDoor.Animating = false
+          clearInterval(DoorOpen)
+        }
+      }, 1)
       leftDoor = false
-      PowerUpdate(-1)
-    } else {
-      LeftDoor.hidden = true
+      if (Office == 'Office3') {
+        PowerUpdate(-1)
+      }
+    } else if(!OfficesRender.Doors.RightDoor.Animating) {
+      AudioControl('DoorSlam', 'Play')
+      OfficesRender.Doors.LeftDoor.Render = true
+      let DoorClose = setInterval(() => {
+        if (OfficesRender.Doors.LeftDoor.ScaleY < OfficesRender.Doors.LeftDoor.MaxScaleY) {
+          OfficesRender.Doors.LeftDoor.ScaleY += 20
+          OfficesRender.Doors.LeftDoor.height += 28
+        } else {
+          OfficesRender.Doors.RightDoor.Animating = false
+          clearInterval(DoorClose)
+        }
+      }, 1)
       leftDoor = true
-      PowerUpdate(1)
+      if (Office == 'Office3') {
+        PowerUpdate(1)
+      }
     }
+    OfficesRender.Doors.RightDoor.Animating = true
   }
-  if (Door == 'right') {
-    if (RightDoor.hidden) {
-      RightDoor.hidden = false
+  if (Door == 'Right') {
+    if (OfficesRender.Doors.RightDoor.Render && !OfficesRender.Doors.RightDoor.Animating) {
+      AudioControl('DoorSlam', 'Play')
+      let DoorOpen = setInterval(() => {
+        if (OfficesRender.Doors.RightDoor.ScaleY > 0) {
+          OfficesRender.Doors.RightDoor.ScaleY -= 20
+          OfficesRender.Doors.RightDoor.height -= 28
+        } else {
+          OfficesRender.Doors.RightDoor.Render = false
+          OfficesRender.Doors.RightDoor.Animating = false
+          clearInterval(DoorOpen)
+        }
+      }, 1)
       rightDoor = false
-      PowerUpdate(-1)
-    } else {
-      RightDoor.hidden = true
+      if (Office == 'Office3') {
+        PowerUpdate(-1)
+      }
+    } else if (!OfficesRender.Doors.RightDoor.Animating) {
+      AudioControl('DoorSlam', 'Play')
+      OfficesRender.Doors.RightDoor.Render = true
+      let DoorClose = setInterval(() => {
+        if (OfficesRender.Doors.RightDoor.ScaleY < OfficesRender.Doors.RightDoor.MaxScaleY) {
+          OfficesRender.Doors.RightDoor.ScaleY += 20
+          OfficesRender.Doors.RightDoor.height += 28
+        } else {
+          clearInterval(DoorClose)
+          OfficesRender.Doors.RightDoor.Animating = false
+        }
+      }, 1)
       rightDoor = true
-      PowerUpdate(1)
+      if (Office == 'Office3') {
+        PowerUpdate(1)
+      }
     }
+    OfficesRender.Doors.RightDoor.Animating = true
   }
 }
