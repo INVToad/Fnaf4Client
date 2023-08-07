@@ -144,7 +144,7 @@ function CreateObjects(e) {
           OfficesRender.Doors[OfficesRender.DoorsList[b]].y = OfficesRender.Doors[OfficesRender.DoorsList[b]].Oy
         }
       } else if (k[h] == 'Office') {
-        OfficeList.push('Desk' + Office.replace('Office', ''))
+        OfficesRender.OfficeList.push('Desk' + Office.replace('Office', ''))
         for (let b = 0; b < OfficesRender.OfficeList.length; b++) {
           Objects.push(OfficesRender.OfficeObjects[OfficesRender.OfficeList[b]])
           OfficesRender.OfficeObjects[OfficesRender.OfficeList[b]].x = OfficesRender.OfficeObjects[OfficesRender.OfficeList[b]].Ox
