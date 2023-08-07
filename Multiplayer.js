@@ -9,7 +9,7 @@ var RoomInput = document.getElementById('RoomInput')
 var RoomSubmitButton = document.getElementById('RoomSubmitButton')
 var refreshLobbiesButton = document.getElementById('refreshLobbiesButton')
 
-var Username = 'Admin'//prompt('Username')
+var Username = prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
 var Lobbylist = document.getElementById("lobbies")
 
