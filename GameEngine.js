@@ -242,6 +242,7 @@ function GameStart() {
       }
     }
   }
+  CreateObjects('All')
 }
 
 function JunctionConnect() {
