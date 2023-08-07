@@ -15,4 +15,4 @@ const FPSDisplay = document.getElementById("FPS")
 const DigitialCommandPromptAllowed = true
 
 //Admin Stuff
-const AdminPassword = 'Sen45pole'
+const AdminPassword = ''
