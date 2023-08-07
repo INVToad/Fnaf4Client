@@ -19,7 +19,9 @@ var Room = 'null'
 //Connection socket to tell when the player connects
 socket.on('connect', function() {
   socket.emit("connection")
-  socket.emit("connected", Username, socket.id, window.location, AdminPassword)
+  if (Username != null) {
+    socket.emit("connected", Username, socket.id, window.location, AdminPassword)
+  }
 });
 socket.on('Forcedisonnection', function() {
   socket.disconnect()
@@ -27,7 +29,7 @@ socket.on('Forcedisonnection', function() {
 socket.on('user', function(data, name) {
   if (data == 'Taken') {
     var Username = prompt('Username', name + 'was Taken')
-    socket.emit("connected", Username, socket.id)
+    socket.emit("connected", Username, socket.id, window.location, AdminPassword)
   }
 })
 socket.on('connected', function(data) {
