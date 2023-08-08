@@ -46,7 +46,7 @@ socket.on('disconnected', function(data) {
 socket.on('receiveMessage', function(arg) {
   let allow = true
   for (p in ProfanityFilter) {
-    if (arg.includes(ProfanityFilter[p])) {
+    if ((arg.toLowerCase()).includes(ProfanityFilter[p])) {
       allow = false
       break
     };
