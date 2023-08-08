@@ -44,12 +44,21 @@ socket.on('disconnected', function(data) {
   ChatMsgs.push(data + ' Disconnected')
 });
 socket.on('receiveMessage', function(arg) {
-  if (ChatMsgs.length >= 10) {
-    ChatMsgs.shift()
-    deleteChatMsg()
-  }
-  createChatMsg(arg)
-  ChatMsgs.push(arg)
+  let allow = true
+  for (p in ProfanityFilter) {
+    if (arg.includes(ProfanityFilter[p])) {
+      allow = false
+      break
+    };
+  };
+  if (allow) {
+    if (ChatMsgs.length >= 10) {
+      ChatMsgs.shift()
+      deleteChatMsg()
+    }
+    createChatMsg(arg)
+    ChatMsgs.push(arg)
+  };
 });
 socket.on('RoomConnection', function(data) {
   if (ChatMsgs.length >= 10) {

@@ -14,6 +14,7 @@ var rightDoor = false
 var AllTimers = []
 var ScreenCover = false
 var textshown = true
+const ProfanityFilter = ['fuck', 'shit', 'dick', 'cunt', 'twat', 'god']
 var NightShift = 1
 var Functions = [] //Lists all the office abilities
 var FunctionControls = {}
