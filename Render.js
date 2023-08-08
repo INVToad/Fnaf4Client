@@ -68,15 +68,6 @@ function WorldRender() { //Renders the game using Canvas
       }
     }
     //debug Stuff
-    for (let y = 0; y < MouseCollisions.length; y++) {
-      if (MouseCollisionsValues[MouseCollisions[y]].Hitbox) {
-        ctx.beginPath();
-        ctx.lineWidth = "2";
-        ctx.strokeStyle = "blue";
-        ctx.rect(MouseCollisionsValues[MouseCollisions[y]].x, MouseCollisionsValues[MouseCollisions[y]].y, MouseCollisionsValues[MouseCollisions[y]].width, MouseCollisionsValues[MouseCollisions[y]].height);
-        ctx.stroke();
-      }
-    }
     if (Ingame && Powered && textshown) {
       ctx.fillStyle = 'white';
       ctx.font = '30px Arial';
