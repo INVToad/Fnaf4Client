@@ -23,4 +23,4 @@ const ChatSettings = {
 }
 
 //Admin Stuff
-const AdminPassword = 'Sen45pole'
+const AdminPassword = ''
