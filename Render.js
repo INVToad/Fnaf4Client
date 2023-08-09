@@ -7,14 +7,15 @@ function WorldRender() { //Renders the game using Canvas
     for (let i = 0; i < Objects.length; i++) {
       if (Objects[i].Class.includes('Text') && Objects[i].Render ) {
         ctx.fillStyle = Objects[i].Colour
-        ctx.font = '10px Arial'
+        ctx.font = Objects[i].Font
         if (Objects[i].Multilined) {
           let o = Objects[i].Text.split('|')
           for (let p = 0; p < Objects[i].Lines; p++) {
             if (o[p] == undefined) {
               o[p] = 'ERROR'
             }
-            ctx.fillText(o[p], Objects[i].x, Objects[i].y + (11 * p), Objects[i].width)
+            let j = Number((OfficesRender.ConsoleObjects.ConsoleText.Font.split(' '))[0].replace('px', ''))
+            ctx.fillText(o[p], Objects[i].x, Objects[i].y + ((j + (j / 10)) * p), Objects[i].width)
           }
         } else {
           ctx.fillText(Objects[i].Text, Objects[i].x, Objects[i].y, Objects[i].width)
@@ -44,7 +45,9 @@ function WorldRender() { //Renders the game using Canvas
                 if (Objects[i].Class.includes('EndAnimationAction')) {
                   EndFrameEffect(Objects[i].EndEffect, Objects[i])
                 }
-                Objects[i].Frame = 0
+                if (Objects[i] != undefined) {
+                  Objects[i].Frame = 0
+                }
               }
             }
           } else if (Objects[i].Class.includes('DesignMove')) {
@@ -68,6 +71,15 @@ function WorldRender() { //Renders the game using Canvas
       }
     }
     //debug Stuff
+    for (let y = 0; y < MouseCollisions.length; y++) {
+      if (MouseCollisionsValues[MouseCollisions[y]].Hitbox) {
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "blue";
+        ctx.rect(MouseCollisionsValues[MouseCollisions[y]].x, MouseCollisionsValues[MouseCollisions[y]].y, MouseCollisionsValues[MouseCollisions[y]].width, MouseCollisionsValues[MouseCollisions[y]].height);
+        ctx.stroke();
+      }
+    }
     if (Ingame && Powered && textshown) {
       ctx.fillStyle = 'white';
       ctx.font = '30px Arial';

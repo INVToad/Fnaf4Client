@@ -243,7 +243,11 @@ const ComputerDialog = {
   OfficeConnect: 'New Network detected|Ping: Port-4537|...|Received: Ping|Establishing Connection|[———————————]|Connection Establishing||Identified: Network/undefined',
   OfficeDisconnect: 'Diconnect: Port-4537|Disconnecting Network|[———]|Diconnected Network',
   OfficeReset: 'Send: Deactivate/undefined1/undefined2|Rebooting: [————————————]|Send: Reactivate/undefined3/undefined4|',
-  OfficeFunctionCheck: 'Here| undefined'
+  OfficeFunctionCheck: 'Here| undefined',
+  StartUpLobby: 'Initializing System|BIO: 44_Delta_34|[———————]|Perparing to create||CHOOSE: name||Lobby_Name: <|INPUT|Name Accepted',
+  NightSelect: 'Perparing Difficulty|OPTIONS: 1, 2, 3, 4, 5|Input: <|INPUT|Difficulty Accepted|Setting: Animatronics|[—————]|Completed',
+  Password: 'Security Initializing|[—————————]|Password Required|Password: <|INPUT|Password Accepted|',
+  FinalRoom: 'All Inputs Completed||Compiling: data|[————————]||Display: Room|  Lobby_Name: undefined1|  NightShift: undefined2|  Password: undefined3|Finalize: Input required||To finalize press the red button, otherwise type no into the console',
 }
 
 const OfficesFunctions = {
