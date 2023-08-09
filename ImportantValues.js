@@ -14,7 +14,6 @@ var rightDoor = false
 var AllTimers = []
 var ScreenCover = false
 var textshown = true
-const ProfanityFilter = ['fuck', 'shit', 'dick', 'cunt', 'twat', 'god']
 var NightShift = 1
 var Functions = [] //Lists all the office abilities
 var FunctionControls = {}
@@ -118,6 +117,26 @@ const OfficesRender = { //Contains the presets for the images
     FreezeFrame: false,
     Reverse: false,
     Class: 'AnimatedOpacityFixed'
+  },
+  CreateLobby: {
+    Ox: 1105,
+    Oy: 482,
+    x: 0,
+    y: 0,
+    width: 74.5,
+    height: 80,
+    FrameRate: 1,
+    ScaleX: 237,
+    ScaleY: 237,
+    Frame: 0,
+    Frames: 3,
+    UIN: 'BOTTON',
+    src: 'Assests/BigRedButton_SpirteSheet.png',
+    Render: true,
+    FreezeFrame: true,
+    Reverse: false,
+    Class: 'AnimatedLeverEndAnimationAction',
+    EndEffect: 'CreateLobby',
   },
   OfficeList: ['Office'],
   OfficeObjects: {
@@ -510,8 +529,11 @@ const OfficesRender = { //Contains the presets for the images
       UIN: 228,
       src: 'Assests/BigRedButton_SpirteSheet.png',
       Render: true,
+      Prompt: '',
+      NextDialog: '',
       Multilined: true,
       Lines: 0,
+      Font: '10px Arial',
       Text: 'Yap',
       Class: 'Text',
     }
@@ -1182,6 +1204,7 @@ const OfficesRender = { //Contains the presets for the images
       Frames: 4,
       UIN: 238,
       Text: 'none',
+      Font: '20px Arial',
       Colour: 'green',
       Multilined: false,
       LineNumbers: 0,
@@ -1225,6 +1248,7 @@ const OfficesRender = { //Contains the presets for the images
       Frames: 4,
       UIN: 228,
       Text: 'none',
+      Font: '20px Arial',
       Colour: 'green',
       Multilined: false,
       LineNumbers: 0,
@@ -1268,6 +1292,7 @@ const OfficesRender = { //Contains the presets for the images
       Frames: 4,
       UIN: 278,
       Text: 'none',
+      Font: '20px Arial',
       Colour: 'green',
       Multilined: false,
       LineNumbers: 0,
@@ -1311,6 +1336,7 @@ const OfficesRender = { //Contains the presets for the images
       Frames: 4,
       UIN: 218,
       Text: 'none',
+      Font: '20px Arial',
       Colour: 'green',
       Multilined: false,
       LineNumbers: 0,
@@ -1620,6 +1646,18 @@ var MouseInfo = {
 
 var MouseCollisions = ['CreateLobby', 'FindLobby']
 const MouseCollisionsValues = {
+  CreateLobbyButton: {
+    x: 1105,
+    y: 492,
+    width: 237,
+    height: 237,
+    Hitbox: true,
+    Triggered: false,
+    Move: true,
+    Effect: {
+      lever: 'CreateLobby'
+    }
+  },
   CreateLobby: {
     x: 51,
     y: 540,

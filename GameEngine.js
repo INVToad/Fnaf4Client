@@ -299,6 +299,7 @@ function AudioContoll(e) {
 
 function DisplayUpdate(e) {
   if ((ConsoleActive || (e == 'StartUp' || e == 'PowerCheck')) && !ConsoleWorking) {
+    OfficesRender.ConsoleObjects.ConsoleText.Prompt = e
     ConsoleWorking = true
     if (e == 'StartUp') {
       ConsoleActive = true
@@ -328,6 +329,9 @@ function DisplayUpdate(e) {
     let o = setInterval(() => {
       if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines] == 'RECEIVE DELAY' && !DataReceived) {
 
+      } else if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines] == 'INPUT' && !InputSubmit) {
+        console.log('e')
+        DigitialCommandPrompt = true
       } else if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines - 1] != undefined && (OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines - 1].includes('—')) {
         if (BarTimer >= BarIncrease) {
           BarTimer = 0
@@ -358,6 +362,12 @@ function DisplayUpdate(e) {
             OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined2', Reset)
             OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined3', ConnectedOffice)
             OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined4', Reset)
+          } else if (e == 'FinalRoom') {
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined1', RoomInput.value)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined2', NightShift)
+            OfficesRender.ConsoleObjects.ConsoleText.Text = OfficesRender.ConsoleObjects.ConsoleText.Text.replace('undefined3', RooomPassword)
+            InputSubmit = true
+            CommandSet = true
           }
         }
         if ((OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines] != undefined && (OfficesRender.ConsoleObjects.ConsoleText.Text.split('|'))[OfficesRender.ConsoleObjects.ConsoleText.Lines].includes('Send: ')) {
@@ -401,10 +411,13 @@ function DisplayUpdate(e) {
               OfficesRender.ConsoleObjects.ConsoleText.Lines = 0
             }
             ConsoleWorking = false
-            if (DigitialCommandPromptAllowed == true && Office == 'Office1') {
+            if (DigitialCommandPromptAllowed == true && (Office == 'Office1' || Objects[0].src.includes('TitleScreen')) && CommandSet) {
               DigitialCommandPrompt = true
               OfficesRender.ConsoleObjects.ConsoleText.Text += '||Command: <'
               OfficesRender.ConsoleObjects.ConsoleText.Lines += 2
+            } else if (InputSubmit) {
+              InputSubmit = false
+              DisplayUpdate(OfficesRender.ConsoleObjects.ConsoleText.NextDialog)
             }
             if (Math.floor(Math.random()* 500)+1 <= 1) {
               DisplayUpdate('Threaten')
@@ -557,6 +570,20 @@ function EndFrameEffect(e, Object) { //Preforms an action when called, used with
       Object.Reverse = true
       textshown = true
     }
+  } else if (e == 'CreateLobby') {
+    if (Object.Reverse) {
+      Object.FreezeFrame = true
+      if (DigitialCommandPrompt && OfficesRender.ConsoleObjects.ConsoleText.NextDialog == 'FinalRoom')  {
+        OfficesRender.ConsoleObjects.ConsoleText.Font = '10px Arial'
+        OfficesRender.ConsoleObjects.ConsoleText.width = 700
+        CreateRoom()
+        LobbyStuff('Joined')
+      } else {
+        Object.Reverse = false
+      }
+    } else {
+      Object.Reverse = true
+    }
   }
 }
 //Remove these
@@ -605,6 +632,8 @@ function leverInfo(e, Value1) {
       OfficesRender.JunctionObjects.PowerDial.FreezeFrame = false
     } else if (e == 'Flick') {
       OfficesRender.JunctionObjects[Value1.Name].FreezeFrame = false
+    } else if (e == 'CreateLobby') {
+      OfficesRender.CreateLobby.FreezeFrame = false
     }
   }
 }
@@ -755,7 +784,6 @@ function MouseLocationTriggers() {
       MouseInfo.x < BoxLeft + BoxWidth &&
       MouseInfo.y > BoxTop &&
       MouseInfo.y < BoxTop + BoxHeight && (Powered || MouseCollisions[y].includes('Door'))) {
-        console.log('e')
         let Action = MouseCollisionsValues[MouseCollisions[y]]
         if (Action.Effect.CameraChange != undefined) {
           CamChange(Action.Effect.CameraChange)
@@ -781,23 +809,88 @@ function MouseLocationTriggers() {
 function LobbyStuff(e) {
   if (e == 'Find') {
     MouseCollisions = []
+    ChatInput.style.left = '40px'
+    ChatSubmitButton.style.left = '200px'
+    for (let i = 0; i < Messages.length; i++) {
+      let j = document.getElementById(Messages[i])
+      j.style.left = '40px'
+      j.style.color = 'white'
+    }
+    ChatSettings.Left = '40px'
+    ChatSettings.Colour = 'white'
+    MouseCollisions = []
     Objects = []
-    Objects.push(OfficesRender.StaticTitle)
-    OfficesRender.StaticTitle.x = OfficesRender.StaticTitle.Ox
-    OfficesRender.StaticTitle.y = OfficesRender.StaticTitle.Oy
     Images = []
+    Objects.push(OfficesRender.TitleScreen)
+    OfficesRender.TitleScreen.x = OfficesRender.TitleScreen.Ox
+    OfficesRender.TitleScreen.y = OfficesRender.TitleScreen.Oy
     for (let i = 0; i < Objects.length; i++) {
-      if (!Objects[i].Class.includes('Text')) {
-        let Img = new Image()
-        Img.src = Objects[i].src
-        Img.alt = Objects[i].UIN
-        Images.push(Img)
+      let Img = new Image()
+      Img.src = Objects[i].src
+      Img.alt = Objects[i].UIN
+      Images.push(Img)
+    }
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.TitleScreen.UIN) {
+        Images[i].src = 'Assests/WaitingRoom.png'
       }
     }
     document.getElementById('chatInput').hidden = false
     document.getElementById('RoomRonnector').hidden = false
     document.getElementById('lobbies').hidden = false
     document.getElementById('refreshLobbiesButton').hidden = false
+    document.getElementById('ChatBox').hidden = false
+  } else if (e == 'Create') {
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.TitleScreen.UIN) {
+        Images[i].src = 'Assests/CreateLobbyScreen.png'
+      }
+    }
+    Objects.push(OfficesRender.CreateLobby)
+    OfficesRender.CreateLobby.x = OfficesRender.CreateLobby.Ox
+    OfficesRender.CreateLobby.y = OfficesRender.CreateLobby.Oy
+    let Img = new Image()
+    Img.src = OfficesRender.CreateLobby.src
+    Img.alt = OfficesRender.CreateLobby.UIN
+    Images.push(Img)
+    Objects.push(OfficesRender.ConsoleObjects.ConsoleText)
+    OfficesRender.ConsoleObjects.ConsoleText.x = 90
+    OfficesRender.ConsoleObjects.ConsoleText.y = 90
+    OfficesRender.ConsoleObjects.ConsoleText.Font = '20px Arial'
+    OfficesRender.ConsoleObjects.ConsoleText.width = 700
+    ConsoleActive = true
+    ConsoleWorking = false
+    MouseCollisions = ['CreateLobbyButton']
+    DigitialCommandPrompt = true
+    DisplayUpdate('StartUpLobby')
+  } else if ('Joined') {
+    ChatInput.style.left = '40px'
+    ChatSubmitButton.style.left = '200px'
+    for (let i = 0; i < Messages.length; i++) {
+      let j = document.getElementById(Messages[i])
+      j.style.left = '40px'
+      j.style.color = 'white'
+    }
+    ChatSettings.Left = '40px'
+    ChatSettings.Colour = 'white'
+    MouseCollisions = []
+    Objects = []
+    Images = []
+    Objects.push(OfficesRender.TitleScreen)
+    OfficesRender.TitleScreen.x = OfficesRender.TitleScreen.Ox
+    OfficesRender.TitleScreen.y = OfficesRender.TitleScreen.Oy
+    for (let i = 0; i < Objects.length; i++) {
+      let Img = new Image()
+      Img.src = Objects[i].src
+      Img.alt = Objects[i].UIN
+      Images.push(Img)
+    }
+    for (let i = 0; i < Images.length; i++) {
+      if (Images[i].alt == OfficesRender.TitleScreen.UIN) {
+        Images[i].src = 'Assests/WaitingRoom.png'
+      }
+    }
+    document.getElementById('chatInput').hidden = false
   }
 }
 

@@ -9,7 +9,7 @@ var RoomInput = document.getElementById('RoomInput')
 var RoomSubmitButton = document.getElementById('RoomSubmitButton')
 var refreshLobbiesButton = document.getElementById('refreshLobbiesButton')
 
-var Username = prompt('Username')
+var Username = 'Admin'//prompt('Username')
 var ChatBox = document.getElementById("ChatBox")
 var Lobbylist = document.getElementById("lobbies")
 
@@ -32,7 +32,7 @@ socket.on('user', function(data, name) {
     socket.emit("connected", Username, socket.id, window.location, AdminPassword)
   }
 })
-socket.on('connected', function(data) {
+socket.on('connectedUserName', function(data) {
   SendChatServerMessage(data + " Connected")
 });
 socket.on('disconnected', function(data) {
@@ -52,7 +52,7 @@ socket.on('receiveMessage', function(arg) {
     };
   };
   if (allow) {
-    if (ChatMsgs.length >= 10) {
+    if (document.getElementById(Messages[0]) != null && Number((document.getElementById(Messages[0]).style.bottom).replace('px', '')) + document.getElementById(Messages[0]).clientHeight >= 700) {
       ChatMsgs.shift()
       deleteChatMsg()
     }
@@ -72,6 +72,7 @@ socket.on('RoomConnection', function(data) {
     Lobbylist.removeChild(Lobbylist.lastChild)
   }
   refreshLobbiesButton.hidden = true
+  LobbyStuff('Joined')
 });
 socket.on('ConsoleLog', function(data) {
   console.log(data)
@@ -152,7 +153,7 @@ socket.on('receiveGameData', function(type, data, data1, data2) {
   }
   if (type == 'ShiftTime') {
     ShiftTime = data
-    Time.firstchild.data = '0' + data + ':00'
+    ShiftTime = data
   }
   if (type == 'Difficulty') {
     PowerDrainAnamtronic.AILevel = data.PowerDraintronic
@@ -208,9 +209,10 @@ function createChatMsg(e) {
   Messages.push('ChatMsg' + number)
   number += 1
   NewPara.style.position = 'absolute'
-  NewPara.style.left = '10px'
+  NewPara.style.left = ChatSettings.Left
   NewPara.style.bottom = '100px'
   NewPara.style.maxWidth = '200px'
+  NewPara.style.color = ChatSettings.Colour
   ChatBox.appendChild(NewPara)
   for (let i = 0; i < Messages.length; i++) {
     var TempMsg = document.getElementById(Messages[i])
@@ -244,12 +246,17 @@ function Checkkey(e) {
 }
 
 function sendRoomRequest() {
+  let Password = prompt('Password: ')
   if (RoomInput.value != '') {
-    socket.emit('JoinRoom', RoomInput.value)
+    socket.emit('JoinRoom', RoomInput.value, Password)
     RoomInput.value = ''
     RoomInput.hidden = true
     RoomSubmitButton.hidden = true
   }
+}
+
+function CreateRoom() {
+  socket.emit('CreateRoom', RoomInput.value,  NightShift, RooomPassword)
 }
 
 function SendData(type, data, data1) {
